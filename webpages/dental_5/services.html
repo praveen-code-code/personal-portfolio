@@ -1,0 +1,1174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PrimeCare Navbar</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        :root {
+            --primary-color: #0F3847;
+            --accent-color: #2B95CE;
+            --white: #ffffff;
+            --text-color: #ffffff;
+            --link-hover: #3498db;
+        }
+
+        /* Keyframes for fade animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes fadeInRight {
+            from {
+                opacity: 0;
+                transform: translateX(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        /* Animation classes */
+        .fade-in,
+        .fade-in-up,
+        .fade-in-left,
+        .fade-in-right {
+            opacity: 0;
+            animation-duration: 1s;
+            animation-fill-mode: forwards;
+            animation-timing-function: ease-out;
+            animation-play-state: paused;
+        }
+
+        .fade-in {
+            animation-name: fadeIn;
+            animation-delay: calc(0.2s * var(--i, 0));
+        }
+
+        .fade-in-up {
+            animation-name: fadeInUp;
+            animation-delay: calc(0.3s * var(--i, 0));
+        }
+
+        .fade-in-left {
+            animation-name: fadeInLeft;
+            animation-delay: calc(0.3s * var(--i, 0));
+        }
+
+        .fade-in-right {
+            animation-name: fadeInRight;
+            animation-delay: calc(0.3s * var(--i, 0));
+        }
+
+        /* Navbar */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 5%;
+            background-color: var(--primary-color);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            color: var(--white);
+            text-decoration: none;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .logo img {
+            width: 40px;
+            margin-right: 10px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: var(--white);
+            text-decoration: none;
+            font-size: 1rem;
+        }
+
+        .book-btn {
+            background-color: var(--accent-color);
+            color: var(--white);
+            padding: 0.8rem 1.5rem;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 6px;
+            cursor: pointer;
+            padding: 10px;
+        }
+
+        .hamburger span {
+            width: 25px;
+            height: 2px;
+            background-color: var(--white);
+            transition: all 0.3s ease;
+        }
+
+        @media (max-width: 1024px) {
+            .hamburger {
+                display: flex;
+            }
+
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 80px;
+                left: 0;
+                right: 0;
+                flex-direction: column;
+                background-color: var(--primary-color);
+                padding: 2rem;
+                gap: 1.5rem;
+                text-align: center;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .book-btn {
+                display: none;
+            }
+
+            .hamburger.active span:nth-child(1) {
+                transform: rotate(45deg) translate(8px, 8px);
+            }
+
+            .hamburger.active span:nth-child(2) {
+                opacity: 0;
+            }
+
+            .hamburger.active span:nth-child(3) {
+                transform: rotate(-45deg) translate(7px, -7px);
+            }
+        }
+
+        /* Header Section */
+        .header {
+            color: white;
+            text-align: center;
+            padding: 2rem 1rem;
+            background: url('images/abouts_bg.jpg') no-repeat center/cover fixed;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+        }
+
+        @media (max-width: 600px) {
+            .header {
+                background-attachment: scroll;
+                padding: 1.5rem 0.5rem;
+            }
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 2.5rem;
+            text-transform: uppercase;
+        }
+
+        .header nav {
+            margin-top: 1rem;
+        }
+
+        .header nav a {
+            color: white;
+            text-decoration: none;
+            margin: 0 1rem;
+            font-size: 0.9rem;
+        }
+
+        .header nav a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 600px) {
+            .header h1 {
+                font-size: 1.5rem;
+            }
+
+            .header nav a {
+                margin: 0 0.5rem;
+                font-size: 0.8rem;
+            }
+        }
+
+        /* Services Section */
+        .container-services {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 20px;
+  text-align: center;
+  background: linear-gradient(180deg, #f8fafc 0%, #ffffff 100%);
+}
+
+.services-header {
+  margin-bottom: 40px;
+}
+
+.services-header span {
+  font-size: 1rem;
+  color: #3498db;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.services-header h1 {
+  font-size: 2.5rem;
+  color: #0F3847;
+  margin: 10px 0;
+}
+
+.services-header p {
+  font-size: 1.1rem;
+  color: #64748b;
+  max-width: 700px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
+  padding: 0 10px;
+}
+
+.service-card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 24px;
+  text-align: left;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  position: relative;
+  cursor: pointer;
+  overflow: hidden;
+}
+
+.service-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+}
+
+.service-card.expanded {
+  padding-bottom: 48px;
+}
+
+.service-card::before {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #2c3e50;
+  z-index: 0;
+  transition: top 0.3s ease-out;
+}
+
+.service-card:hover::before {
+  top: 0;
+}
+
+.service-icon {
+  width: 40px;
+  height: 40px;
+  margin-bottom: 16px;
+  z-index: 1;
+  position: relative;
+}
+
+.service-card h3 {
+  font-size: 1.4rem;
+  color: #0F3847;
+  margin-bottom: 12px;
+  z-index: 1;
+  position: relative;
+}
+
+.service-card p {
+  font-size: 0.95rem;
+  color: #64748b;
+  line-height: 1.5;
+  margin-bottom: 16px;
+  z-index: 1;
+  position: relative;
+}
+
+.service-details {
+  display: none;
+  font-size: 0.9rem;
+  color: #475569;
+  margin-top: 12px;
+  z-index: 1;
+  position: relative;
+}
+
+.service-card.expanded .service-details {
+  display: block;
+}
+
+.service-card a {
+  color: #3498db;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.95rem;
+  z-index: 1;
+  position: relative;
+  transition: color 0.3s ease;
+}
+
+.service-card:hover h3,
+.service-card:hover p,
+.service-card:hover a {
+  color: #fff;
+}
+
+.service-card:hover .service-details {
+  color: #e2e8f0;
+}
+
+.service-card:hover .service-icon {
+  stroke: #fff;
+}
+
+@media (max-width: 768px) {
+  .services-header h1 {
+    font-size: 2rem;
+  }
+
+  .services-header p {
+    font-size: 1rem;
+  }
+
+  .services-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  .services-header h1 {
+    font-size: 1.8rem;
+  }
+
+  .services-header p {
+    font-size: 0.9rem;
+  }
+
+  .service-card {
+    padding: 20px;
+  }
+}
+
+        /* Testimonials Section */
+        .testimonials-section {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 1rem;
+        }
+
+        .testimonials-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .testimonials-label {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #0284c7;
+            font-size: clamp(0.75rem, 2vw, 0.875rem);
+            margin-bottom: 1rem;
+        }
+
+        .testimonials-label svg {
+            width: 18px;
+            height: 18px;
+            fill: #0284c7;
+        }
+
+        .testimonials-title {
+            color: #0f172a;
+            font-size: clamp(1.75rem, 5vw, 2.25rem);
+            font-weight: bold;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+
+        .testimonials-description {
+            color: #64748b;
+            max-width: 700px;
+            margin: 0 auto;
+            line-height: 1.6;
+            font-size: clamp(0.875rem, 2.5vw, 1rem);
+        }
+
+        .testimonials-container {
+            position: relative;
+            overflow: hidden;
+            padding: 1rem 0;
+        }
+
+        .testimonials-track {
+            display: flex;
+            gap: 1.5rem;
+            transition: transform 0.5s ease-in-out;
+        }
+
+        .testimonial-card {
+            flex: 0 0 100%;
+            padding: 1.5rem;
+            background: white;
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            min-width: 280px;
+            flex: 0 0 calc(33.333% - 1rem);
+        }
+
+        .quote-icon {
+            color: #0284c7;
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            line-height: 1;
+        }
+
+        .testimonial-content {
+            color: #334155;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+            font-size: clamp(0.875rem, 2.5vw, 1rem);
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .author-image {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .author-info h4 {
+            color: #0f172a;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+            font-size: clamp(0.875rem, 2vw, 1rem);
+        }
+
+        .author-info p {
+            color: #64748b;
+            font-size: clamp(0.75rem, 2vw, 0.875rem);
+        }
+
+        .navigation-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 0.75rem;
+            margin-top: 1.5rem;
+        }
+
+        .nav-button {
+            width: 36px;
+            height: 36px;
+            border: 1px solid #e2e8f0;
+            border-radius: 50%;
+            background: white;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+            color: #0284c7;
+        }
+
+        .nav-button:hover {
+            background: #f8fafc;
+            border-color: #0284c7;
+        }
+
+        .nav-button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            border-color: #e2e8f0;
+        }
+
+        @media (max-width: 640px) {
+            .testimonials-section {
+                padding: 0.5rem;
+                margin: 1.5rem auto;
+            }
+
+            .testimonials-header {
+                margin-bottom: 1.5rem;
+            }
+
+            .testimonials-title {
+                font-size: clamp(1.5rem, 6vw, 1.75rem);
+            }
+
+            .testimonial-card {
+                padding: 1rem;
+                min-width: 100%;
+            }
+
+            .navigation-buttons {
+                margin-top: 1rem;
+            }
+        }
+
+        @media (min-width: 640px) and (max-width: 768px) {
+            .testimonials-section {
+                margin: 1.5rem auto;
+            }
+
+            .testimonials-header {
+                margin-bottom: 1.5rem;
+            }
+
+            .testimonial-card {
+                flex: 0 0 calc(50% - 0.75rem);
+            }
+        }
+
+        @media (min-width: 768px) and (max-width: 1024px) {
+            .testimonials-section {
+                margin: 1.5rem auto;
+                padding: 1rem;
+            }
+
+            .testimonials-header {
+                margin-bottom: 1.5rem;
+            }
+
+            .testimonial-card {
+                flex: 0 0 calc(50% - 0.75rem);
+            }
+        }
+
+        /* Footer */
+        .footer-cta {
+            background-color: var(--primary-color);
+            padding: 2rem;
+            text-align: center;
+            position: relative;
+        }
+
+        .cta-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem;
+        }
+
+        .cta-text {
+            color: var(--text-color);
+            font-size: 2rem;
+            font-weight: 600;
+        }
+
+        .cta-button {
+            background-color: var(--accent-color);
+            color: var(--text-color);
+            padding: 0.8rem 1.5rem;
+            border-radius: 50px;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .cta-button:hover {
+            background-color: #2980b9;
+            transform: translateY(-2px);
+        }
+
+        .footer-main {
+            background-color: var(--primary-color);
+            padding: 4rem 2rem;
+            color: var(--text-color);
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1.5fr 1fr 1fr 1fr;
+            gap: 2rem;
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        .footer-logo svg {
+            width: 40px;
+            height: 40px;
+            fill: var(--accent-color);
+        }
+
+        .footer-description {
+            color: #ccc;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .social-link {
+            color: var(--text-color);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .social-link:hover {
+            color: var(--link-hover);
+        }
+
+        .footer-heading {
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-links a {
+            color: #ccc;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--link-hover);
+        }
+
+        .contact-info {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+            color: #ccc;
+        }
+
+        .footer-copyright {
+            text-align: center;
+            padding: 1.5rem;
+            background-color: var(--primary-color);
+            color: #ccc;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        @media (max-width: 1024px) {
+            .footer-content {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .cta-content {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+
+            .cta-text {
+                font-size: 1.5rem;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .footer-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .footer-logo {
+                justify-content: center;
+            }
+
+            .social-links {
+                justify-content: center;
+            }
+
+            .contact-info {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar fade-in">
+        <a href="#" class="logo">
+            <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
+                <path d="M20 40C31.0457 40 40 31.0457 40 20C40 8.9543 31.0457 0 20 0C8.9543 0 0 8.9543 0 20C0 31.0457 8.9543 40 20 40Z" fill="#2B95CE"/>
+                <path d="M25 15C25 17.7614 22.7614 20 20 20C17.2386 20 15 17.7614 15 15C15 12.2386 17.2386 10 20 10C22.7614 10 25 12.2386 25 15Z" fill="white"/>
+            </svg>
+            PrimeCare
+        </a>
+        <div class="nav-links">
+            <a href="#" class="fade-in" style="--i: 1;">Home</a>
+            <a href="#" class="fade-in" style="--i: 2;">About</a>
+            <a href="#" class="fade-in" style="--i: 3;">Services</a>
+            <a href="#" class="fade-in" style="--i: 4;">Contact</a>
+        </div>
+        <div class="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <a href="#" class="book-btn fade-in" style="--i: 5;">Book Appointment →</a>
+    </nav>
+
+    <!-- Header Section -->
+    <header class="header">
+        <h1>Services</h1>
+        <nav>
+            <a href="#">Home</a> / <a href="#">Services</a>
+        </nav>
+    </header>
+
+    <!-- Services Section -->
+    <section class="container-services" id="services">
+        <div class="services-header fade-in" style="--i: 1;">
+            <span>🦷 Our Services</span>
+            <h1>Discover Our Dental Solutions</h1>
+            <p>At PrimeCare, we offer a wide range of dental services to ensure your smile is healthy and radiant. Explore our expert treatments tailored to your needs.</p>
+        </div>
+        <div class="services-grid">
+            <div class="service-card fade-in-left" style="--i: 1;" role="button" tabindex="0" aria-label="Learn more about Dental Care">
+                <svg class="service-icon" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#3498db" stroke-width="2">
+                    <path d="M12 21a9 9 0 0 0 9-9c0-4.97-4.03-9-9-9s-9 4.03-9 9a9 9 0 0 0 9 9z" />
+                    <path d="M12 15v-3m0 0v-3m0 3h3m-3 0H9" />
+                </svg>
+                <h3>Dental Care</h3>
+                <p>Comprehensive check-ups, cleanings, and preventive care to maintain your oral health.</p>
+                <p class="service-details">Our dental care services include routine examinations, professional cleanings, and personalized advice to keep your teeth and gums in top condition.</p>
+                <a href="#" class="service-cta">Learn More →</a>
+            </div>
+            <div class="service-card fade-in-left" style="--i: 2;" role="button" tabindex="0" aria-label="Learn more about Cosmetic Dentistry">
+                <svg class="service-icon" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#3498db" stroke-width="2">
+                    <path d="M12 21a9 9 0 0 0 9-9c0-4.97-4.03-9-9-9s-9 4.03-9 9a9 9 0 0 0 9 9z" />
+                    <path d="M12 15l3-3m-3 3l-3-3m6 0H9" />
+                </svg>
+                <h3>Cosmetic Dentistry</h3>
+                <p>Transform your smile with veneers, bonding, and other aesthetic treatments.</p>
+                <p class="service-details">Enhance your smile with our cosmetic solutions, including porcelain veneers, composite bonding, and smile makeovers designed to boost your confidence.</p>
+                <a href="#" class="service-cta">Learn More →</a>
+            </div>
+            <div class="service-card fade-in-right" style="--i: 3;" role="button" tabindex="0" aria-label="Learn more about Dental Implants">
+                <svg class="service-icon" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#3498db" stroke-width="2">
+                    <path d="M12 21a9 9 0 0 0 9-9c0-4.97-4.03-9-9-9s-9 4.03-9 9a9 9 0 0 0 9 9z" />
+                    <path d="M12 15v-6m0 0l-3 3m3-3l3 3" />
+                </svg>
+                <h3>Dental Implants</h3>
+                <p>Replace missing teeth with durable, natural-looking implants for a lasting smile.</p>
+                <p class="service-details">Our dental implants offer a permanent solution for missing teeth, providing strength, stability, and a natural appearance that blends seamlessly with your smile.</p>
+                <a href="#" class="service-cta">Learn More →</a>
+            </div>
+            <div class="service-card fade-in-right" style="--i: 4;" role="button" tabindex="0" aria-label="Learn more about Teeth Whitening">
+                <svg class="service-icon" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#3498db" stroke-width="2">
+                    <path d="M12 21a9 9 0 0 0 9-9c0-4.97-4.03-9-9-9s-9 4.03-9 9a9 9 0 0 0 9 9z" />
+                    <path d="M12 15l-3-3m0 0l3-3m-3 3h6" />
+                </svg>
+                <h3>Teeth Whitening</h3>
+                <p>Brighten your smile with our safe and effective whitening treatments.</p>
+                <p class="service-details">Our professional teeth whitening treatments use advanced technology to safely remove stains and give you a radiant, confident smile.</p>
+                <a href="#" class="service-cta">Learn More →</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="testimonials-section">
+        <div class="testimonials-header">
+            <div class="testimonials-label">
+                <span>🦷 Testimonials</span>
+            </div>
+            <h2 class="testimonials-title">Listen from our happy patients</h2>
+            <p class="testimonials-description">
+                The goal of our clinic is to provide friendly, caring dentistry and the highest level of general, cosmetic, and specialist dental treatments. With dental practices throughout the world.
+            </p>
+        </div>
+        <div class="testimonials-container">
+            <div class="testimonials-track" id="testimonialsTrack"></div>
+        </div>
+        <div class="navigation-buttons">
+            <button class="nav-button" id="prevBtn" aria-label="Previous">←</button>
+            <button class="nav-button" id="nextBtn" aria-label="Next">→</button>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer-cta">
+        <div class="cta-content">
+            <h2 class="cta-text">Ready to Transform Your Smile?</h2>
+            <a href="#" class="cta-button">Book Appointment Now</a>
+        </div>
+    </footer>
+    <footer class="footer-main">
+        <div class="footer-content">
+            <div>
+                <div class="footer-logo">
+                    <svg viewBox="0 0 40 40" fill="none">
+                        <path d="M20 40C31.0457 40 40 31.0457 40 20C40 8.9543 31.0457 0 20 0C8.9543 0 0 8.9543 0 20C0 31.0457 8.9543 40 20 40Z" fill="#2B95CE"/>
+                        <path d="M25 15C25 17.7614 22.7614 20 20 20C17.2386 20 15 17.7614 15 15C15 12.2386 17.2386 10 20 10C22.7614 10 25 12.2386 25 15Z" fill="white"/>
+                    </svg>
+                    PrimeCare
+                </div>
+                <p class="footer-description">PrimeCare is dedicated to providing exceptional dental care with a focus on patient comfort and satisfaction.</p>
+                <div class="social-links">
+                    <a href="#" class="social-link">Facebook</a>
+                    <a href="#" class="social-link">Twitter</a>
+                    <a href="#" class="social-link">Instagram</a>
+                </div>
+            </div>
+            <div>
+                <h3 class="footer-heading">Quick Links</h3>
+                <ul class="footer-links">
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">About</a></li>
+                    <li><a href="#">Services</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3 class="footer-heading">Services</h3>
+                <ul class="footer-links">
+                    <li><a href="#">Dental Care</a></li>
+                    <li><a href="#">Cosmetic Dentistry</a></li>
+                    <li><a href="#">Dental Implants</a></li>
+                    <li><a href="#">Teeth Whitening</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3 class="footer-heading">Contact</h3>
+                <div class="contact-info">
+                    <span>📍</span>
+                    <p>123 Dental St, Smile City</p>
+                </div>
+                <div class="contact-info">
+                    <span>📞</span>
+                    <p>(123) 456-7890</p>
+                </div>
+                <div class="contact-info">
+                    <span>✉️</span>
+                    <p>info@primecare.com</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <div class="footer-copyright">
+        <p>&copy; 2025 PrimeCare. All rights reserved.</p>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Intersection Observer for fade animations
+            const fadeObserverOptions = {
+                root: null,
+                threshold: 0.1,
+                rootMargin: '0px'
+            };
+
+            const fadeObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        try {
+                            entry.target.style.animationPlayState = 'running';
+                            fadeObserver.unobserve(entry.target);
+                        } catch (error) {
+                            console.error('Error in fade animation:', error);
+                        }
+                    }
+                });
+            }, fadeObserverOptions);
+
+            // Apply fade observer to elements
+            const fadeElements = document.querySelectorAll('.fade-in, .fade-in-left, .fade-in-right');
+            fadeElements.forEach(element => {
+                try {
+                    element.style.animationPlayState = 'paused';
+                    fadeObserver.observe(element);
+                } catch (error) {
+                    console.error('Error setting up fade element:', error);
+                }
+            });
+
+            // Hamburger menu functionality
+            const hamburger = document.querySelector('.hamburger');
+            const navLinks = document.querySelector('.nav-links');
+
+            if (hamburger && navLinks) {
+                hamburger.addEventListener('click', () => {
+                    try {
+                        hamburger.classList.toggle('active');
+                        navLinks.classList.toggle('active');
+                        const isExpanded = hamburger.classList.contains('active');
+                        hamburger.setAttribute('aria-expanded', isExpanded);
+                    } catch (error) {
+                        console.error('Error in hamburger menu:', error);
+                    }
+                });
+
+                document.addEventListener('click', (event) => {
+                    if (!navLinks.contains(event.target) && !hamburger.contains(event.target)) {
+                        hamburger.classList.remove('active');
+                        navLinks.classList.remove('active');
+                        hamburger.setAttribute('aria-expanded', 'false');
+                    }
+                });
+            }
+
+            // Service card expand functionality
+            const serviceCards = document.querySelectorAll('.service-card');
+            serviceCards.forEach(card => {
+                card.addEventListener('click', () => {
+                    card.classList.toggle('expanded');
+                });
+
+                card.addEventListener('keydown', (event) => {
+                    if (event.key === 'Enter' || event.key === ' ') {
+                        event.preventDefault();
+                        card.classList.toggle('expanded');
+                    }
+                });
+            });
+
+            // Smooth scroll for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    document.querySelector(this.getAttribute('href')).scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                });
+            });
+        });
+
+        // Testimonials
+        const testimonials = [
+            {
+                id: 1,
+                name: "Dianne Russell",
+                role: "Patient",
+                content: "I want to say thank you to my doctor Steve! Vivamus sagittis massa vitae bibendum rhoncus. Duis cursus. Thank you for helping me overcome my fear of the dentist! Vivamus sagittis massa vitae bibendum rhoncus. Duis cursus.",
+                image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+            },
+            {
+                id: 2,
+                name: "Jane Cooper",
+                role: "Patient",
+                content: "I want to say thank you to my doctor Steve! Vivamus sagittis massa vitae bibendum rhoncus. Duis cursus. Thank you for helping me overcome my fear of the dentist! Vivamus sagittis massa vitae bibendum rhoncus. Duis cursus.",
+                image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+            },
+            {
+                id: 3,
+                name: "Artemisia Udinese",
+                role: "Patient",
+                content: "I want to say thank you to my doctor Steve! Vivamus sagittis massa vitae bibendum rhoncus. Duis cursus. Thank you for helping me overcome my fear of the dentist! Vivamus sagittis massa vitae bibendum rhoncus. Duis cursus.",
+                image: "https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+            },
+            {
+                id: 4,
+                name: "Artemisia Udinese",
+                role: "Patient",
+                content: "I want to say thank you to my doctor Steve! Vivamus sagittis massa vitae bibendum rhoncus. Duis cursus. Thank you for helping me overcome my fear of the dentist! Vivamus sagittis massa vitae bibendum rhoncus. Duis cursus.",
+                image: "https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+            },
+            {
+                id: 5,
+                name: "Artemisia Udinese",
+                role: "Patient",
+                content: "I want to say thank you to my doctor Steve! Vivamus sagittis massa vitae bibendum rhoncus. Duis cursus. Thank you for helping me overcome my fear of the dentist! Vivamus sagittis massa vitae bibendum rhoncus. Duis cursus.",
+                image: "https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+            },
+            {
+                id: 6,
+                name: "Artemisia Udinese",
+                role: "Patient",
+                content: "I want to say thank you to my doctor Steve! Vivamus sagittis massa vitae bibendum rhoncus. Duis cursus. Thank you for helping me overcome my fear of the dentist! Vivamus sagittis massa vitae bibendum rhoncus. Duis cursus.",
+                image: "https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+            }
+        ];
+
+        const track = document.getElementById('testimonialsTrack');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        let currentIndex = 0;
+        let autoScrollInterval;
+
+        function createTestimonialCard(testimonial) {
+            return `
+                <div class="testimonial-card">
+                    <div class="quote-icon">"</div>
+                    <p class="testimonial-content">${testimonial.content}</p>
+                    <div class="testimonial-author">
+                        <img src="${testimonial.image}" alt="${testimonial.name}" class="author-image">
+                        <div class="author-info">
+                            <h4>${testimonial.name}</h4>
+                            <p>${testimonial.role}</p>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderTestimonials() {
+            track.innerHTML = testimonials.map(createTestimonialCard).join('');
+            updateSlidePosition();
+        }
+
+        function updateSlidePosition() {
+            const slideWidth = document.querySelector('.testimonial-card').offsetWidth;
+            const gap = 32; // 2rem gap
+            track.style.transform = `translateX(-${currentIndex * (slideWidth + gap)}px)`;
+            updateButtons();
+        }
+
+        function updateButtons() {
+            prevBtn.disabled = currentIndex === 0;
+            nextBtn.disabled = currentIndex >= testimonials.length - getVisibleSlides();
+        }
+
+        function getVisibleSlides() {
+            const width = window.innerWidth;
+            if (width >= 1024) return 3;
+            if (width >= 768) return 2;
+            return 1;
+        }
+
+        function nextSlide() {
+            if (currentIndex < testimonials.length - getVisibleSlides()) {
+                currentIndex++;
+                updateSlidePosition();
+            }
+        }
+
+        function prevSlide() {
+            if (currentIndex > 0) {
+                currentIndex--;
+                updateSlidePosition();
+            }
+        }
+
+        function startAutoScroll() {
+            autoScrollInterval = setInterval(() => {
+                if (currentIndex >= testimonials.length - getVisibleSlides()) {
+                    currentIndex = 0;
+                } else {
+                    currentIndex++;
+                }
+                updateSlidePosition();
+            }, 5000);
+        }
+
+        function stopAutoScroll() {
+            clearInterval(autoScrollInterval);
+        }
+
+        // Event Listeners
+        prevBtn.addEventListener('click', () => {
+            prevSlide();
+            stopAutoScroll();
+        });
+
+        nextBtn.addEventListener('click', () => {
+            nextSlide();
+            stopAutoScroll();
+        });
+
+        // Initialize
+        renderTestimonials();
+        startAutoScroll();
+
+        // Responsive handling
+        window.addEventListener('resize', () => {
+            currentIndex = 0;
+            updateSlidePosition();
+        });
+
+        // Pause auto-scroll on hover
+        track.addEventListener('mouseenter', stopAutoScroll);
+        track.addEventListener('mouseleave', startAutoScroll);
+    </script>
+</body>
+</html>

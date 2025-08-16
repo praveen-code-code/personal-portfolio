@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio Page</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #121212;
+            color: #fff;
+        }
+        .back-button {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            padding: 10px 20px;
+            background-color: #0d1b2a;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            transition: background-color 0.3s;
+        }
+        .back-button:hover {
+            background-color: #f4a261;
+        }
+        .hero {
+            width: 100%;
+            height: 400px;
+            overflow: hidden;
+            position: relative;
+        }
+        .hero video, .hero img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .content, .technologies {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .card {
+            background-color: #181414;
+            padding: 50px;
+            margin: 10%;
+            margin-bottom: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+        .p {
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+        .technologies {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+        }
+        .tech-card {
+            background-color: #1b263b;
+            padding: 10px 20px;
+            border-radius: 5px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            font-size: 16px;
+        }
+        pre {
+            background-color: #1b263b;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+        code {
+            font-family: Consolas, monospace;
+            color: #f4a261;
+        }
+        @media (max-width: 768px) {
+            .back-button {
+                top: 10px;
+                left: 10px;
+                padding: 8px 15px;
+                font-size: 14px;
+            }
+            .hero {
+                height: 200px;
+            }
+            .card, .p, .tech-card {
+                padding: 10px;
+                font-size: 14px;
+            }
+        }
+        b {
+            color: #f4a261;
+        }
+    </style>
+</head>
+<body>
+    <button class="back-button" onclick="history.back()">Back</button>
+     
+    <div class="card">
+         <div class="hero">
+            <video controls poster="../thamb/sniffing.png">
+                <source src="../video/sniffinga.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+        </div>
+        <div class="content">
+            <div class="p"><b>Packet Sniffing with Wireshark and Metasploitable 2</b></div>
+            <div class="p">Wireshark is a free, open-source packet analyzer used for network troubleshooting, analysis, and education. It captures and inspects network traffic in real-time. Metasploitable 2 is an intentionally vulnerable virtual machine (VM) designed for testing security tools like Metasploit. Here, we'll use Wireshark to sniff traffic involving Metasploitable 2 on Kali Linux. Always obtain permission and ensure you're in a controlled lab environment to avoid legal issues, as unauthorized sniffing can violate privacy laws.</div>
+            <div class="p"><b>Steps to Perform Packet Sniffing Using Wireshark with Metasploitable 2 on Kali Linux</b></div>
+            <div class="p"><b>1. Set Up Metasploitable 2</b><br>Download and run Metasploitable 2 VM (e.g., via VirtualBox or VMware). Ensure it's on the same network as your Kali machine.<br>Note: Use a bridged or NAT network adapter for traffic visibility.</div>
+            <div class="p"><b>2. Verify Wireshark Installation</b><br>Wireshark is pre-installed on Kali Linux.<br>Check version:<br><pre><code>wireshark --version</code></pre><b>Explanation:</b> The <code>--version</code> flag displays the current version of Wireshark, confirming it's installed and ready for use.</div>
+            <div class="p"><b>3. Start Wireshark</b><br>Launch Wireshark with root privileges (required for packet capture):<br><pre><code>sudo wireshark</code></pre><b>Explanation:</b> <code>sudo</code> runs Wireshark with elevated permissions to access network interfaces for capturing raw packets. Without sudo, capture options may be limited.</div>
+            <div class="p"><b>4. Get Authorization</b><br>Obtain explicit written permission if sniffing involves real networks or systems. For lab use with Metasploitable 2, ensure it's isolated.</div>
+            <div class="p"><b>5. Select Capture Interface</b><br>In Wireshark GUI:<br>- Go to Capture > Options.<br>- Select the network interface (e.g., eth0) connected to the Metasploitable 2 network.<br>- Click "Start" to begin capturing.<br><b>Explanation:</b> The interface is the network card through which traffic flows. Choosing the correct one (e.g., via <code>ip link show</code> in terminal) ensures you capture relevant packets.</div>
+            <div class="p"><b>6. Generate Traffic</b><br>Interact with Metasploitable 2 to generate network traffic:<br>- Ping the Metasploitable 2 IP:<br><pre><code>ping [Metasploitable_IP]</code></pre><b>Explanation:</b> <code>ping</code> sends ICMP echo requests to the target IP, creating simple traffic that Wireshark can capture and display as request/reply packets.<br>- Or access a service (e.g., HTTP):<br><pre><code>curl http://[Metasploitable_IP]</code></pre><b>Explanation:</b> <code>curl</code> fetches the web page from the target's HTTP server, generating TCP and HTTP packets for analysis.</div>
+            <div class="p"><b>7. Apply Filters</b><br>In Wireshark, use display filters to focus on traffic (e.g., from Metasploitable 2):<br><pre><code>ip.addr == [Metasploitable_IP]</code></pre><b>Explanation:</b> This filter shows only packets where the source or destination IP matches the target's IP, narrowing down the capture to relevant traffic.<br>For HTTP traffic:<br><pre><code>http</code></pre><b>Explanation:</b> Filters packets containing HTTP protocol data, useful for inspecting web requests and responses.</div>
+            <div class="p"><b>8. Stop Capture and Analyze</b><br>- In Wireshark: Capture > Stop.<br>- Inspect packets: Click on a packet to view details in the packet details pane.<br><b>Explanation:</b> Stopping the capture freezes the data for analysis. You can expand protocol layers (e.g., Ethernet, IP, TCP) to see headers, payloads, and potential sensitive data like unencrypted credentials.</div>
+            <div class="p"><b>9. Review Results</b><br>Look for insights such as:<br>- Unencrypted data (e.g., HTTP credentials).<br>- Protocol vulnerabilities in Metasploitable 2 services.<br>Example captured packet summary:<br><pre><code>No. Time Source Destination Protocol Info<br>1 0.000000 Kali_IP Metasploitable_IP ICMP Echo (ping) request</code></pre><b>Explanation:</b> This shows a ping request packet, including timestamp, IPs, protocol, and info. Analyze for patterns, anomalies, or security issues. Verify findings manually and document for reporting.</div>
+            <div class="p"><b>Important Notes</b><br>- Use Wireshark ethically; sniffing can reveal sensitive information.<br>- In production, use encrypted protocols (e.g., HTTPS) to prevent sniffing.<br>- Test in a lab environment with Metasploitable 2 to practice safely.<br>- Comply with all legal and organizational policies.</div>
+        </div>
+      
+    
+        <div class="technologies">
+            <div class="tech-card">Packet Sniffing</div>
+            <div class="tech-card">Wireshark</div>
+            <div class="tech-card">packet analyzer </div>
+         
+        </div>
+    </div>
+    <script>
+        // JavaScript for dynamic behavior
+        window.addEventListener('resize', () => {
+            const hero = document.querySelector('.hero');
+            if (window.innerWidth <= 768) {
+                hero.style.height = '200px';
+            } else {
+                hero.style.height = '400px';
+            }
+        });
+
+        // Fallback to image if video fails
+        const video = document.querySelector('video');
+        video.addEventListener('error', () => {
+            const hero = document.querySelector('.hero');
+            const img = document.createElement('img');
+            img.src = 'sample-image.jpg';
+            img.alt = 'Fallback Image';
+            hero.innerHTML = '';
+            hero.appendChild(img);
+        });
+    </script>
+</body>
+</html>

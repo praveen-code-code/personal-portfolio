@@ -1,0 +1,1039 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meet Our Professional Doctors</title>
+    <!-- Font Awesome for social media icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f7fa;
+            position: relative;
+            overflow: auto;
+        }
+
+        /* Top Bar Styles */
+        .top-bar {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: clamp(12px, 2vw, 14px);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            transition: transform 0.3s ease;
+            min-height: 40px;
+            padding-top: env(safe-area-inset-top);
+        }
+
+        .top-bar.hidden {
+            transform: translateY(-100%);
+        }
+
+        .contact-info {
+            display: flex;
+            flex-wrap: wrap;
+            gap: clamp(10px, 2vw, 15px);
+            align-items: center;
+        }
+
+        .contact-info span {
+            display: flex;
+            align-items: center;
+            white-space: nowrap;
+        }
+
+        .contact-info i {
+            margin-right: 5px;
+        }
+
+        .language-social {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .language-social span {
+            white-space: nowrap;
+            font-size: clamp(12px, 2vw, 14px);
+        }
+
+        .language-social a {
+            color: white;
+            text-decoration: none;
+            font-size: clamp(14px, 2.5vw, 16px);
+            width: clamp(12px, 2vw, 16px);
+            height: clamp(12px, 2vw, 16px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: color 0.3s ease;
+        }
+
+        .language-social a:hover {
+            color: #28a745;
+        }
+
+        /* Navbar Styles */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            background-color: white;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            top: 40px;
+            left: 0;
+            right: 0;
+            z-index: 999;
+            transition: transform 0.3s ease, padding 0.3s ease;
+            padding-top: env(safe-area-inset-top);
+        }
+
+        .navbar.hidden {
+            transform: translateY(-160%);
+        }
+
+        .navbar.scrolled {
+            padding: 10px 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .logo h1 {
+            font-size: clamp(20px, 5vw, 28px);
+            color: #007bff;
+            transition: font-size 0.3s ease;
+        }
+
+        .logo p {
+            font-size: clamp(10px, 2vw, 12px);
+            color: #666;
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+            align-items: center;
+            gap: clamp(15px, 3vw, 20px);
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            font-size: clamp(14px, 2.5vw, 16px);
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: #007bff;
+        }
+
+        .nav-links a i {
+            margin-left: 5px;
+            font-size: clamp(10px, 2vw, 12px);
+        }
+
+        .menu-toggle {
+            display: none;
+            width: 30px;
+            height: 25px;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .menu-toggle span {
+            position: absolute;
+            width: 100%;
+            height: 3px;
+            background-color: #007bff;
+            transition: all 0.3s ease;
+        }
+
+        .menu-toggle span:nth-child(1) { top: 0; }
+        .menu-toggle span:nth-child(2) { top: 11px; }
+        .menu-toggle span:nth-child(3) { top: 22px; }
+
+        .menu-toggle.active span:nth-child(1) {
+            transform: rotate(45deg);
+            top: 11px;
+        }
+
+        .menu-toggle.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .menu-toggle.active span:nth-child(3) {
+            transform: rotate(-45deg);
+            top: 11px;
+        }
+
+        /* Responsive Design for Top Bar and Navbar */
+        @media (max-width: 1024px) {
+            .top-bar {
+                padding: clamp(10px, 2vw, 15px) clamp(20px, 3vw, 30px);
+                flex-wrap: wrap;
+                gap: 10px;
+            }
+
+            .navbar {
+                padding: clamp(10px, 2vw, 15px) clamp(20px, 3vw, 30px);
+            }
+
+            .nav-links {
+                gap: clamp(10px, 2vw, 15px);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .top-bar {
+                justify-content: center;
+                padding: clamp(8px, 2vw, 10px) clamp(15px, 3vw, 20px);
+            }
+
+            .contact-info {
+                display: none;
+            }
+
+            .language-social {
+                width: auto;
+                margin-top: 0;
+            }
+
+            .navbar {
+                padding: clamp(10px, 2vw, 15px) clamp(15px, 3vw, 20px);
+                top: 40px;
+            }
+
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background-color: white;
+                padding: 20px 0;
+                box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+                max-height: 0;
+                overflow: hidden;
+                transition: max-height 0.3s ease;
+            }
+
+            .nav-links.active {
+                display: flex;
+                max-height: 600px;
+            }
+
+            .nav-links li {
+                margin: 15px 0;
+                text-align: center;
+            }
+
+            .menu-toggle {
+                display: block;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding-top: calc(40px + env(safe-area-inset-top));
+            }
+
+            .top-bar {
+                padding: clamp(6px, 2vw, 8px) clamp(10px, 3vw, 15px);
+            }
+
+            .navbar {
+                padding: clamp(8px, 2vw, 10px) clamp(10px, 3vw, 15px);
+                top: 40px;
+            }
+
+            .logo h1 {
+                font-size: clamp(18px, 5vw, 24px);
+            }
+        }
+
+        /* Updated About Us Header (Hero Section) */
+        .about-us-header {
+            position: relative;
+            min-height: clamp(200px, 35vh, 400px); /* Responsive height */
+            background-color: #e6f0fa;
+            text-align: center;
+            overflow: hidden;
+            padding-top: calc(200px + env(safe-area-inset-top)); /* Accounts for top-bar + navbar */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .background-icons {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+
+        .icon {
+            position: absolute;
+            opacity: 0.8;
+            transition: all 0.3s ease;
+        }
+
+        .stethoscope {
+            left: clamp(2%, 5vw, 5%);
+            top: 80%;
+            transform: translateY(-50%);
+            width: clamp(30px, 8vw, 60px);
+        }
+
+        .arrow {
+            left: clamp(5%, 10vw, 15%);
+            top: 40%;
+            width: clamp(20px, 5vw, 40px);
+        }
+
+        .plus {
+            right: clamp(2%, 5vw, 5%);
+            top: 30%;
+            width: clamp(25px, 6vw, 50px);
+        }
+
+        .content {
+            position: relative;
+            z-index: 2;
+            padding: clamp(10px, 3vw, 20px);
+            color: #1e3a8a;
+            margin-bottom: 5%;
+        }
+
+        .content h1 {
+            font-size: clamp(1.5rem, 5vw, 2.5rem);
+            margin: 0;
+            color: #1e3a8a;
+        }
+
+        .breadcrumbs {
+            margin-top: clamp(5px, 1vw, 10px);
+            font-size: clamp(0.7rem, 2vw, 0.9rem);
+            color: #10b981;
+        }
+
+        .breadcrumbs a {
+            color: #10b981;
+            text-decoration: none;
+        }
+
+        .breadcrumbs a:hover {
+            text-decoration: underline;
+        }
+
+        .about-us-header::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: radial-gradient(circle, rgba(0, 0, 255, 0.1) 1px, transparent 1px);
+            background-size: clamp(10px, 2vw, 20px) clamp(10px, 2vw, 20px);
+            z-index: 0;
+        }
+
+        /* Doctors Section */
+        .doctors-section {
+            padding: 50px 20px;
+            text-align: center;
+            background-color: #fff;
+        }
+
+        .section-header {
+            margin-bottom: 40px;
+        }
+
+        .section-header h2 {
+            font-size: 2.5rem;
+            color: #1a3c5e;
+            margin-bottom: 10px;
+        }
+
+        /* Updated Expert Label to Match Old Code */
+        .expert-label {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .expert-label img {
+            width: clamp(20px, 2vw, 24px);
+            height: auto;
+        }
+
+        .expert-label span {
+            font-size: clamp(0.9rem, 2vw, 1.1rem);
+            color: #00c4b4;
+            text-transform: uppercase;
+            margin: 0;
+            letter-spacing: 1px;
+            font-weight: bold;
+        }
+
+        .doctors-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .doctor-card {
+            background: linear-gradient(135deg, #e0f7fa 0%, #b2dfdb 100%);
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            transition: transform 0.3s ease;
+            position: relative; /* For positioning social icons */
+        }
+
+        .doctor-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .doctor-image {
+            width: 100%;
+            padding-top: 100%; /* Creates a square aspect ratio (1:1) as a fallback */
+            position: relative; /* Allows the image to be absolutely positioned inside */
+            border-radius: 15px;
+            overflow: hidden;
+            margin-bottom: 15px;
+        }
+
+        .doctor-image img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: contain; /* Ensures the full image is visible */
+            object-position: center; /* Centers the image */
+            border-radius: 15px;
+        }
+
+        .doctor-card h3 {
+            font-size: 1.2rem;
+            color: #1a3c5e;
+            margin-bottom: 10px;
+        }
+
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            opacity: 0; /* Hidden by default */
+            transform: translateY(10px); /* Slight downward offset when hidden */
+            transition: opacity 0.3s ease, transform 0.3s ease; /* Smooth transition */
+        }
+
+        .doctor-card:hover .social-icons {
+            opacity: 1; /* Show on hover */
+            transform: translateY(0); /* Move to original position */
+        }
+
+        .social-icons a {
+            width: 35px;
+            height: 35px;
+            background-color: #fff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #1a3c5e;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+        }
+
+        .social-icons a:hover {
+            background-color: #00c4b4;
+            color: #fff;
+        }
+
+        /* Responsive Design for Doctors Section */
+        @media (max-width: 768px) {
+            .section-header h2 {
+                font-size: 2rem;
+            }
+
+            .expert-label img {
+                width: clamp(18px, 1.8vw, 22px);
+            }
+
+            .expert-label span {
+                font-size: clamp(0.8rem, 1.5vw, 1rem);
+            }
+
+            .doctors-grid {
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            }
+
+            .doctor-image {
+                padding-top: 100%; /* Maintains square aspect ratio for smaller screens */
+            }
+        }
+
+        @media (max-width: 480px) {
+            .section-header h2 {
+                font-size: 1.5rem;
+            }
+
+            .expert-label img {
+                width: clamp(16px, 1.5vw, 20px);
+            }
+
+            .expert-label span {
+                font-size: clamp(0.7rem, 1.2vw, 0.9rem);
+            }
+
+            .doctors-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .doctor-image {
+                padding-top: 100%; /* Maintains square aspect ratio for mobile */
+            }
+        }
+
+
+        
+        .footer {
+            background: #1a2a44;
+            color: #fff;
+            padding-top: 5%;
+            margin-top: auto;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            min-height: 300px; /* Ensures footer has enough height for content */
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 30px;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none"><rect x="0" y="0" width="10" height="10" fill="%231a2a44"/><rect x="10" y="10" width="10" height="10" fill="%231a2a44"/></svg>') repeat;
+        }
+
+        .footer-section {
+            text-align: left;
+        }
+
+        .footer-section .logo {
+            width: 30px;
+            height: 30px;
+            background: #28a745;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .footer-section .logo img {
+            width: 20px;
+            height: 20px;
+            object-fit: contain;
+        }
+
+        .footer-section h3 {
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            color: #28a745;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .footer-section p {
+            font-size: 0.9rem;
+            line-height: 1.6;
+            margin-bottom: 15px;
+            color: #ccc;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-section ul li a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.3s ease;
+        }
+
+        .footer-section ul li a:hover {
+            color: #28a745;
+        }
+
+        .footer-section ul li::before {
+            content: '>';
+            color: #28a745;
+            margin-right: 5px;
+        }
+
+        .recent-posts .post {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .recent-posts .post img {
+            width: 50px;
+            height: 50px;
+            object-fit: cover;
+            border-radius: 5px;
+            border: 2px solid #28a745;
+        }
+
+        .recent-posts .post .text {
+            text-align: left;
+        }
+
+        .recent-posts .post .text h4 {
+            font-size: 0.9rem;
+            margin-bottom: 5px;
+            color: #fff;
+        }
+
+        .recent-posts .post .text span {
+            font-size: 0.8rem;
+            color: #ccc;
+        }
+
+        .footer-bottom {
+            background: #2c6bed;
+            padding: 10px 20px;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: auto;
+        }
+
+        .footer-bottom p {
+            font-size: 0.8rem;
+            color: #28a745; /* Green text as per image */
+            margin: 0;
+            flex-grow: 1;
+            text-align: left;
+        }
+
+        .footer-bottom .social-icons {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-grow: 0;
+        }
+
+        .footer-bottom .social-icons img {
+            width: 24px;
+            height: 24px;
+            object-fit: contain;
+            background: #fff;
+            border-radius: 50%;
+            padding: 2px;
+            transition: opacity 0.3s ease;
+        }
+
+        .footer-bottom .social-icons img:hover {
+            opacity: 0.7;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .footer-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .footer-section:nth-child(3) {
+                grid-column: 1 / 3;
+            }
+
+            .recent-posts .post {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .recent-posts .post img {
+                margin-bottom: 10px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .footer-container {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-section h3 {
+                font-size: 1.1rem;
+            }
+
+            .footer-section p,
+            .footer-section ul li a {
+                font-size: 0.85rem;
+            }
+
+            .recent-posts .post img {
+                width: 40px;
+                height: 40px;
+            }
+
+            .recent-posts .post .text h4 {
+                font-size: 0.85rem;
+            }
+
+            .recent-posts .post .text span {
+                font-size: 0.75rem;
+            }
+
+            .footer-bottom {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .footer-bottom p {
+                flex-grow: 0;
+                margin-bottom: 10px;
+            }
+
+            .footer-bottom .social-icons {
+                margin-top: 0;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .footer {
+                padding: 0px 10px;
+            }
+
+            .footer-container {
+                gap: 20px;
+            }
+
+            .footer-section h3 {
+                font-size: 1rem;
+            }
+
+            .footer-section p,
+            .footer-section ul li a {
+                font-size: 0.8rem;
+            }
+
+            .recent-posts .post img {
+                width: 35px;
+                height: 35px;
+            }
+
+            .recent-posts .post .text h4 {
+                font-size: 0.8rem;
+            }
+
+            .recent-posts .post .text span {
+                font-size: 0.7rem;
+            }
+
+            .footer-bottom p {
+                font-size: 0.7rem;
+            }
+
+            .footer-bottom .social-icons img {
+                width: 20px;
+                height: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Section -->
+    <header>
+        <div class="top-bar">
+            <div class="contact-info">
+                <span><i class="fas fa-phone-alt"></i> Phone: +163-654-3569</span>
+                <span><i class="fas fa-envelope"></i> Email: info@mediax.com</span>
+            </div>
+            <div class="language-social">
+                <span>Follow Us:</span>
+                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+            </div>
+        </div>
+        <nav class="navbar">
+            <div class="logo">
+                <h1>Mediax</h1>
+                <p>Health & Medical</p>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#">Home</a></li>
+                <li><a href="#">About Us</a></li>
+                <li><a href="#">Service <i class="fas fa-plus"></i></a></li>
+                <li><a href="#">Pages <i class="fas fa-plus"></i></a></li>
+                <li><a href="#">Blog <i class="fas fa-plus"></i></a></li>
+                <li><a href="#">Contact</a></li>
+            </ul>
+            <div class="menu-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Updated Hero Section -->
+    <section class="about-us-header">
+        <div class="background-icons">
+            <img src="../icons/stethoscope-heart.png" alt="Stethoscope Heart" class="icon stethoscope">
+            <img src="../icons/aboutus_bg.png" alt="Green Arrow" class="icon arrow">
+            <img src="../icons/aboutus_bg-removebg-preview.png" alt="Green Plus" class="icon plus">
+        </div>
+        <div class="content">
+            <h1>Services</h1>
+            <nav class="breadcrumbs">
+                <a href="#">Home</a> > <a href="#">Services</a>
+            </nav>
+        </div>
+    </section>
+
+    <!-- Teams Section -->
+    <section class="doctors-section">
+        <div class="section-header">
+            <h2>Meet Our Professional Doctors</h2>
+            <div class="expert-label">
+                <img src="../icons/logo.png" alt="Logo">
+                <span>EXPERT DOCTORS</span>
+            </div>
+        </div>
+        <div class="doctors-grid">
+            <div class="doctor-card">
+                <div class="doctor-image">
+                    <img src="../images/doctor_img.jpg" alt="Dr. Malcolm Function">
+                </div>
+                <h3>Dr. Malcolm Function</h3>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                </div>
+            </div>
+            <div class="doctor-card">
+                <div class="doctor-image">
+                    <img src="../images/doctor_img.jpg" alt="Dr. Douglas Lyphe">
+                </div>
+                <h3>Dr. Douglas Lyphe</h3>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                </div>
+            </div>
+            <div class="doctor-card">
+                <div class="doctor-image">
+                    <img src="../images/doctor_img.jpg" alt="Dr. Wisteria Ravenc">
+                </div>
+                <h3>Dr. Wisteria Ravenc</h3>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                </div>
+            </div>
+            <div class="doctor-card">
+                <div class="doctor-image">
+                    <img src="../images/doctor_img.jpg" alt="Dr. Wisteria Ravenc">
+                </div>
+                <h3>Dr. Wisteria Ravenc</h3>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                </div>
+            </div>
+            <div class="doctor-card">
+                <div class="doctor-image">
+                    <img src="../images/doctor_img.jpg" alt="Dr. Wisteria Ravenc">
+                </div>
+                <h3>Dr. Wisteria Ravenc</h3>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                </div>
+            </div>
+            <div class="doctor-card">
+                <div class="doctor-image">
+                    <img src="../images/doctor_img.jpg" alt="Dr. Wisteria Ravenc">
+                </div>
+                <h3>Dr. Wisteria Ravenc</h3>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                </div>
+            </div>
+            <div class="doctor-card">
+                <div class="doctor-image">
+                    <img src="../images/doctor_img.jpg" alt="Dr. Wisteria Ravenc">
+                </div>
+                <h3>Dr. Wisteria Ravenc</h3>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                </div>
+            </div>
+            <div class="doctor-card">
+                <div class="doctor-image">
+                    <img src="../images/doctor_img.jpg" alt="Dr. Benjamin Evalent">
+                </div>
+                <h3>Dr. Benjamin Evalent</h3>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-section">
+                <div class="logo">
+                    <img src="https://via.placeholder.com/30" alt="Mediax Logo">
+                </div>
+                <h3>Mediax Health & Medical</h3>
+                <p>Subscribe to our newsletter today to receive latest news administrate cost effective for tactical data.</p>
+                <p><img src="https://via.placeholder.com/15" alt="Location Icon"> 2478 Street City Ohio 90255</p>
+                <p><img src="https://via.placeholder.com/15" alt="Email Icon"> info@mediax.com</p>
+                <p><img src="https://via.placeholder.com/15" alt="Phone Icon"> +4402 763 282 46</p>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Terms of Use</a></li>
+                    <li><a href="#">Our Services</a></li>
+                    <li><a href="#">Help & FAQs</a></li>
+                    <li><a href="#">Blog</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Popular Service</h3>
+                <ul>
+                    <li><a href="#">Cardiology Care</a></li>
+                    <li><a href="#">Urgent Care</a></li>
+                    <li><a href="#">Orthopedic Care</a></li>
+                    <li><a href="#">Diagnosis</a></li>
+                    <li><a href="#">Gastroenterology</a></li>
+                    <li><a href="#">Therapy Department</a></li>
+                    <li><a href="#">Dental Service</a></li>
+                </ul>
+            </div>
+            <div class="footer-section recent-posts">
+                <h3>Recent Posts</h3>
+                <div class="post">
+                    <img src="https://via.placeholder.com/50" alt="Post 1">
+                    <div class="text">
+                        <h4>How Business Is Taking Over & What to Do About It</h4>
+                        <span>21 Jun. 2024</span>
+                    </div>
+                </div>
+                <div class="post">
+                    <img src="https://via.placeholder.com/50" alt="Post 2">
+                    <div class="text">
+                        <h4>Health vs. Wealth Navigate Business in Medicine</h4>
+                        <span>22 Jun. 2024</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>Copyright © 2024 Mediax. All Rights Reserved.</p>
+            <div class="social-icons">
+                <a href="#"><img src="https://via.placeholder.com/24" alt="Facebook Icon"></a>
+                <a href="#"><img src="https://via.placeholder.com/24" alt="Twitter Icon"></a>
+                <a href="#"><img src="https://via.placeholder.com/24" alt="LinkedIn Icon"></a>
+                <a href="#"><img src="https://via.placeholder.com/24" alt="Instagram Icon"></a>
+                <a href="#"><img src="https://via.placeholder.com/24" alt="Up Arrow Icon"></a>
+            </div>
+        </div>
+    </footer>
+</body>
+<script>
+    // Menu toggle
+    const menuToggle = document.querySelector('.menu-toggle');
+    const navLinks = document.querySelector('.nav-links');
+    menuToggle.addEventListener('click', () => {
+        menuToggle.classList.toggle('active');
+        navLinks.classList.toggle('active');
+    });
+
+    // Navbar and top bar scroll behavior
+    let lastScroll = 0;
+    window.addEventListener('scroll', () => {
+        const navbar = document.querySelector('.navbar');
+        const topBar = document.querySelector('.top-bar');
+        const currentScroll = window.scrollY;
+
+        if (currentScroll > lastScroll) {
+            topBar.classList.add('hidden');
+            navbar.classList.add('hidden');
+        } else {
+            topBar.classList.remove('hidden');
+            navbar.classList.remove('hidden');
+        }
+
+        if (currentScroll > 50) {
+            navbar.classList.add('scrolled');
+        } else {
+            navbar.classList.remove('scrolled');
+        }
+
+        lastScroll = currentScroll <= 0 ? 0 : currentScroll;
+    });
+</script>
+</html>

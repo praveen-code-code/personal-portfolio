@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio Page</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #121212;
+            color: #fff;
+        }
+        .back-button {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            padding: 10px 20px;
+            background-color: #0d1b2a;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            transition: background-color 0.3s;
+        }
+        .back-button:hover {
+            background-color: #f4a261;
+        }
+        .hero {
+            width: 100%;
+            height: 400px;
+            overflow: hidden;
+            position: relative;
+        }
+        .hero video, .hero img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .content, .technologies {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .card {
+            background-color: #181414;
+            padding: 50px;
+            margin: 10%;
+            margin-bottom: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+        .p {
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+        .technologies {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+        }
+        .tech-card {
+            background-color: #1b263b;
+            padding: 10px 20px;
+            border-radius: 5px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            font-size: 16px;
+        }
+        pre {
+            background-color: #1b263b;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+        code {
+            font-family: Consolas, monospace;
+            color: #f4a261;
+        }
+        @media (max-width: 768px) {
+            .back-button {
+                top: 10px;
+                left: 10px;
+                padding: 8px 15px;
+                font-size: 14px;
+            }
+            .hero {
+                height: 200px;
+            }
+            .card, .p, .tech-card {
+                padding: 10px;
+                font-size: 14px;
+            }
+        }
+        b {
+            color: #f4a261;
+        }
+    </style>
+</head>
+<body>
+    <button class="back-button" onclick="history.back()">Back</button>
+    <div class="card">
+       
+        <div class="hero">
+            <video controls poster="../thamb/ddos.png">
+                <source src="../video/dos and ddos.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+        </div>
+         <div class="content">
+            <div class="p"><b>DoS and DDoS Attacks</b></div>
+            <div class="p">A Denial of Service (DoS) attack aims to shut down a machine or network, making it inaccessible to its intended users. DoS attacks accomplish this by flooding the target with traffic or sending information that triggers a crash.<grok:render card_id="fa183b" card_type="citation_card" type="render_inline_citation">
+<argument name="citation_id">14</argument>
+</grok:render> A Distributed Denial of Service (DDoS) attack is a DoS attack that comes from multiple systems, often compromised devices forming a botnet.<grok:render card_id="6aeb7b" card_type="citation_card" type="render_inline_citation">
+<argument name="citation_id">3</argument>
+</grok:render></div>
+            <div class="p">Types include Volumetric (flood bandwidth), Protocol (exploit weaknesses in protocols like SYN flood), and Application layer (target web apps like HTTP flood).<grok:render card_id="cca2ce" card_type="citation_card" type="render_inline_citation">
+<argument name="citation_id">8</argument>
+</grok:render></div>
+            <div class="p">Kali Linux has tools to simulate these for testing purposes. It's crucial to only use them in controlled environments with permission, as unauthorized use is illegal and can lead to severe penalties.<grok:render card_id="86b7df" card_type="citation_card" type="render_inline_citation">
+<argument name="citation_id">9</argument>
+</grok:render><grok:render card_id="30b38d" card_type="citation_card" type="render_inline_citation">
+<argument name="citation_id">18</argument>
+</grok:render></div>
+            <div class="p"><b>Steps to Simulate DoS on Kali Linux</b></div>
+            <div class="p"><b>Set Up Test Environment</b><br>Use virtual machines like Kali as attacker and Metasploitable as target to avoid affecting real systems.<grok:render card_id="8d7ff9" card_type="citation_card" type="render_inline_citation">
+<argument name="citation_id">18</argument>
+</grok:render></div>
+            <div class="p"><b>Verify Tool Installation</b><br>hping3 is pre-installed on Kali.<br>Check version:<br><pre><code>hping3 --version</code></pre></div>
+            <div class="p"><b>Run a Basic SYN Flood</b><br>Simulate a SYN flood attack (replace IP with target):<br><pre><code>sudo hping3 -S --flood -V -p 80 192.168.1.100</code></pre><grok:render card_id="60a99b" card_type="citation_card" type="render_inline_citation">
+<argument name="citation_id">16</argument>
+</grok:render></div>
+            <div class="p"><b>Common Simulation Options</b><br>UDP Flood:<br><pre><code>sudo hping3 --udp --flood -p 80 192.168.1.100</code></pre>Slowloris with slowhttptest:<br><pre><code>slowhttptest -c 1000 -H -g -o slowloris_stats -i 10 -r 200 -t GET -u http://192.168.1.100</code></pre><grok:render card_id="5407ca" card_type="citation_card" type="render_inline_citation">
+<argument name="citation_id">15</argument>
+</grok:render></div>
+            <div class="p"><b>Mitigation Strategies</b><br>Use firewalls, intrusion prevention systems (IPS), rate limiting, and DDoS protection services like Cloudflare. Monitor traffic and have incident response plans.<grok:render card_id="ff5fbe" card_type="citation_card" type="render_inline_citation">
+<argument name="citation_id">0</argument>
+</grok:render><grok:render card_id="69c49b" card_type="citation_card" type="render_inline_citation">
+<argument name="citation_id">11</argument>
+</grok:render></div>
+            <div class="p"><b>Review Results</b><br>Monitor the target for unresponsiveness or high CPU usage. Use tools like Wireshark to analyze traffic. Stop the attack immediately after testing and verify no permanent damage.</div>
+        </div>
+        <div class="technologies">
+<div class="tech-card">DDoS attack</div>
+            <div class="tech-card">Kali Linux</div>
+            <div class="tech-card">hping3</div>
+            <div class="tech-card">slowhttptest</div>
+        </div>
+    </div>
+    <script>
+        // JavaScript for dynamic behavior
+        window.addEventListener('resize', () => {
+            const hero = document.querySelector('.hero');
+            if (window.innerWidth <= 768) {
+                hero.style.height = '200px';
+            } else {
+                hero.style.height = '400px';
+            }
+        });
+
+        // Fallback to image if video fails
+        const video = document.querySelector('video');
+        video.addEventListener('error', () => {
+            const hero = document.querySelector('.hero');
+            const img = document.createElement('img');
+            img.src = 'sample-image.jpg';
+            img.alt = 'Fallback Image';
+            hero.innerHTML = '';
+            hero.appendChild(img);
+        });
+    </script>
+</body>
+</html>

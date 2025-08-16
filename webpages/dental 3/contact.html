@@ -1,0 +1,1209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Footer Section</title>
+    <!-- Font Awesome CDN for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        /* Ensure the body has no extra margin/padding affecting the footer */
+        body {
+            margin: 0;
+            padding: 0;
+            min-height: 100vh; /* Ensure the body takes at least the full viewport height */
+            display: flex;
+            flex-direction: column;
+        }
+
+
+
+  /* Top Bar */
+  .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #1a3c34;
+            color: white;
+            padding: 10px 20px;
+            font-size: 14px;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            transition: top 0.3s ease;
+        }
+
+        .top-bar.hidden {
+            top: -50px;
+        }
+
+        .contact-info i {
+            margin-right: 5px;
+            color: #00c4b4;
+        }
+
+        .social-icons-topnav span {
+            margin-right: 10px;
+        }
+
+        .social-icons-topnav a {
+            color: white;
+            margin: 0 5px;
+            text-decoration: none;
+        }
+
+        /* Navbar */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            background-color: white;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            top: 30px;
+            width: 100%;
+            z-index: 999;
+            transition: top 0.3s ease;
+        }
+
+        .navbar.hidden {
+            top: -60px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 28px;
+            font-weight: bold;
+            color: #1a3c34;
+        }
+
+        .logo img {
+            width: 100px;
+            margin-right: 15px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 20px;
+        }
+        .nav-links a:hover {
+            color: #12862dca;
+        }
+        .nav-links .activated{
+            color: #12862dca;
+        }
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            position: relative;
+        }
+
+        .nav-links a i {
+            margin-left: 5px;
+        }
+
+        .hamburger {
+            display: none;
+            font-size: 24px;
+            color: #333;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .hamburger.active {
+            transform: rotate(90deg);
+        }
+
+        /* Responsive Design for Mobile (768px and Below) */
+        @media (max-width: 768px) {
+            .top-bar {
+                padding: 8px 15px;
+                font-size: 12px;
+            }
+
+            .navbar {
+                padding: 10px 15px;
+                top: 28px;
+            }
+
+            .hamburger {
+                display: block;
+            }
+
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background-color: white;
+                padding: 20px;
+                box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+                z-index: 10;
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .nav-links a {
+                padding: 10px 0;
+                text-align: center;
+            }
+        }
+
+      
+
+           /* About Us Section */
+           .about-us-section {
+            position: relative;
+            width: 100%;
+            height: 300px;
+            background: linear-gradient(to bottom, #e6f0fa, #f0f8ff); /* Light gradient background */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            overflow: hidden;
+            padding: 20px;
+            margin-top: 5%;
+        }
+     
+        /* Background Decorative Elements */
+        .about-us-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('images/about_section_bg.avif') repeat;
+            opacity: 0.5;
+            z-index: 0;
+        }
+
+        /* Stethoscope Decoration */
+        .stethoscope-decor {
+            position: absolute;
+            top: 50%;
+            left: 10%;
+            transform: translateY(-50%);
+            width: 100px;
+            height: 100px;
+            background: url('icons/bg_1.png') no-repeat center;
+            background-size: contain;
+            opacity: 0.7;
+            z-index: 1;
+        }
+
+        /* Green Cross Decorations */
+        .cross-decor-top-right {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 40px;
+            height: 40px;
+            background: url('icons/aboutus_bg2.png') no-repeat center;
+            background-size: contain;
+            opacity: 0.7;
+            z-index: 1;
+        }
+
+        .cross-decor-bottom-left {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            width: 40px;
+            height: 40px;
+            background: url('icons/aboutus_bg2.png') no-repeat center;
+            background-size: contain;
+            opacity: 0.7;
+            z-index: 1;
+        }
+
+        .cross-decor-bottom-right {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            width: 40px;
+            height: 40px;
+            background: url('icons/aboutus_bg-removebg-preview.png') no-repeat center;
+            background-size: contain;
+            opacity: 0.7;
+            z-index: 1;
+        }
+
+        /* Hexagon Decorations */
+        .hexagon-decor-top-right {
+            position: absolute;
+            top: 20px;
+            right: 80px;
+            width: 60px;
+            height: 60px;
+          
+            background-size: contain;
+            opacity: 0.5;
+            z-index: 1;
+        }
+
+        .hexagon-decor-bottom-right {
+            position: absolute;
+            bottom: 20px;
+            right: 80px;
+            width: 60px;
+            height: 60px;
+           
+            background-size: contain;
+            opacity: 0.5;
+            z-index: 1;
+        }
+
+        /* Green Arrow Decoration */
+        .arrow-decor {
+            position: absolute;
+            top: 50%;
+            left: 15%;
+            transform: translateY(-50%);
+            width: 40px;
+            height: 40px;
+            background: url('icons/aboutus_bg.png') no-repeat center;
+            background-size: contain;
+            opacity: 0.7;
+            z-index: 1;
+        }
+
+        /* Content */
+        .about-us-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .about-us-content h1 {
+            font-size: 48px;
+            color: #1a3c5e;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            font-weight: 700;
+        }
+
+        .breadcrumb {
+            font-size: 16px;
+            color: #666;
+        }
+
+        .breadcrumb a {
+            color: #28a745;
+            text-decoration: none;
+            margin: 0 5px;
+        }
+
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+
+        .breadcrumb span {
+            color: #666;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .about-us-section {
+                height: 200px;
+                margin-top: 10%;
+            }
+
+            .about-us-content h1 {
+                font-size: 32px;
+            }
+
+            .breadcrumb {
+                font-size: 14px;
+            }
+
+            .stethoscope-decor {
+                width: 80px;
+                height: 80px;
+                left: 5%;
+            }
+
+            .cross-decor-top-right,
+            .cross-decor-bottom-left,
+            .cross-decor-bottom-right {
+                width: 30px;
+                height: 30px;
+            }
+
+            .hexagon-decor-top-right,
+            .hexagon-decor-bottom-right {
+                width: 40px;
+                height: 40px;
+            }
+
+            .arrow-decor {
+                width: 30px;
+                height: 30px;
+                left: 10%;
+            }
+        }
+        @media (max-width: 767px){
+            .about-us-section {
+               margin-top: 20%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .about-us-section {
+                height: 150px;
+            }
+
+            .about-us-content h1 {
+                font-size: 24px;
+            }
+
+            .breadcrumb {
+                font-size: 12px;
+            }
+
+            .stethoscope-decor {
+                width: 60px;
+                height: 60px;
+            }
+
+            .cross-decor-top-right,
+            .cross-decor-bottom-left,
+            .cross-decor-bottom-right {
+                width: 20px;
+                height: 20px;
+            }
+
+            .hexagon-decor-top-right,
+            .hexagon-decor-bottom-right {
+                width: 30px;
+                height: 30px;
+            }
+
+            .arrow-decor {
+                width: 20px;
+                height: 20px;
+            }
+        }
+        
+        /*location deatiles*/
+        .container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+            margin-top: 6%;
+        }
+
+        .card {
+            background-color: #fff;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card h2 {
+            color: #1a3c5e;
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+        }
+
+        .info p {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+            font-size: 1rem;
+            color: #333;
+        }
+
+        .info .icon {
+            color: #28a745;
+            margin-right: 10px;
+            font-size: 1.2rem;
+        }
+
+        .hours {
+            display: flex;
+            align-items: center;
+            margin-top: 15px;
+            background-color: #f8f9fa;
+            padding: 10px;
+            border-radius: 10px;
+        }
+
+        .hours-icon {
+            background-color: #007bff;
+            color: #fff;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 10px;
+            font-size: 1.2rem;
+        }
+
+        .hours p {
+            font-size: 0.9rem;
+            color: #555;
+            line-height: 1.5;
+        }
+
+        .card.highlight {
+            border: 2px solid #007bff;
+            background-color: #e7f1ff;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+
+            .card {
+                margin: 0 10px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .card h2 {
+                font-size: 1.3rem;
+            }
+
+            .info p {
+                font-size: 0.9rem;
+            }
+
+            .hours p {
+                font-size: 0.8rem;
+            }
+        }
+
+        /*contact form*/
+        .get-in-touch {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+    background: url('https://via.placeholder.com/1500x1000?text=Hexagon+Background') no-repeat center center/cover;
+}
+
+.container-form {
+    display: flex;
+    max-width: 900px;
+    width: 100%;
+    background: #fff;
+    border-radius: 15px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+.form-section {
+    flex: 1;
+    padding: 40px;
+}
+
+.form-section h2 {
+    font-size: 2rem;
+    color: #1a3c5e;
+    margin-bottom: 20px;
+}
+
+.form-group {
+    position: relative;
+    margin-bottom: 20px;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 12px 40px 12px 15px;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 1rem;
+    outline: none;
+    transition: border-color 0.3s ease;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    border-color: #1a3c5e;
+}
+
+.form-group textarea {
+    height: 80px;
+    resize: none;
+}
+
+.form-group .icon {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 1.2rem;
+    color: #999;
+}
+
+button {
+    width: 100%;
+    padding: 15px;
+    background: linear-gradient(90deg, #00c4b4, #00e676);
+    border: none;
+    border-radius: 25px;
+    color: #fff;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+button:hover {
+    background: linear-gradient(90deg, #00e676, #00c4b4);
+}
+
+.image-section {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #f5f7fa;
+}
+
+.image-section img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 0 15px 15px 0;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .container-form {
+        flex-direction: column;
+    }
+
+    .form-section {
+        padding: 20px;
+    }
+
+    .image-section {
+        display: none; /* Hide image on smaller screens */
+    }
+}
+
+@media (max-width: 480px) {
+    .form-section h2 {
+        font-size: 1.5rem;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+        padding: 10px 35px 10px 10px;
+        font-size: 0.9rem;
+    }
+
+    button {
+        padding: 12px;
+        font-size: 1rem;
+    }
+}
+
+
+        /* Footer Section */
+        .footer {
+            background-color: #1a2a44;
+            color: #fff;
+            padding: 50px 0 20px; /* Adjusted padding to match the image */
+            position: relative;
+            width: 100%; /* Ensure full width */
+            margin: 0; /* Remove any default margins */
+            /* Add hexagonal background pattern */
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none"><pattern id="hexagons" x="0" y="0" width="20" height="35" patternUnits="userSpaceOnUse" patternTransform="rotate(0)"><polygon points="10,0 20,5 20,15 10,20 0,15 0,5" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="1"/></pattern><rect x="0" y="0" width="100%" height="100%" fill="url(#hexagons)"/></svg>');
+            background-repeat: repeat;
+        }
+
+        /* Footer container */
+        .footer-container {
+            display: flex;
+            justify-content: space-between;
+            max-width: 1200px; /* Keep content centered */
+            margin: 0 auto;
+            flex-wrap: wrap;
+            padding: 0 20px; /* Add padding to prevent content from touching edges */
+            gap: 20px; /* Add gap between sections */
+        }
+
+        .footer-section {
+            flex: 1;
+            min-width: 200px;
+            margin: 10px 0;
+        }
+
+        .logo-section .logo h2 {
+            color: #00c4b4;
+            font-size: 24px;
+            margin-bottom: 5px;
+            text-transform: uppercase;
+        }
+
+        .logo-section .logo p {
+            color: #00c4b4;
+            font-size: 12px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .subscribe-text {
+            font-size: 14px;
+            margin: 20px 0;
+            color: #b0b0b0;
+            line-height: 1.6;
+        }
+
+        .contact-info p {
+            font-size: 14px;
+            margin: 10px 0;
+            color: #b0b0b0;
+            display: flex;
+            align-items: center;
+        }
+
+        .contact-info .icon {
+            margin-right: 10px;
+            color: #00c4b4;
+            font-size: 16px;
+        }
+
+        .footer-section h3 {
+            font-size: 16px;
+            margin-bottom: 15px;
+            color: #fff;
+            border-bottom: 2px solid #00c4b4;
+            display: inline-block;
+            padding-bottom: 5px;
+            text-transform: uppercase;
+        }
+
+        .footer-section ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .footer-section ul li {
+            margin: 10px 0;
+        }
+
+        .footer-section ul li a {
+            color: #b0b0b0;
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.3s ease;
+        }
+
+        .footer-section ul li a:hover {
+            color: #00c4b4;
+        }
+
+        .footer-section p {
+            font-size: 14px;
+            margin: 10px 0;
+            color: #b0b0b0;
+            display: flex;
+            align-items: center;
+        }
+
+        .footer-section p .icon {
+            margin-right: 10px;
+            color: #00c4b4;
+            font-size: 16px;
+        }
+
+        .footer-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 30px auto 0;
+            padding: 20px 20px 0;
+            border-top: 1px solid #3a4a64;
+        }
+
+        .footer-bottom p {
+            font-size: 14px;
+            color: #b0b0b0;
+        }
+
+        .social-icons a {
+            margin-left: 10px;
+            color: #1a2a44;
+            background-color: #fff;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+        }
+
+        .social-icons a:hover {
+            background-color: #00c4b4;
+            color: #fff;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .footer-container {
+                flex-direction: column;
+                align-items: flex-start;
+                padding: 0 30px;
+            }
+
+            .footer-section {
+                width: 100%;
+                text-align: left;
+            }
+
+            .footer-section.logo-section {
+                text-align: left;
+            }
+
+            .footer-bottom {
+                flex-direction: column;
+                text-align: center;
+                padding: 20px 30px 0;
+            }
+
+            .social-icons {
+                margin-top: 15px;
+            }
+
+            .social-icons a {
+                margin: 0 5px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .footer {
+                padding: 30px 0 10px;
+            }
+
+            .footer-container {
+                padding: 0 20px;
+            }
+
+            .footer-section h3 {
+                font-size: 14px;
+            }
+
+            .footer-section ul li a,
+            .footer-section p,
+            .subscribe-text {
+                font-size: 13px;
+            }
+
+            .footer-bottom {
+                padding: 15px 20px 0;
+            }
+
+            .footer-bottom p {
+                font-size: 12px;
+            }
+
+            .social-icons a {
+                width: 28px;
+                height: 28px;
+                font-size: 12px;
+            }
+        }
+
+
+
+/* Floating Phone Button */
+.floating-phone {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    background: #00c853;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    text-decoration: none;
+    box-shadow: 0 4px 12px rgba(0, 200, 83, 0.3);
+    animation: bounce 2s infinite;
+    transition: all 0.3s ease;
+    overflow: hidden;
+    z-index: 9999;
+}
+
+.phone-content {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.phone-number {
+    width: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    transition: width 0.3s ease;
+    font-weight: 500;
+    font-size: 16px;
+}
+
+.floating-phone:hover {
+    width: auto;
+    padding: 0 25px;
+    border-radius: 50px;
+    background: #00b34a;
+    animation: none;
+}
+
+.floating-phone:hover .phone-number {
+    width: 120px;
+}
+
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0);
+    }
+    40% {
+        transform: translateY(-20px);
+    }
+    60% {
+        transform: translateY(-10px);
+    }
+}
+
+/* Responsive Design */
+@media (max-width: 968px) {
+    .container {
+        grid-template-columns: 1fr;
+    }
+
+    .sidebar {
+        position: static;
+    }
+}
+
+@media (max-width: 576px) {
+    .container {
+        padding: 1rem;
+    }
+
+    .post-meta {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .floating-phone {
+        bottom: 20px;
+        right: 20px;
+        width: 50px;
+        height: 50px;
+    }
+
+    .floating-phone:hover {
+        padding: 0 20px;
+    }
+
+    .floating-phone:hover .phone-number {
+        width: 110px;
+        font-size: 14px;
+    }
+}
+    </style>
+</head>
+<body>
+        <!-- Top Bar -->
+        <div class="top-bar">
+            <div class="contact-info">
+                <i class="fas fa-phone-alt"></i> Phone: +163-654-3569
+            </div>
+            <div class="social-icons-topnav">
+                <span>Follow Us On:</span>
+                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+            </div>
+        </div>
+    
+        <!-- Navbar -->
+        <nav class="navbar">
+            <div class="logo">
+                <img src="images/hero_logo.svg" alt="Mediax Logo" width="100px">
+            </div>
+            <div class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="abouts.html">About Us</a>
+            <a href="Services.html">Service</a>
+            <a href="team.html">Team</a>
+            <a href="blogs.html">Blog </a>
+            <a href="contact.html" class="activated">Contact</a>
+            </div>
+            <div class="hamburger">
+                <i class="fas fa-bars"></i>
+            </div>
+        </nav>
+     <!-- About Us hero Section -->
+     <section class="about-us-section">
+        <div class="stethoscope-decor"></div>
+        <div class="cross-decor-top-right"></div>
+        <div class="cross-decor-bottom-left"></div>
+        <div class="cross-decor-bottom-right"></div>
+        <div class="hexagon-decor-top-right"></div>
+        <div class="hexagon-decor-bottom-right"></div>
+        <div class="arrow-decor"></div>
+        <div class="about-us-content">
+            <h1>Contact US</h1>
+            <div class="breadcrumb">
+                <a href="index.html">Home</a> <span>></span> <a href="#">Contact Us</a>
+            </div>
+        </div>
+    </section>
+    <div class="container">
+        <!-- Central Branch -->
+        <div class="card">
+            <h2>Central Branch</h2>
+            <div class="info">
+                <p><span class="icon">📍</span> 12601 Garden Grove BLVD, Garden Grove, CA 92843</p>
+                <p><span class="icon">📧</span> info@contactchp.com</p>
+                <p><span class="icon">📞</span> +171 4537 5160</p>
+            </div>
+            <div class="hours">
+                <div class="hours-icon">⏰</div>
+                <p>Mon to sat: 8:00am - 9:00pm<br>Sunday - Closed</p>
+            </div>
+        </div>
+
+        <!-- USA Branch -->
+        <div class="card">
+            <h2>USA. Branch</h2>
+            <div class="info">
+                <p><span class="icon">📍</span> 1120 15th St BA 8412, Augusta, GA 30912, United States</p>
+                <p><span class="icon">📧</span> info@contactusa.com</p>
+                <p><span class="icon">📞</span> +170 6721 8623</p>
+            </div>
+            <div class="hours">
+                <div class="hours-icon">⏰</div>
+                <p>Mon to sat: 8:00am - 9:00pm<br>Sunday - Closed</p>
+            </div>
+        </div>
+
+        <!-- Australia Branch -->
+        <div class="card">
+            <h2>Australia Branch</h2>
+            <div class="info">
+                <p><span class="icon">📍</span> 260 Lygon St, Brunswick East VIC 3057, Australia</p>
+                <p><span class="icon">📧</span> info@contactaus.com</p>
+                <p><span class="icon">📞</span> +613 9988 2015</p>
+            </div>
+            <div class="hours">
+                <div class="hours-icon">⏰</div>
+                <p>Mon to sat: 8:00am - 9:00pm<br>Monday - Closed</p>
+            </div>
+        </div>
+    </div>
+
+
+
+        <section class="get-in-touch">
+            <div class="container-form">
+                <div class="form-section">
+                    <h2>Get In Touch!</h2>
+                    <form>
+                        <div class="form-group">
+                            <input type="text" placeholder="Your Name" required>
+                            <span class="icon">👤</span>
+                        </div>
+                        <div class="form-group">
+                            <input type="email" placeholder="Email Address" required>
+                            <span class="icon">📧</span>
+                        </div>
+                        <div class="form-group">
+                            <input type="tel" placeholder="Phone Number" required>
+                            <span class="icon">📞</span>
+                        </div>
+                        <div class="form-group">
+                            <select required>
+                                <option value="" disabled selected>Select Subject</option>
+                                <option value="general">General Inquiry</option>
+                                <option value="support">Support</option>
+                                <option value="appointment">Appointment</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <textarea placeholder="Type Appointment Note..." required></textarea>
+                            <span class="icon">✍️</span>
+                        </div>
+                        <button type="submit">Book Appointment</button>
+                    </form>
+                </div>
+                <div class="image-section">
+                    <img src="images/d1.jpg" alt="Customer Service Representative">
+                </div>
+            </div>
+        </section>
+   
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <!-- Logo and Contact Section -->
+            <div class="footer-section logo-section">
+                <div class="logo">
+                    <h2>MEDIAX</h2>
+                    <p>HEALTHCARE</p>
+                </div>
+                <p class="subscribe-text">Subscribe to our newsletter today to receive latest news administrate cost effective for tactical data.</p>
+                <div class="contact-info">
+                    <p><span class="icon">📍</span> 2478 Street City Ohio 90255</p>
+                    <p><span class="icon">✉️</span> info@mediax.com</p>
+                    <p><span class="icon">📞</span> +1 (402) 763 8246</p>
+                </div>
+            </div>
+
+            <!-- Quick Links Section -->
+            <div class="footer-section">
+                <h3>QUICK LINKS</h3>
+                <ul>
+                    <li><a href="abouts.html">About Us</a></li>
+                    <li><a href="#">Terms of Use</a></li>
+                    <li><a href="Services.html">Our Services</a></li>
+                    <li><a href="#">Help & FAQs</a></li>
+                    <li><a href="blogs.html">Blog</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="contact.html">Contact Us</a></li>
+                </ul>
+            </div>
+
+            <!-- Popular Services Section -->
+            <div class="footer-section">
+                <h3>POPULAR SERVICE</h3>
+                <ul>
+                    <li><a href="#">Cardiology Care</a></li>
+                    <li><a href="#">Urgent Care</a></li>
+                    <li><a href="#">Orthopedic Care</a></li>
+                    <li><a href="#">Diagnosis department</a></li>
+                    <li><a href="#">Gastroenterology</a></li>
+                    <li><a href="#">Dental service</a></li>
+                </ul>
+            </div>
+
+            <!-- Branches Section -->
+            <div class="footer-section">
+                <h3>USA BRANCHES:</h3>
+                <p><span class="icon">📍</span> 1120 15th St BA 8412, Augusta, GA 30912, United States</p>
+                <p><span class="icon">📞</span> +170 6721 8623</p>
+                <h3>AUSTRALIA BRANCHES:</h3>
+                <p><span class="icon">📍</span> 260 Lygon St, Brunswick East VIC 3057, Australia</p>
+                <p><span class="icon">📞</span> +613 9988 2015</p>
+            </div>
+        </div>
+
+        <!-- Copyright and Social Media -->
+        <div class="footer-bottom">
+            <p>Copyright © 2024 Mediax. All Rights Reserved.</p>
+            <div class="social-icons-topnav">
+                <span>Follow Us On:</span>
+                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+            </div>
+       <!--<div class="social-icons-topnav">
+                <a href="#"><img src="facebook-icon.png" alt="Facebook"></a>
+                <a href="#"><img src="twitter-icon.png" alt="Twitter"></a>
+                <a href="#"><img src="linkedin-icon.png" alt="LinkedIn"></a>
+                  <a href="#"><img src="whatsapp-icon.png" alt="WhatsApp"></a>
+            </div>--> 
+        </div>
+    </footer>
+   <!-- Floating Phone Button -->
+   <a href="tel:+1234567890" class="floating-phone">
+    <div class="phone-content">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+        </svg>
+        <span class="phone-number">+1 234 567 890</span>
+    </div>
+</a>
+    <script>
+          // Toggle mobile menu and switch between hamburger and close icons
+          const hamburger = document.querySelector('.hamburger');
+        const hamburgerIcon = hamburger.querySelector('i');
+        const navLinks = document.querySelector('.nav-links');
+
+        hamburger.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            hamburger.classList.toggle('active');
+            if (navLinks.classList.contains('active')) {
+                hamburgerIcon.classList.remove('fa-bars');
+                hamburgerIcon.classList.add('fa-times');
+            } else {
+                hamburgerIcon.classList.remove('fa-times');
+                hamburgerIcon.classList.add('fa-bars');
+            }
+        });
+
+        // Scroll behavior for top bar and navbar
+        let lastScrollTop = 0;
+        const topBar = document.querySelector('.top-bar');
+        const navbar = document.querySelector('.navbar');
+        const topBarHeight = topBar.offsetHeight;
+        const navbarHeight = navbar.offsetHeight;
+
+        window.addEventListener('scroll', () => {
+            let currentScrollTop = window.pageYOffset || document.documentElement.scrollTop;
+
+            if (currentScrollTop <= 0) {
+                // At the top of the page, always show the top bar and navbar
+                topBar.classList.remove('hidden');
+                navbar.classList.remove('hidden');
+            } else if (currentScrollTop > lastScrollTop) {
+                // Scrolling down - hide the top bar and navbar
+                topBar.classList.add('hidden');
+                navbar.classList.add('hidden');
+            } else {
+                // Scrolling up - show the top bar and navbar
+                topBar.classList.remove('hidden');
+                navbar.classList.remove('hidden');
+            }
+
+            lastScrollTop = currentScrollTop <= 0 ? 0 : currentScrollTop; // For Mobile or negative scrolling
+        });
+    </script>
+</body>
+</html>

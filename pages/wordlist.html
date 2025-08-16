@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio Page</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #121212;
+            color: #fff;
+        }
+        .back-button {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            padding: 10px 20px;
+            background-color: #0d1b2a;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            transition: background-color 0.3s;
+        }
+        .back-button:hover {
+            background-color: #f4a261;
+        }
+        .hero {
+            width: 100%;
+            height: 400px;
+            overflow: hidden;
+            position: relative;
+        }
+        .hero video, .hero img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .content, .technologies {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .card {
+            background-color: #181414;
+            padding: 50px;
+            margin: 10%;
+            margin-bottom: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+        .p {
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+        .technologies {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+        }
+        .tech-card {
+            background-color: #1b263b;
+            padding: 10px 20px;
+            border-radius: 5px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            font-size: 16px;
+        }
+        pre {
+            background-color: #1b263b;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+        code {
+            font-family: Consolas, monospace;
+            color: #f4a261;
+        }
+        @media (max-width: 768px) {
+            .back-button {
+                top: 10px;
+                left: 10px;
+                padding: 8px 15px;
+                font-size: 14px;
+            }
+            .hero {
+                height: 200px;
+            }
+            .card, .p, .tech-card {
+                padding: 10px;
+                font-size: 14px;
+            }
+        }
+        b {
+            color: #f4a261;
+        }
+    </style>
+</head>
+<body>
+    <button class="back-button" onclick="history.back()">Back</button>
+
+       
+    <div class="card">
+         <div class="hero">
+            <video controls poster="../thamb/pwd.png">
+                <source src="../video/pwdwordlist.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+        </div>
+        <div class="content">
+            <div class="p"><b>Creating a Wordlist Using Crunch from a Git Repository</b></div>
+            <div class="p">Wordlists are essential for penetration testing tasks like brute-forcing passwords or directories. <code>Crunch</code> is a powerful wordlist generator available on Kali Linux, which can be installed from a Git repository if not pre-installed. This guide covers cloning the Crunch repository and generating a wordlist. Always use wordlists ethically and with explicit permission in a controlled lab environment to avoid legal issues.</div>
+            <div class="p"><b>Steps to Create a Wordlist Using Crunch on Kali Linux</b></div>
+            <div class="p"><b>1. Verify Crunch Installation</b><br>Check if Crunch is installed:<br><pre><code>crunch -v</code></pre><b>Explanation:</b> The <code>-v</code> flag displays the version of Crunch, confirming whether it’s installed and ready for use.</div>
+            <div class="p"><b>2. Install Crunch via Git Repository</b><br>If Crunch is not installed, clone it from its Git repository and install it:<br><pre><code>git clone https://github.com/crunchsec/crunch.git<br>cd crunch<br>make<br>sudo make install</code></pre><b>Explanation:</b><br>- <code>git clone https://github.com/crunchsec/crunch.git</code>: Downloads the Crunch source code from its GitHub repository.<br>- <code>cd crunch</code>: Navigates into the cloned directory.<br>- <code>make</code>: Compiles the Crunch source code.<br>- <code>sudo make install</code>: Installs Crunch system-wide, making it accessible from the command line.</div>
+            <div class="p"><b>3. Get Authorization</b><br>Obtain explicit written permission before using wordlists for testing on any system. For practice, use a lab environment like Metasploitable 2 or a personal test server.</div>
+            <div class="p"><b>4. Generate a Basic Wordlist</b><br>Create a wordlist with a specific length and character set (e.g., 4-character passwords using lowercase letters):<br><pre><code>crunch 4 4 -f /usr/share/crunch/charset.lst lalpha -o wordlist.txt</code></pre><b>Explanation:</b><br>- <code>crunch 4 4</code>: Specifies minimum and maximum word length (both 4 characters).<br>- <code>-f /usr/share/crunch/charset.lst lalpha</code>: Uses the lowercase alphabet character set from Crunch’s charset file.<br>- <code>-o wordlist.txt</code>: Saves the generated wordlist to a file named <code>wordlist.txt</code>.</div>
+            <div class="p"><b>5. Generate a Custom Wordlist</b><br>Create a wordlist with specific patterns (e.g., 6-character passwords with a mix of letters and numbers, starting with "pass"):<br><pre><code>crunch 6 6 -t pass@@ -o custom_wordlist.txt</code></pre><b>Explanation:</b><br>- <code>crunch 6 6</code>: Sets the word length to exactly 6 characters.<br>- <code>-t pass@@</code>: Defines a pattern where "pass" is fixed, and <code>@@</code> represents two placeholder characters (defaulting to alphanumeric).<br>- <code>-o custom_wordlist.txt</code>: Saves the output to <code>custom_wordlist.txt</code>.</div>
+            <div class="p"><b>6. Optimize Wordlist Size</b><br>Compress the wordlist to reduce storage (optional):<br><pre><code>gzip wordlist.txt</code></pre><b>Explanation:</b> The <code>gzip</code> command compresses the wordlist file to save disk space, useful for large wordlists.</div>
+            <div class="p"><b>7. Verify Wordlist</b><br>Check the wordlist content:<br><pre><code>head -n 10 wordlist.txt</code></pre><b>Explanation:</b> Displays the first 10 lines of the wordlist to verify its contents and ensure it meets the desired format.<br>Example output:<br><pre><code>aaaa
+aaab
+aaac
+aaad
+aaae
+aaaf
+aaag
+aaah
+aaai
+aaaj</code></pre><b>Explanation:</b> Shows a sample of generated words, confirming the wordlist follows the specified character set and length.</div>
+            <div class="p"><b>8. Use Wordlist (Optional)</b><br>Use the wordlist with a tool like Hydra for testing (in a lab environment):<br><pre><code>hydra -l admin -P wordlist.txt [Metasploitable_IP] http-post-form "/login.php:username=^USER^&password=^PASS^:Invalid"</code></pre><b>Explanation:</b><br>- <code>hydra</code>: A password-cracking tool.<br>- <code>-l admin</code>: Specifies the username to test (e.g., "admin").<br>- <code>-P wordlist.txt</code>: Uses the generated wordlist for passwords.<br>- <code>[Metasploitable_IP] http-post-form</code>: Targets a login page on the Metasploitable 2 server.<br>- <code>/login.php:username=^USER^&password=^PASS^:Invalid</code>: Defines the login form parameters and failure message.</div>
+            <div class="p"><b>Important Notes</b><br>- Use Crunch and wordlists ethically; unauthorized brute-forcing is illegal.<br>- Test in a controlled lab environment (e.g., Metasploitable 2) to practice safely.<br>- Large wordlists can consume significant disk space; plan storage accordingly.<br>- Comply with all legal and organizational policies.</div>
+        </div>
+    
+      
+        <div class="technologies">
+            <div class="tech-card">password-cracking</div>
+            <div class="tech-card">Wordlist</div>
+            <div class="tech-card">Crunch</div>
+        </div>
+    </div>
+    <script>
+        // JavaScript for dynamic behavior
+        window.addEventListener('resize', () => {
+            const hero = document.querySelector('.hero');
+            if (window.innerWidth <= 768) {
+                hero.style.height = '200px';
+            } else {
+                hero.style.height = '400px';
+            }
+        });
+
+        // Fallback to image if video fails
+        const video = document.querySelector('video');
+        video.addEventListener('error', () => {
+            const hero = document.querySelector('.hero');
+            const img = document.createElement('img');
+            img.src = 'sample-image.jpg';
+            img.alt = 'Fallback Image';
+            hero.innerHTML = '';
+            hero.appendChild(img);
+        });
+    </script>
+</body>
+</html>

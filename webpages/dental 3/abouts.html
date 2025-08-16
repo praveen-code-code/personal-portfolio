@@ -1,0 +1,1684 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Top Bar and Navbar</title>
+    <!-- Font Awesome CDN for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        body {
+            overflow-x: hidden;
+        }
+
+        /* Top Bar */
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #1a3c34;
+            color: white;
+            padding: 10px 20px;
+            font-size: 14px;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            transition: top 0.3s ease;
+        }
+
+        .top-bar.hidden {
+            top: -50px;
+        }
+
+        .contact-info i {
+            margin-right: 5px;
+            color: #00c4b4;
+        }
+
+        .social-icons-topnav span {
+            margin-right: 10px;
+        }
+
+        .social-icons-topnav a {
+            color: white;
+            margin: 0 5px;
+            text-decoration: none;
+        }
+
+        /* Navbar */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            background-color: white;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            top: 30px;
+            width: 100%;
+            z-index: 999;
+            transition: top 0.3s ease;
+        }
+
+        .navbar.hidden {
+            top: -60px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 28px;
+            font-weight: bold;
+            color: #1a3c34;
+        }
+
+        .logo img {
+            width: 100px;
+            margin-right: 15px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 20px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            position: relative;
+        }
+        .nav-links a:hover {
+            color: #12862dca;
+        }
+        .nav-links .activated{
+            color: #12862dca;
+        }
+        .nav-links a i {
+            margin-left: 5px;
+        }
+
+        .hamburger {
+            display: none;
+            font-size: 24px;
+            color: #333;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .hamburger.active {
+            transform: rotate(90deg);
+        }
+
+        /* Responsive Design for Mobile (768px and Below) */
+        @media (max-width: 768px) {
+            .top-bar {
+                padding: 8px 15px;
+                font-size: 12px;
+            }
+
+            .navbar {
+                padding: 10px 15px;
+                top: 28px;
+            }
+
+            .hamburger {
+                display: block;
+            }
+
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background-color: white;
+                padding: 20px;
+                box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+                z-index: 10;
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .nav-links a {
+                padding: 10px 0;
+                text-align: center;
+            }
+        }
+
+      
+
+        /* About Us Section */
+        .about-us-section {
+            position: relative;
+            width: 100%;
+            height: 300px;
+            background: linear-gradient(to bottom, #e6f0fa, #f0f8ff); /* Light gradient background */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            overflow: hidden;
+            padding: 20px;
+            margin-top: 5%;
+        }
+     
+        /* Background Decorative Elements */
+        .about-us-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('images/about_section_bg.avif') repeat;
+            opacity: 0.5;
+            z-index: 0;
+        }
+
+        /* Stethoscope Decoration */
+        .stethoscope-decor {
+            position: absolute;
+            top: 50%;
+            left: 10%;
+            transform: translateY(-50%);
+            width: 100px;
+            height: 100px;
+            background: url('icons/bg_1.png') no-repeat center;
+            background-size: contain;
+            opacity: 0.7;
+            z-index: 1;
+        }
+
+        /* Green Cross Decorations */
+        .cross-decor-top-right {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 40px;
+            height: 40px;
+            background: url('icons/aboutus_bg2.png') no-repeat center;
+            background-size: contain;
+            opacity: 0.7;
+            z-index: 1;
+        }
+
+        .cross-decor-bottom-left {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            width: 40px;
+            height: 40px;
+            background: url('icons/aboutus_bg2.png') no-repeat center;
+            background-size: contain;
+            opacity: 0.7;
+            z-index: 1;
+        }
+
+        .cross-decor-bottom-right {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            width: 40px;
+            height: 40px;
+            background: url('icons/aboutus_bg-removebg-preview.png') no-repeat center;
+            background-size: contain;
+            opacity: 0.7;
+            z-index: 1;
+        }
+
+        /* Hexagon Decorations */
+        .hexagon-decor-top-right {
+            position: absolute;
+            top: 20px;
+            right: 80px;
+            width: 60px;
+            height: 60px;
+          
+            background-size: contain;
+            opacity: 0.5;
+            z-index: 1;
+        }
+
+        .hexagon-decor-bottom-right {
+            position: absolute;
+            bottom: 20px;
+            right: 80px;
+            width: 60px;
+            height: 60px;
+           
+            background-size: contain;
+            opacity: 0.5;
+            z-index: 1;
+        }
+
+        /* Green Arrow Decoration */
+        .arrow-decor {
+            position: absolute;
+            top: 50%;
+            left: 15%;
+            transform: translateY(-50%);
+            width: 40px;
+            height: 40px;
+            background: url('icons/aboutus_bg.png') no-repeat center;
+            background-size: contain;
+            opacity: 0.7;
+            z-index: 1;
+        }
+
+        /* Content */
+        .about-us-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .about-us-content h1 {
+            font-size: 48px;
+            color: #1a3c5e;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            font-weight: 700;
+        }
+
+        .breadcrumb {
+            font-size: 16px;
+            color: #666;
+        }
+
+        .breadcrumb a {
+            color: #28a745;
+            text-decoration: none;
+            margin: 0 5px;
+        }
+
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+
+        .breadcrumb span {
+            color: #666;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .about-us-section {
+                height: 200px;
+                margin-top: 10%;
+            }
+
+            .about-us-content h1 {
+                font-size: 32px;
+            }
+
+            .breadcrumb {
+                font-size: 14px;
+            }
+
+            .stethoscope-decor {
+                width: 80px;
+                height: 80px;
+                left: 5%;
+            }
+
+            .cross-decor-top-right,
+            .cross-decor-bottom-left,
+            .cross-decor-bottom-right {
+                width: 30px;
+                height: 30px;
+            }
+
+            .hexagon-decor-top-right,
+            .hexagon-decor-bottom-right {
+                width: 40px;
+                height: 40px;
+            }
+
+            .arrow-decor {
+                width: 30px;
+                height: 30px;
+                left: 10%;
+            }
+        }
+        @media (max-width: 767px){
+            .about-us-section {
+               margin-top: 20%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .about-us-section {
+                height: 150px;
+            }
+
+            .about-us-content h1 {
+                font-size: 24px;
+            }
+
+            .breadcrumb {
+                font-size: 12px;
+            }
+
+            .stethoscope-decor {
+                width: 60px;
+                height: 60px;
+            }
+
+            .cross-decor-top-right,
+            .cross-decor-bottom-left,
+            .cross-decor-bottom-right {
+                width: 20px;
+                height: 20px;
+            }
+
+            .hexagon-decor-top-right,
+            .hexagon-decor-bottom-right {
+                width: 30px;
+                height: 30px;
+            }
+
+            .arrow-decor {
+                width: 20px;
+                height: 20px;
+            }
+        }
+
+        /* about us section*/
+        .about_us_section{
+            padding: 50px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 80px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .header small {
+            color: #00c4b4;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .header h1 {
+            font-size: 36px;
+            color: #1a3c5e;
+            margin-top: 10px;
+        }
+
+        .header h1 span {
+            color: #00c4b4;
+        }
+
+        .main-content {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            gap: 30px;
+        }
+
+        .image-gallery {
+            flex: 1;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        .image-gallery img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 15px;
+        }
+
+        .content-right {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .description {
+            color: #666;
+            font-size: 16px;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .services {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .service-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #1a3c5e;
+            font-size: 16px;
+        }
+
+        .service-item i {
+            color: #00c4b4;
+            font-size: 20px;
+        }
+
+        .btn {
+            background: linear-gradient(90deg, #00c4b4, #00a1d6);
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 25px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .btn:hover {
+            transform: scale(1.05);
+        }
+
+        .doctor-profile {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            background-color: white;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+        }
+
+        .doctor-profile img {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .doctor-info h3 {
+            color: #1a3c5e;
+            font-size: 18px;
+        }
+
+        .doctor-info p {
+            color: #666;
+            font-size: 14px;
+            margin: 5px 0;
+        }
+
+        .doctor-info .rating {
+            color: #f4c430;
+            font-size: 16px;
+        }
+
+        .contact-links {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+
+        .contact-links a {
+            color: #00c4b4;
+            text-decoration: none;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .contact-links a i {
+            font-size: 16px;
+        }
+
+        @media (max-width: 768px) {
+            .main-content {
+                flex-direction: column;
+                align-items: center;
+            }
+         
+            .image-gallery {
+                grid-template-columns: 1fr;
+            }
+
+            .contact-links {
+                flex-direction: column;
+                align-items: center;
+                gap: 10px;
+            }
+        }
+     
+
+        /*state section*/
+        .stats-section{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 20px;
+            margin-top: -15%;
+        }
+        .stats-container {
+            display: flex;
+            justify-content: space-around;
+            background-color: #1e88e5;
+            padding: 2vw;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 1200px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .stat {
+            text-align: center;
+            color: white;
+            flex: 1;
+            min-width: 200px;
+            padding: 1rem 0;
+            border-right: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .stat:last-child {
+            border-right: none;
+        }
+
+        .stat h2 {
+            font-size: clamp(1.5rem, 4vw, 2.5rem);
+            margin: 0;
+            font-weight: bold;
+        }
+
+        .stat p {
+            font-size: clamp(0.8rem, 2vw, 1rem);
+            margin: 5px 0 0;
+            font-weight: 300;
+        }
+
+        /* Media Queries for additional responsiveness */
+     
+        @media (max-width: 1028px) {
+            .stats-section{
+                margin-top: -40%;
+            }
+        }
+        @media (max-width: 768px) {
+            .stats-container {
+                flex-direction: column;
+                align-items: center;
+                padding: 1.5rem;
+            }
+
+            .stat {
+                border-right: none;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+                padding: 1rem 0;
+                width: 100%;
+                max-width: 300px;
+            }
+
+            .stat:last-child {
+                border-bottom: none;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .stats-container {
+                padding: 1rem;
+                width: 95%;
+            }
+
+            .stat {
+                min-width: 100%;
+            }
+
+            .stat h2 {
+                font-size: clamp(1.2rem, 3.5vw, 2rem);
+            }
+
+            .stat p {
+                font-size: clamp(0.7rem, 1.8vw, 0.9rem);
+            }
+        }
+
+        /*why choice us*/
+        
+        .why-choose-us {
+            max-width: 1200px;
+            margin: auto;
+            text-align: center;
+            padding: 50px 20px;
+            margin-top: -13%;
+        }
+
+        .sub-title {
+            color: green;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .title {
+            font-size: 28px;
+            font-weight: bold;
+            color: #222;
+            margin: 10px 0 30px;
+        }
+
+        .features-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .feature-box {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 250px;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .feature-box:hover {
+            transform: translateY(-5px);
+        }
+
+        .icon-box {
+            width: 80px;
+            height: 80px;
+            background: #e3f2fd;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px;
+            position: relative;
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+        }
+
+        .feature-box:hover .icon-box {
+            transform: rotateY(180deg);
+        }
+
+        .icon-box i {
+            font-size: 32px;
+            color: #007bff;
+            position: absolute;
+            backface-visibility: hidden;
+        }
+
+        .icon-box .back {
+            transform: rotateY(180deg);
+        }
+
+        h3 {
+            font-size: 18px;
+            color: #333;
+            margin: 10px 0;
+        }
+
+        p {
+            font-size: 14px;
+            color: #777;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .features-container {
+                flex-wrap: wrap;
+            }
+
+            .feature-box {
+                width: 45%;
+            }
+            .why-choose-us{
+                margin-top: -35%;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .feature-box {
+                width: 100%;
+            }
+        }
+
+
+        
+        /* Team Section */
+        .team-section {
+            padding: 50px 20px;
+            text-align: center;
+        }
+
+        .section-header {
+            margin-bottom: 40px;
+        }
+
+        .label {
+            display: inline-block;
+            color: #00c4b4;
+            font-size: 14px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .section-header h2 {
+            color: #1a3c6d;
+            font-size: 36px;
+            font-weight: bold;
+        }
+
+        .team-carousel {
+            position: relative;
+            max-width: 1200px;
+            margin: 0 auto;
+            overflow: hidden;
+        }
+
+        .carousel-container {
+            overflow: hidden;
+        }
+
+        .carousel-track {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+        }
+
+        .team-card {
+            flex: 0 0 25%;
+            padding: 10px;
+            text-align: center;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            margin: 0 8px;
+        }
+
+        .card-image {
+            position: relative;
+            overflow: hidden;
+            border-radius: 10px;
+        }
+
+        .card-image img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+        }
+
+        .social-icons {
+            position: absolute;
+            top: 70%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            display: flex;
+            gap: 10px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .card-image:hover .social-icons {
+            opacity: 1;
+        }
+
+        .social-icons a img {
+            width: 40px;
+            height: 40px;
+            background: #fff;
+            border-radius: 50%;
+            padding: 5px;
+        }
+
+        .team-card h3 {
+            margin-top: 10px;
+            font-size: 18px;
+            color: #1a3c6d;
+        }
+
+        .team-card p {
+            color: #666;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+
+        @media (max-width: 768px) {
+            .team-card {
+                flex: 0 0 40%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .team-card {
+                flex: 0 0 80%;
+            }
+        }
+
+        /* Footer Section */
+.footer {
+    background-color: #1a2a44;
+    color: #fff;
+    padding: 50px 0 20px; /* Adjusted padding to match the image */
+    position: relative;
+    width: 100%; /* Ensure full width */
+    margin: 0; /* Remove any default margins */
+    /* Add hexagonal background pattern */
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none"><pattern id="hexagons" x="0" y="0" width="20" height="35" patternUnits="userSpaceOnUse" patternTransform="rotate(0)"><polygon points="10,0 20,5 20,15 10,20 0,15 0,5" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="1"/></pattern><rect x="0" y="0" width="100%" height="100%" fill="url(#hexagons)"/></svg>');
+    background-repeat: repeat;
+}
+
+/* Ensure the body has no extra margin/padding affecting the footer */
+body {
+    margin: 0;
+    padding: 0;
+    min-height: 100vh; /* Ensure the body takes at least the full viewport height */
+    display: flex;
+    flex-direction: column;
+}
+
+/* Ensure the main content grows to push the footer down */
+main {
+    flex: 1 0 auto;
+}
+
+/* Footer container */
+.footer-container {
+    display: flex;
+    justify-content: space-between;
+    max-width: 1200px; /* Keep content centered */
+    margin: 0 auto;
+    flex-wrap: wrap;
+    padding: 0 20px; /* Add padding to prevent content from touching edges */
+    gap: 20px; /* Add gap between sections */
+}
+
+.footer-section {
+    flex: 1;
+    min-width: 200px;
+    margin: 10px 0;
+}
+
+.logo-section .logo h2 {
+    color: #00c4b4;
+    font-size: 24px;
+    margin-bottom: 5px;
+    text-transform: uppercase;
+}
+
+.logo-section .logo p {
+    color: #00c4b4;
+    font-size: 12px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+.subscribe-text {
+    font-size: 14px;
+    margin: 20px 0;
+    color: #b0b0b0;
+    line-height: 1.6;
+}
+
+.contact-info p {
+    font-size: 14px;
+    margin: 10px 0;
+    color: #b0b0b0;
+    display: flex;
+    align-items: center;
+}
+
+.contact-info .icon {
+    margin-right: 10px;
+    color: #00c4b4;
+    font-size: 16px;
+}
+
+.footer-section h3 {
+    font-size: 16px;
+    margin-bottom: 15px;
+    color: #fff;
+    border-bottom: 2px solid #00c4b4;
+    display: inline-block;
+    padding-bottom: 5px;
+    text-transform: uppercase;
+}
+
+.footer-section ul {
+    list-style: none;
+    padding: 0;
+}
+
+.footer-section ul li {
+    margin: 10px 0;
+}
+
+.footer-section ul li a {
+    color: #b0b0b0;
+    text-decoration: none;
+    font-size: 14px;
+    transition: color 0.3s ease;
+}
+
+.footer-section ul li a:hover {
+    color: #00c4b4;
+}
+
+.footer-section p {
+    font-size: 14px;
+    margin: 10px 0;
+    color: #b0b0b0;
+    display: flex;
+    align-items: center;
+}
+
+.footer-section p .icon {
+    margin-right: 10px;
+    color: #00c4b4;
+    font-size: 16px;
+}
+
+.footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 30px auto 0;
+    padding: 20px 20px 0;
+    border-top: 1px solid #3a4a64;
+}
+
+.footer-bottom p {
+    font-size: 14px;
+    color: #b0b0b0;
+}
+
+.social-icons a {
+    margin-left: 10px;
+    color: #1a2a44;
+    background-color: #fff;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+
+.social-icons a:hover {
+    background-color: #00c4b4;
+    color: #fff;
+}
+
+/* Scroll to Top Button */
+.scroll-to-top {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #00c4b4;
+    color: white;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    text-decoration: none;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: 1000;
+}
+
+.scroll-to-top.visible {
+    opacity: 1;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .footer-container {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 0 30px;
+    }
+
+    .footer-section {
+        width: 100%;
+        text-align: left;
+    }
+
+    .footer-section.logo-section {
+        text-align: left;
+    }
+
+    .footer-bottom {
+        flex-direction: column;
+        text-align: center;
+        padding: 20px 30px 0;
+    }
+
+    .social-icons {
+        margin-top: 15px;
+    }
+
+    .social-icons a {
+        margin: 0 5px;
+    }
+}
+
+@media (max-width: 480px) {
+    .footer {
+        padding: 30px 0 10px;
+    }
+
+    .footer-container {
+        padding: 0 20px;
+    }
+
+    .footer-section h3 {
+        font-size: 14px;
+    }
+
+    .footer-section ul li a,
+    .footer-section p,
+    .subscribe-text {
+        font-size: 13px;
+    }
+
+    .footer-bottom {
+        padding: 15px 20px 0;
+    }
+
+    .footer-bottom p {
+        font-size: 12px;
+    }
+
+    .social-icons a {
+        width: 28px;
+        height: 28px;
+        font-size: 12px;
+    }
+}
+
+
+
+/* Floating Phone Button */
+.floating-phone {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    background: #00c853;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    text-decoration: none;
+    box-shadow: 0 4px 12px rgba(0, 200, 83, 0.3);
+    animation: bounce 2s infinite;
+    transition: all 0.3s ease;
+    overflow: hidden;
+    z-index: 9999;
+}
+
+.phone-content {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.phone-number {
+    width: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    transition: width 0.3s ease;
+    font-weight: 500;
+    font-size: 16px;
+}
+
+.floating-phone:hover {
+    width: auto;
+    padding: 0 25px;
+    border-radius: 50px;
+    background: #00b34a;
+    animation: none;
+}
+
+.floating-phone:hover .phone-number {
+    width: 120px;
+}
+
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0);
+    }
+    40% {
+        transform: translateY(-20px);
+    }
+    60% {
+        transform: translateY(-10px);
+    }
+}
+
+/* Responsive Design */
+@media (max-width: 968px) {
+    .container {
+        grid-template-columns: 1fr;
+    }
+
+    .sidebar {
+        position: static;
+    }
+}
+
+@media (max-width: 576px) {
+    .container {
+        padding: 1rem;
+    }
+
+    .post-meta {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .floating-phone {
+        bottom: 20px;
+        right: 20px;
+        width: 50px;
+        height: 50px;
+    }
+
+    .floating-phone:hover {
+        padding: 0 20px;
+    }
+
+    .floating-phone:hover .phone-number {
+        width: 110px;
+        font-size: 14px;
+    }
+}
+    </style>
+</head>
+<body>
+
+
+      <!-- Floating Phone Button -->
+   <a href="tel:+1234567890" class="floating-phone">
+    <div class="phone-content">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+        </svg>
+        <span class="phone-number">+1 234 567 890</span>
+    </div>
+</a>
+
+    <!-- Top Bar -->
+    <div class="top-bar">
+        <div class="contact-info">
+            <i class="fas fa-phone-alt"></i> Phone: +163-654-3569
+        </div>
+        <div class="social-icons-topnav">
+            <span>Follow Us On:</span>
+            <a href="#"><i class="fab fa-facebook-f"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-linkedin-in"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+        </div>
+    </div>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="logo">
+            <img src="images/hero_logo.svg" alt="Mediax Logo" width="100px">
+        </div>
+        <div class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="abouts.html" class="activated">About Us</a>
+            <a href="Services.html">Service </a>
+            <a href="team.html">Team </a>
+            <a href="blogs.html">Blog </a>
+            <a href="contact.html">Contact</a>
+        </div>
+        <div class="hamburger">
+            <i class="fas fa-bars"></i>
+        </div>
+    </nav>
+ <!-- About Us hero Section -->
+ <section class="about-us-section">
+    <div class="stethoscope-decor"></div>
+    <div class="cross-decor-top-right"></div>
+    <div class="cross-decor-bottom-left"></div>
+    <div class="cross-decor-bottom-right"></div>
+    <div class="hexagon-decor-top-right"></div>
+    <div class="hexagon-decor-bottom-right"></div>
+    <div class="arrow-decor"></div>
+    <div class="about-us-content">
+        <h1>About Us</h1>
+        <div class="breadcrumb">
+            <a href="index.html">Home</a> <span>></span> <a href="#">About Us</a>
+        </div>
+    </div>
+</section>
+<!--about us sewctiion-->
+<section class="about_us_section">
+<div class="container">
+    <div class="header">
+        <small>ABOUT OUR COMPANY</small>
+        <h1>Taking Care Of Your Health Is <span>Our Top Priority</span></h1>
+    </div>
+    <div class="main-content">
+        <div class="image-gallery">
+            <img src="images/aboutus-section-img.jpg" alt="Doctor 1">
+            <img src="images/aboutus-section-img2.jpg" alt="Doctor 2">
+            <img src="images/aboutus-section-img.jpg" alt="Patient Care">
+            <img src="images/aboutus-section-img2.jpg" alt="Consultation">
+        </div>
+        <div class="content-right">
+            <div class="description">
+                A brief statement outlining the purpose and mission of the clinic. This can include the commitment to patient care, community health, and any specific goals for our values.
+            </div>
+            <div class="services">
+                <div class="service-item">
+                    <i class="fas fa-heartbeat"></i>
+                    <span>Medical Professionals</span>
+                </div>
+                <div class="service-item">
+                    <i class="fas fa-ambulance"></i>
+                    <span>Emergency Care</span>
+                </div>
+                <div class="service-item">
+                    <i class="fas fa-hospital"></i>
+                    <span>Facilities & Equipment</span>
+                </div>
+                <div class="service-item">
+                    <i class="fas fa-stethoscope"></i>
+                    <span>Medical Consulting</span>
+                </div>
+            </div>
+            <button class="btn">MORE ABOUT US</button>
+            <div class="doctor-profile">
+                <img src="images/aboutus-doctor_img.webp" alt="Doctor">
+                <div class="doctor-info">
+                    <h3>Dr. Esita Jabed</h3>
+                    <p>Mention the languages in which the staff.</p>
+                    <div class="rating">
+                        ★★★★★
+                        <span>+163 547 7965</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="contact-links">
+        <a href="mailto:info@contact.com"><i class="fas fa-envelope"></i> INFO@CONTACT.COM</a>
+        <a href="#"><i class="fas fa-calendar-alt"></i> BOOK HERE</a>
+    </div>
+</div>
+</section>
+
+
+<!--state section-->
+<section class="stats-section">
+    <div class="stats-container">
+        <div class="stat">
+            <h2 data-target="69000">0</h2>
+            <p>Satisfied Patients</p>
+        </div>
+        <div class="stat">
+            <h2 data-target="236">0</h2>
+            <p>Professional Doctors</p>
+        </div>
+        <div class="stat">
+            <h2 data-target="19000">0</h2>
+            <p>Operations Successful</p>
+        </div>
+        <div class="stat">
+            <h2 data-target="320">0</h2>
+            <p>National Awards Win</p>
+        </div>
+    </div>
+</section>
+<!--why choice us-->
+
+<section class="why-choose-us">
+    <h4 class="sub-title">WHY CHOOSE US</h4>
+    <h2 class="title">We Have 25 Years Experience In Medical Health Services</h2>
+
+    <div class="features-container">
+        <div class="feature-box">
+            <div class="icon-box">
+                <i class="fas fa-user-md front"></i>
+                <i class="fas fa-stethoscope back"></i>
+            </div>
+            <h3>Experience Doctor</h3>
+            <p>Our products are certified by reputable organic.</p>
+        </div>
+
+        <div class="feature-box">
+            <div class="icon-box">
+                <i class="fas fa-syringe front"></i>
+                <i class="fas fa-heartbeat back"></i>
+            </div>
+            <h3>Painless Treatment</h3>
+            <p>Our products are certified by reputable organic.</p>
+        </div>
+
+        <div class="feature-box">
+            <div class="icon-box">
+                <i class="fas fa-microscope front"></i>
+                <i class="fas fa-briefcase-medical back"></i>
+            </div>
+            <h3>Top Equipment</h3>
+            <p>Our products are certified by reputable organic.</p>
+        </div>
+
+        <div class="feature-box">
+            <div class="icon-box">
+                <i class="fas fa-clock front"></i>
+                <i class="fas fa-phone back"></i>
+            </div>
+            <h3>24/7 Advance Care</h3>
+            <p>Our products are certified by reputable organic.</p>
+        </div>
+    </div>
+</section>
+
+<!--team section-->
+<section class="team-section">
+    <div class="section-header">
+        <span class="label">OUR TEAM</span>
+        <h2>Best Dental Service For You</h2>
+    </div>
+    <div class="team-carousel">
+        <div class="carousel-container">
+            <div class="carousel-track">
+                <!-- Team Member 1 -->
+                <div class="team-card">
+                    <div class="card-image">
+                        <img src="images/d1.jpg" alt="Dr. Benjamin Evalent">
+                        <div class="social-icons">
+                            <a href="#"><img src="icons/facebook.png" alt="Facebook"></a>
+                            <a href="#"><img src="icons/linkedin (1).png" alt="LinkedIn"></a>
+                            <a href="#"><img src="icons/linkedin (1).png" alt="Twitter"></a>
+                        </div>
+                    </div>
+                    <h3>Dr. Benjamin Evalent</h3>
+                    <p>Physiotherapist</p>
+                </div>
+                <!-- Team Member 2 -->
+                <div class="team-card">
+                    <div class="card-image">
+                        <img src="images/d2.jpg" alt="Dr. Malcolm Function">
+                        <div class="social-icons">
+                            <a href="#"><img src="icons/facebook.png" alt="Facebook"></a>
+                            <a href="#"><img src="icons/linkedin (1).png" alt="LinkedIn"></a>
+                            <a href="#"><img src="icons/linkedin (1).png" alt="Twitter"></a>
+                        </div>
+                    </div>
+                    <h3>Dr. Malcolm Function</h3>
+                    <p>Neurologist</p>
+                </div>
+                <!-- Team Member 3 -->
+                <div class="team-card">
+                    <div class="card-image">
+                        <img src="images/d3.jpg" alt="Dr. Douglas Lyphe">
+                        <div class="social-icons">
+                            <a href="#"><img src="icons/facebook.png" alt="Facebook"></a>
+                            <a href="#"><img src="icons/linkedin (1).png" alt="LinkedIn"></a>
+                            <a href="#"><img src="icons/linkedin (1).png" alt="Twitter"></a>
+                        </div>
+                    </div>
+                    <h3>Dr. Douglas Lyphe</h3>
+                    <p>Physiotherapist</p>
+                </div>
+                <!-- Team Member 4 -->
+                <div class="team-card">
+                    <div class="card-image">
+                        <img src="images/d1.jpg" alt="Dr. Jane Doe">
+                        <div class="social-icons">
+                            <a href="#"><img src="icons/facebook.png" alt="Facebook"></a>
+                            <a href="#"><img src="icons/linkedin (1).png" alt="LinkedIn"></a>
+                            <a href="#"><img src="icons/linkedin (1).png" alt="Twitter"></a>
+                        </div>
+                    </div>
+                    <h3>Dr. Jane Doe</h3>
+                    <p>Dentist</p>
+                </div>
+                <!-- Duplicate cards for seamless looping -->
+                <div class="team-card">
+                    <div class="card-image">
+                        <img src="images/d2.jpg" alt="Dr. Benjamin Evalent">
+                        <div class="social-icons">
+                            <a href="#"><img src="icons/facebook.png" alt="Facebook"></a>
+                            <a href="#"><img src="icons/linkedin (1).png" alt="LinkedIn"></a>
+                            <a href="#"><img src="icons/linkedin (1).png" alt="Twitter"></a>
+                        </div>
+                    </div>
+                    <h3>Dr. Benjamin Evalent</h3>
+                    <p>Physiotherapist</p>
+                </div>
+            </div>
+        </div>
+      
+    </div>
+</section>
+<!--footer-->
+
+<footer class="footer">
+    <div class="footer-container">
+        <!-- Logo and Contact Section -->
+        <div class="footer-section">
+            <div class="logo">
+                <h2>MEDIAX</h2>
+                <p>HEALTHCARE</p>
+            </div>
+            <p class="subscribe-text">Subscribe to our newsletter today to receive latest news administrate cost effective for tactical data.</p>
+            <div class="contact-info">
+                <p><span class="icon">📍</span> 2478 Street City Ohio 90255</p>
+                <p><span class="icon">✉️</span> info@mediax.com</p>
+                <p><span class="icon">📞</span> +1 (402) 763 8246</p>
+            </div>
+        </div>
+
+        <!-- Quick Links Section -->
+        <div class="footer-section">
+            <h3>QUICK LINKS</h3>
+            <ul>
+                <li><a href="abouts.html">About Us</a></li>
+                <li><a href="#">Terms of Use</a></li>
+                <li><a href="contact.html">Our Services</a></li>
+                <li><a href="#">Help & FAQs</a></li>
+                <li><a href="blogs.html">Blog</a></li>
+                <li><a href="#">Privacy Policy</a></li>
+                <li><a href="contact.html">Contact Us</a></li>
+            </ul>
+        </div>
+
+        <!-- Popular Services Section -->
+        <div class="footer-section">
+            <h3>POPULAR SERVICE</h3>
+            <ul>
+                <li><a href="#">Cardiology Care</a></li>
+                <li><a href="#">Urgent Care</a></li>
+                <li><a href="#">Orthopedic Care</a></li>
+                <li><a href="#">Diagnosis department</a></li>
+                <li><a href="#">Gastroenterology</a></li>
+                <li><a href="#">Dental service</a></li>
+            </ul>
+        </div>
+
+        <!-- Branches Section -->
+        <div class="footer-section">
+            <h3>USA BRANCHES:</h3>
+            <p><span class="icon">📍</span> 1120 15th St BA 8412, Augusta, GA 30912, United States</p>
+            <p><span class="icon">📞</span> +170 6721 8623</p>
+            <h3>AUSTRALIA BRANCHES:</h3>
+            <p><span class="icon">📍</span> 260 Lygon St, Brunswick East VIC 3057, Australia</p>
+            <p><span class="icon">📞</span> +613 9988 2015</p>
+        </div>
+    </div>
+
+    <!-- Copyright and Social Media -->
+    <div class="footer-bottom">
+        <p>Copyright © 2024 Mediax. All Rights Reserved.</p>
+        <div class="social-icons-topnav">
+            <a href="#"><i class="fab fa-facebook-f"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-linkedin-in"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+        </div>
+      <!--  <div class="social-icons">
+            
+            <a href="#"><img src="facebook-icon.png" alt="Facebook"></a>
+            <a href="#"><img src="twitter-icon.png" alt="Twitter"></a>
+            <a href="#"><img src="linkedin-icon.png" alt="LinkedIn"></a>
+            <a href="#"><img src="whatsapp-icon.png" alt="WhatsApp"></a>
+        </div>-->
+    </div>
+</footer>
+    <!-- JavaScript -->
+    <script>
+        // Toggle mobile menu and switch between hamburger and close icons
+        const hamburger = document.querySelector('.hamburger');
+        const hamburgerIcon = hamburger.querySelector('i');
+        const navLinks = document.querySelector('.nav-links');
+
+        hamburger.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            hamburger.classList.toggle('active');
+            if (navLinks.classList.contains('active')) {
+                hamburgerIcon.classList.remove('fa-bars');
+                hamburgerIcon.classList.add('fa-times');
+            } else {
+                hamburgerIcon.classList.remove('fa-times');
+                hamburgerIcon.classList.add('fa-bars');
+            }
+        });
+
+        // Scroll behavior for top bar and navbar
+        let lastScrollTop = 0;
+        const topBar = document.querySelector('.top-bar');
+        const navbar = document.querySelector('.navbar');
+        const topBarHeight = topBar.offsetHeight;
+        const navbarHeight = navbar.offsetHeight;
+
+        window.addEventListener('scroll', () => {
+            let currentScrollTop = window.pageYOffset || document.documentElement.scrollTop;
+
+            if (currentScrollTop <= 0) {
+                // At the top of the page, always show the top bar and navbar
+                topBar.classList.remove('hidden');
+                navbar.classList.remove('hidden');
+            } else if (currentScrollTop > lastScrollTop) {
+                // Scrolling down - hide the top bar and navbar
+                topBar.classList.add('hidden');
+                navbar.classList.add('hidden');
+            } else {
+                // Scrolling up - show the top bar and navbar
+                topBar.classList.remove('hidden');
+                navbar.classList.remove('hidden');
+            }
+
+            lastScrollTop = currentScrollTop <= 0 ? 0 : currentScrollTop; // For Mobile or negative scrolling
+        });
+        //state secrtion
+
+        document.addEventListener("DOMContentLoaded", () => {
+            const statsContainer = document.querySelector(".stats-container");
+            const counters = document.querySelectorAll(".stat h2");
+
+            const animateCounter = (counter) => {
+                const target = parseInt(counter.getAttribute("data-target"));
+                const isKPlus = counter.textContent.includes("k+");
+                let count = 0;
+                const increment = target / 200;
+                const suffix = isKPlus ? "k+" : "+";
+
+                const updateCounter = () => {
+                    count += increment;
+                    if (count >= target) {
+                        count = target;
+                        counter.textContent = isKPlus ? `${Math.floor(target / 1000)}${suffix}` : `${Math.floor(target)}${suffix}`;
+                        return;
+                    }
+                    counter.textContent = isKPlus ? `${Math.floor(count / 1000)}${suffix}` : `${Math.floor(count)}${suffix}`;
+                    setTimeout(updateCounter, 10);
+                };
+
+                updateCounter();
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        counters.forEach(counter => {
+                            animateCounter(counter);
+                        });
+                        observer.unobserve(statsContainer);
+                    }
+                });
+            });
+
+            observer.observe(statsContainer);
+        });
+
+
+         //team section
+         document.addEventListener('DOMContentLoaded', () => {
+            const track = document.querySelector('.carousel-track');
+            const cards = document.querySelectorAll('.team-card');
+            const leftArrow = document.querySelector('.left-arrow');
+            const rightArrow = document.querySelector('.right-arrow');
+            let currentIndex = 0;
+            const cardWidth = cards[0].offsetWidth + 16; // Including margin (8px on each side)
+            const totalCards = cards.length;
+            const visibleCards = 4;
+
+            // Auto-scroll functionality
+            let autoScroll = setInterval(() => {
+                currentIndex++;
+                if (currentIndex >= totalCards - visibleCards + 1) {
+                    currentIndex = 0;
+                    track.style.transition = 'none';
+                    track.style.transform = `translateX(0)`;
+                    setTimeout(() => {
+                        track.style.transition = 'transform 0.5s ease-in-out';
+                    }, 50);
+                } else {
+                    track.style.transform = `translateX(-${currentIndex * cardWidth}px)`;
+                }
+            }, 3000);
+        });
+
+    </script>
+</body>
+</html>

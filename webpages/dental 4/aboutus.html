@@ -1,0 +1,1319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #2196f3;
+            --secondary-color: #4dd0e1;
+            --text-color: #333;
+            --white: #fff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            overflow-x: hidden;
+        }
+
+        /* Header Styles */
+        header {
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 5%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .logo img {
+            height: 50px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 500;
+            transition: color 0.3s;
+            white-space: nowrap;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--primary-color);
+        }
+
+        .contact-info {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .phone {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+        }
+
+        .phone span {
+            font-size: 0.8rem;
+            color: #666;
+        }
+
+        .phone a {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .book-now {
+            background: var(--primary-color);
+            color: var(--white);
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: background-color 0.3s;
+            white-space: nowrap;
+        }
+
+        .book-now:hover {
+            background: #1976d2;
+        }
+
+        /* Mobile Menu */
+        .mobile-menu-btn {
+            display: none;
+            flex-direction: column;
+            gap: 6px;
+            cursor: pointer;
+            z-index: 1001;
+        }
+
+        .mobile-menu-btn span {
+            width: 30px;
+            height: 3px;
+            background: var(--text-color);
+            transition: 0.3s;
+        }
+
+        /* About Us Section */
+        .about-us-section {
+            position: relative;
+            width: 100%;
+            min-height: 200px;
+            background: url('images/dental_section.jpg') no-repeat center center/cover; /* Replace with your image URL */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            margin-top: 10px;
+        }
+
+        .about-us-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 123, 0.7); /* Blue overlay similar to the image */
+            z-index: 1;
+        }
+
+        .about-us-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            color: #fff;
+            padding: 20px;
+        }
+
+        .about-us-content h2 {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+
+        .about-us-content p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1200px) {
+            .nav-links {
+                gap: 1rem;
+            }
+        }
+
+        @media (max-width: 992px) {
+            .nav-links {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                height: 100vh;
+                width: 70%;
+                max-width: 400px;
+                background: var(--white);
+                flex-direction: column;
+                padding: 80px 2rem;
+                transition: 0.3s;
+                box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
+            }
+
+            .nav-links.active {
+                right: 0;
+            }
+
+            .contact-info {
+                display: none;
+            }
+
+            .mobile-menu-btn {
+                display: flex;
+            }
+
+            .mobile-menu-btn.active span:nth-child(1) {
+                transform: rotate(45deg) translate(8px, 8px);
+            }
+
+            .mobile-menu-btn.active span:nth-child(2) {
+                opacity: 0;
+            }
+
+            .mobile-menu-btn.active span:nth-child(3) {
+                transform: rotate(-45deg) translate(7px, -7px);
+            }
+        }
+
+        @media (max-width: 1024px) {
+            .about-us-content h2 {
+                font-size: 2rem;
+            }
+
+            .about-us-content p {
+                font-size: 1rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .about-us-section {
+                min-height: 150px;
+            }
+
+            .about-us-content h2 {
+                font-size: 1.5rem;
+            }
+
+            .about-us-content p {
+                font-size: 0.9rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .about-us-section {
+                min-height: 120px;
+            }
+
+            .about-us-content h2 {
+                font-size: 1.2rem;
+            }
+
+            .about-us-content p {
+                font-size: 0.8rem;
+            }
+        }
+
+        /* Ensure content is not hidden under fixed header */
+        main {
+            padding-top: 80px;
+        }
+
+
+        
+        /*abouts*/
+        .abouts_us{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container-abouts {
+            max-width: 1200px;
+            width: 100%;
+            background: #fff;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .image-section {
+            flex: 1;
+            min-width: 300px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .image-section img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .counter {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: #007bff;
+            color: #fff;
+            border-radius: 50%;
+            width: 120px;
+            height: 120px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 2rem;
+            font-weight: bold;
+            box-shadow: 0 4px 10px rgba(0, 123, 255, 0.3);
+        }
+
+        .text-section {
+            flex: 1;
+            min-width: 300px;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            background: #fff;
+        }
+
+        .header {
+            color: #007bff;
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .title {
+            color: #333;
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+
+        .description {
+            color: #666;
+            font-size: 1rem;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+
+        .info-box {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .info-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 200px;
+            text-align: center;
+        }
+
+        .info-icon {
+            background: #007bff;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 10px;
+            transition: transform 0.3s;
+        }
+
+        .info-icon:hover {
+            transform: scale(1.1);
+        }
+
+        .info-icon i {
+            color: #fff;
+            font-size: 1.5rem;
+        }
+
+        .info-text h3 {
+            color: #333;
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .info-text p {
+            color: #666;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        .action-row {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 12px 25px;
+            background: #007bff;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 20px;
+            font-size: 1rem;
+            font-weight: 500;
+            transition: background 0.3s, transform 0.3s;
+        }
+
+        .btn:hover {
+            background: #0056b3;
+            transform: translateY(-2px);
+        }
+
+        .contact {
+            color: #007bff;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-weight: 500;
+        }
+
+        .contact i {
+            font-size: 1.2rem;
+        }
+
+        @media (max-width: 768px) {
+            .container-abouts {
+                flex-direction: column;
+            }
+            .image-section {
+                height: 300px;
+            }
+            .counter {
+                width: 80px;
+                height: 80px;
+                font-size: 1.5rem;
+            }
+            .text-section {
+                padding: 20px;
+            }
+            .header {
+                font-size: 1rem;
+            }
+            .title {
+                font-size: 2rem;
+            }
+            .info-box {
+                gap: 20px;
+            }
+            .info-item {
+                width: 150px;
+            }
+            .info-icon {
+                width: 50px;
+                height: 50px;
+            }
+            .info-icon i {
+                font-size: 1.2rem;
+            }
+            .info-text h3 {
+                font-size: 1rem;
+            }
+            .info-text p {
+                font-size: 0.8rem;
+            }
+            .btn {
+                padding: 10px 20px;
+            }
+        }
+
+         /*why choice us*/
+         .Why-section {
+            position: relative;
+            width: 100%;
+            height: 500px;
+            background: url('https://via.placeholder.com/1200x500') no-repeat center center/cover; /* Replace with dental office image */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-align: center;
+            overflow: hidden;
+            position: relative;
+            
+        }
+
+        .Why-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.3); /* Slight overlay for text readability */
+        }
+
+        .Why-content {
+            position: relative;
+            z-index: 1;
+            padding: 20px;
+        }
+
+        .Why-content h1 {
+            font-size: clamp(2rem, 5vw, 3rem);
+            margin-bottom: 10px;
+            font-weight: bold;
+            color: #fff;
+        }
+
+        .Why-content p {
+            font-size: clamp(1rem, 2vw, 1.2rem);
+            margin-bottom: 20px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            color: #fff;
+        }
+
+        .Why-content .discover-btn {
+            background: #fff;
+            color: #007bff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            text-decoration: none;
+            transition: background 0.3s;
+        }
+
+        .Why-content .discover-btn:hover {
+            background: #e0e0e0;
+        }
+
+        .play-button {
+            position: absolute;
+            top: 15%; /* Adjusted to align with text middle, slightly above center */
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 50%;
+            width: 80px;
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 2;
+            overflow: hidden;
+        }
+
+        .play-button:hover {
+            transform: translate(-50%, -50%) scale(1.1);
+        }
+
+        .play-button::after {
+            content: '';
+            width: 0;
+            height: 0;
+            border-left: 25px solid #007bff;
+            border-top: 15px solid transparent;
+            border-bottom: 15px solid transparent;
+            z-index: 3;
+        }
+
+        /* Wave Animation */
+        .play-button::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            animation: wave 2s infinite ease-out;
+            z-index: 1;
+        }
+
+        @keyframes wave {
+            0% {
+                transform: scale(0);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(2);
+                opacity: 0;
+            }
+        }
+
+        .stats-section {
+            background: #007bff;
+            color: white;
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 10px;
+            border-bottom-left-radius: 60px;
+            border-bottom-right-radius:60px;
+            position: relative;
+            top: -20px;
+            box-shadow: 0 -5px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat h2 {
+            font-size: clamp(1.5rem, 4vw, 2.5rem);
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .stat p {
+            font-size: clamp(0.9rem, 2vw, 1.1rem);
+            opacity: 0.9;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Video Popup */
+        .video-popup {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .video-popup-content {
+            position: relative;
+            width: 80%;
+            max-width: 800px;
+            height: 450px;
+        }
+
+        .video-popup iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: -15px;
+            right: -15px;
+            background: #fff;
+            border: none;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            font-size: 20px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #000;
+        }
+
+        /* Responsive Design */
+        @media only screen and (max-width: 600px) {
+            .Why-section {
+                height: 300px;
+               
+            }
+            .Why-content{
+                top: 7%;
+            }
+            .Why-content h1 {
+                font-size: 1.5rem;
+            }
+            .Why-content p {
+                font-size: 0.9rem;
+            }
+            .play-button {
+                width: 60px;
+                height: 60px;
+                top: 12%;
+            }
+            .play-button::after {
+                border-left-width: 20px;
+                border-top-width: 10px;
+                border-bottom-width: 10px;
+            }
+            .play-button::before {
+                animation: wave 2s infinite ease-out;
+            }
+            .stats-section {
+                flex-direction: column;
+                text-align: center;
+                padding: 15px;
+            }
+            .stat {
+                margin: 10px 0;
+            }
+        }
+
+        @media only screen and (min-width: 600px) and (max-width: 1200px) {
+            .Why-section {
+                height: 400px;
+               
+            }
+            
+            .play-button {
+                top: 12%; /* Consistent with desktop, slightly above center */
+            }
+            .Why-content{
+                margin-top: 5%;
+            }
+            .stats-section {
+                padding: 25px;
+            }
+            .stat h2 {
+                font-size: 2rem;
+            }
+            .stat p {
+                font-size: 1rem;
+            }
+        }
+        /* iPhone 5 Portrait (Default Orientation) */
+        @media only screen and (max-width: 380px) {
+            .play-button {
+                top: 12%; /* Consistent with desktop, slightly above center */
+            }
+            
+        }
+
+        /*team section*/
+        .team-section {
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .team-header {
+            margin-bottom: 40px;
+        }
+
+        .team-header a {
+            color: #1da1f2;
+            text-decoration: none;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .team-header h2 {
+            font-size: 2rem;
+            color: #333;
+        }
+
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            justify-items: center;
+        }
+
+        .team-member {
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            width: 100%;
+            max-width: 300px;
+        }
+
+        .team-member img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 15px;
+        }
+
+        .team-member h3 {
+            font-size: 1.5rem;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .team-member p {
+            font-size: 1rem;
+            color: #666;
+        }
+
+        .social-links {
+            margin-top: 10px;
+        }
+
+        .social-links a {
+            color: #1da1f2;
+            margin: 0 5px;
+            text-decoration: none;
+            font-size: 1.5rem;
+        }
+
+        @media (max-width: 600px) {
+            .team-header h2 {
+                font-size: 1.5rem;
+            }
+
+            .team-member img {
+                width: 120px;
+                height: 120px;
+            }
+
+            .team-member h3 {
+                font-size: 1.2rem;
+            }
+
+            .team-member p {
+                font-size: 0.9rem;
+            }
+
+            .social-links a {
+                font-size: 1.2rem;
+            }
+        }
+        /*footer*/
+        .footer {
+    padding: 50px 20px;
+    background: linear-gradient(135deg, #f5f7fa 0%, #e0e7ff 100%);
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+    
+}
+
+@media (max-width: 320px) {
+    .footer {
+        margin-top: 15%;
+    }
+}
+
+.footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 30px;
+}
+
+.footer-section {
+    flex: 1;
+    min-width: 200px;
+    transition: transform 0.3s ease;
+}
+
+.footer-section:hover {
+    transform: translateY(-5px);
+}
+
+.footer-section h3 {
+    color: #1e90ff;
+    margin-bottom: 20px;
+    font-size: 1.3em;
+    position: relative;
+}
+
+.footer-section h3::before {
+    content: '🦷';
+    margin-right: 8px;
+}
+
+.footer-section p {
+    color: #555;
+    font-size: 0.95em;
+    line-height: 1.8;
+}
+
+.footer-section ul {
+    list-style: none;
+}
+
+.footer-section ul li {
+    margin-bottom: 15px;
+}
+
+.footer-section ul li a {
+    color: #1e90ff;
+    text-decoration: none;
+    font-size: 0.95em;
+    transition: color 0.3s ease;
+}
+
+.footer-section ul li a:hover {
+    color: #ff4500;
+    text-decoration: underline;
+}
+
+.newsletter {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    text-align: center;
+}
+
+.newsletter h3 {
+    color: #333;
+    font-size: 1.1em;
+    margin-bottom: 0;
+}
+
+.newsletter button {
+    padding: 12px 25px;
+    background: linear-gradient(90deg, #1e90ff, #ff4500);
+    color: white;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 1em;
+    box-shadow: 0 4px 15px rgba(30, 144, 255, 0.3);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.newsletter button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 20px rgba(30, 144, 255, 0.5);
+}
+
+.tooth-image {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    opacity: 0.15;
+    width: 250px;
+    z-index: -1;
+    transition: opacity 0.3s ease;
+}
+
+.footer-bottom {
+    text-align: center;
+    padding: 20px 0;
+    font-size: 0.85em;
+    color: #666;
+    border-top: 1px solid #ddd;
+    margin-top: 30px;
+    background: rgba(255, 255, 255, 0.8);
+}
+
+.social-icons {
+    margin-top: 10px;
+}
+
+.social-icons a {
+    margin: 0 10px;
+    color: #1e90ff;
+    font-size: 1.5em;
+    transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.social-icons a:hover {
+    transform: scale(1.2);
+    color: #ff4500;
+}
+
+@media (max-width: 768px) {
+    .footer-content {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .newsletter {
+        margin-top: 30px;
+    }
+
+    .tooth-image {
+        display: none;
+    }
+
+    .footer-section:hover {
+        transform: none;
+    }
+}
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">
+                <img src="https://placehold.co/150x50/white/blue?text=LuxeDent" alt="LuxeDent Logo">
+            </div>
+            <div class="nav-links">
+                <a href="index.html" >Home</a>
+                <a href="aboutus.html" class="active">About us</a>
+                <a href="services.html">Services</a>
+                <a href="contact.html">Contact us</a>
+                <a href="#">Pages</a>
+            </div>
+            <div class="contact-info">
+                <div class="phone">
+                    <span>Free Consultations</span>
+                    <a href="tel:(888) 4000-2424">(888) 4000-2424</a>
+                </div>
+                <button class="book-now">Book Now!</button>
+            </div>
+            <div class="mobile-menu-btn">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="about-us-section">
+            <div class="about-us-overlay"></div>
+            <div class="about-us-content">
+                <h2>About us</h2>
+                <p>Flexible Payment Options Designed for Your Ultimate Convenience</p>
+            </div>
+        </section>
+
+     <!--abouts us-->
+<section class="abouts_us">
+    <div class="container-abouts">
+        <div class="image-section">
+            <img src="images/dental_section.jpg" alt="Dental Care">
+            <div class="counter" id="counter">0</div>
+        </div>
+        <div class="text-section">
+            <div class="header">DENTAL CENTER</div>
+            <div class="title">Passion for Excellence, Commitment to Care.</div>
+            <div class="description">
+                Aliquam pellentesque quam Aenean bibendum mollis per. Duis non rhoncus vulputate maximus enim ornatre. Diam eu id rutrum lobortis netus neque integer venenatis letus libero a.
+            </div>
+            <div class="info-box">
+                <div class="info-item">
+                    <div class="info-icon">
+                        <i class="fas fa-puzzle-piece"></i>
+                    </div>
+                    <div class="info-text">
+                        <h3>Our Vision</h3>
+                        <p>Parturient purus vestibulum nulla taciti hendrerit felis ultricies enim himenaeos.</p>
+                    </div>
+                </div>
+                <div class="info-item">
+                    <div class="info-icon">
+                        <i class="fas fa-globe"></i>
+                    </div>
+                    <div class="info-text">
+                        <h3>Our Mission</h3>
+                        <p>Parturient purus vestibulum nulla taciti hendrerit felis ultricies enim himenaeos.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="action-row">
+                <a href="#" class="btn">Book an Appointment</a>
+                <div class="contact">
+                    <i class="fas fa-phone"></i> (888) 4000-3434
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!--why-->
+<section class="Why-section">
+    <div class="Why-overlay"></div>
+    <div class="Why-content">
+        <h1>Discover Why Patients Choose Us for Dental Care</h1>
+        <p>Utrique quam mattis posuere porttitor tellus moncus tristique. Primis aliquam dignissim interdum vel suscipsit sodales.</p>
+        <a href="#" class="discover-btn">Discover More</a>
+    </div>
+    <div class="play-button" onclick="openVideoPopup()"></div>
+</section>
+
+<section class="stats-section">
+    <div class="stat">
+        <h2 id="counter1">0</h2>
+        <p>Project Done</p>
+    </div>
+    <div class="stat">
+        <h2 id="counter2">0</h2>
+        <p>Happy Clients</p>
+    </div>
+    <div class="stat">
+        <h2 id="counter3">0</h2>
+        <p>Company Support</p>
+    </div>
+    <div class="stat">
+        <h2 id="counter4">0</h2>
+        <p>Client Reviews</p>
+    </div>
+</section>
+
+<div class="video-popup" id="videoPopup">
+    <div class="video-popup-content">
+        <button class="close-btn" onclick="closeVideoPopup()">×</button>
+        <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" frameborder="0" allowfullscreen></iframe>
+    </div>
+</div>
+
+<!--team section-->
+<div class="team-section">
+    <div class="team-header">
+        <a href="#">MEET OUR TEAM</a>
+        <h2>We talk a lot about hope helping and teamwork.</h2>
+    </div>
+    <div class="team-grid">
+        <div class="team-member">
+            <img src="images/doctor.webp" alt="Oscar Andrews">
+            <h3>Oscar Andrews</h3>
+            <p>Founder</p>
+            <div class="social-links">
+                <a href="#" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" target="_blank"><i class="fab fa-twitter"></i></a>
+                <a href="#" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+            </div>
+        </div>
+        <div class="team-member">
+            <img src="images/doctor.webp" alt="Jenson Newman">
+            <h3>Jenson Newman</h3>
+            <p>Co-Founder</p>
+            <div class="social-links">
+                <a href="#" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" target="_blank"><i class="fab fa-twitter"></i></a>
+                <a href="#" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+            </div>
+        </div>
+        <div class="team-member">
+            <img src="images/doctor.webp" alt="Isobel Francis">
+            <h3>Isobel Francis</h3>
+            <p>Dentist</p>
+            <div class="social-links">
+                <a href="#" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" target="_blank"><i class="fab fa-twitter"></i></a>
+                <a href="#" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+            </div>
+        </div>
+        <div class="team-member">
+            <img src="images/doctor.webp" alt="Cameron Hall">
+            <h3>Cameron Hall</h3>
+            <p>Dentist</p>
+            <div class="social-links">
+                <a href="#" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" target="_blank"><i class="fab fa-twitter"></i></a>
+                <a href="#" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--footer-->
+<footer class="footer">
+    <div class="footer-content">
+        <div class="footer-section">
+            <h3>LuxeDent</h3>
+            <p>Providing expert dental care with a focus on comfort, precision, and lasting smiles. Your trusted partner for brighter, healthier teeth.</p>
+            <p><span style="color: #1e90ff;">📞</span> Customer Support<br><strong>(888) 4000-2424</strong></p>
+        </div>
+        <div class="footer-section">
+            <h3>Services</h3>
+            <ul>
+                <li><a href="#">General Dentistry</a></li>
+                <li><a href="#">Cosmetic Dentistry</a></li>
+                <li><a href="#">Orthodontics</a></li>
+                <li><a href="#">Pediatric Dentistry</a></li>
+                <li><a href="#">Oral Surgery</a></li>
+                <li><a href="#">Periodontal Care</a></li>
+            </ul>
+        </div>
+        <div class="footer-section">
+            <h3>Company</h3>
+            <ul>
+                <li><a href="aboutus.html">About us</a></li>
+                <li><a href="#">Our Doctors</a></li>
+                <li><a href="#">Careers</a></li>
+                <li><a href="#">Article & News</a></li>
+                <li><a href="#">Legal Notices</a></li>
+            </ul>
+        </div>
+        <div class="footer-section newsletter">
+            <h3>Sign up our newsletter to get updates, news, and promotions!</h3>
+            <button>Sign Up</button>
+        </div>
+    </div>
+    <img src="https://via.placeholder.com/250x250" alt="Tooth Image" class="tooth-image">
+    <div class="footer-bottom">
+        <p>Copyright© 2025 LuxeDent. All rights reserved. Powered by MoxCreative.</p>
+        <div class="social-icons">
+            <a href="#" aria-label="Twitter"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 3a10.9 10.9 0 0 1-3.14 2.6 4.75 4.75 0 0 0-7.22 3.67A13.7 13.7 0 0 1 3.27 3a4.77 4.77 0 0 0-.64 2.39A4.75 4.75 0 0 0 4.76 10a4.73 4.73 0 0 1-2.15-.6v.06a4.75 4.75 0 0 0 3.81 4.66A4.78 4.78 0 0 1 2 14.2a4.74 4.74 0 0 0 4.75 4.75 9.5 9.5 0 0 1-5.88 2.03c-.39 0-.77-.02-1.15-.07a13.35 13.35 0 0 0 7.28 2.13c8.74 0 13.53-7.24 13.53-13.53 0-.2 0-.4-.01-.6A9.68 9.68 0 0 0 23 3z"/></svg></a>
+            <a href="#" aria-label="Instagram"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.5" y2="6.5"></line></svg></a>
+            <a href="#" aria-label="YouTube"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"></path><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"></polygon></svg></a>
+        </div>
+    </div>
+</footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Mobile menu functionality
+            const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+            const navLinks = document.querySelector('.nav-links');
+            
+            mobileMenuBtn.addEventListener('click', function() {
+                navLinks.classList.toggle('active');
+                this.classList.toggle('active');
+            });
+
+            // Close mobile menu when clicking outside
+            document.addEventListener('click', function(e) {
+                if (!navLinks.contains(e.target) && !mobileMenuBtn.contains(e.target)) {
+                    navLinks.classList.remove('active');
+                    mobileMenuBtn.classList.remove('active');
+                }
+            });
+
+            // Smooth scroll for navigation links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth'
+                        });
+                        // Close mobile menu after clicking a link
+                        navLinks.classList.remove('active');
+                        mobileMenuBtn.classList.remove('active');
+                    }
+                });
+            });
+        });
+
+         //aboutus
+         const counter = document.getElementById('counter');
+        let count = 0;
+        const target = 25;
+        const duration = 2000; // 2 seconds
+        const increment = target / (duration / 100); // Increment per 100ms
+
+        function updateCounter() {
+            if (count < target) {
+                count += increment;
+                counter.textContent = Math.floor(count) + '+';
+                setTimeout(updateCounter, 100);
+            } else {
+                counter.textContent = target + '+';
+            }
+        }
+
+        // Start the counter animation
+        updateCounter();
+
+
+
+         //why choices us
+          // Counter Animation
+          function startCounters() {
+            const counters = [
+                { id: 'counter1', target: 91, suffix: 'K+' },
+                { id: 'counter2', target: 84, suffix: 'K+' },
+                { id: 'counter3', target: 42, suffix: '+' },
+                { id: 'counter4', target: 4.7, suffix: '' }
+            ];
+
+            counters.forEach(counter => {
+                let current = 0;
+                const element = document.getElementById(counter.id);
+                const increment = counter.target / 100;
+                const duration = 2000;
+
+                const updateCounter = () => {
+                    if (current < counter.target) {
+                        current += increment;
+                        element.textContent = current < counter.target ? Math.ceil(current) + counter.suffix : counter.target + counter.suffix;
+                        setTimeout(updateCounter, duration / 100);
+                    }
+                };
+                updateCounter();
+            });
+        }
+
+        // Video Popup
+        function openVideoPopup() {
+            document.getElementById('videoPopup').style.display = 'flex';
+        }
+
+        function closeVideoPopup() {
+            document.getElementById('videoPopup').style.display = 'none';
+            const iframe = document.querySelector('.video-popup iframe');
+            iframe.src = iframe.src; // Reload to stop video
+        }
+
+        // Start counters when section is in view
+        window.addEventListener('scroll', () => {
+            const section = document.querySelector('.stats-section');
+            const rect = section.getBoundingClientRect();
+            if (rect.top >= 0 && rect.top <= window.innerHeight) {
+                startCounters();
+                window.removeEventListener('scroll', arguments.callee); // Run once
+            }
+        });
+
+        // Start counters on page load if section is already in view
+        window.addEventListener('load', () => {
+            const section = document.querySelector('.stats-section');
+            const rect = section.getBoundingClientRect();
+            if (rect.top >= 0 && rect.top <= window.innerHeight) {
+                startCounters();
+            }
+        });
+
+    </script>
+</body>
+</html>

