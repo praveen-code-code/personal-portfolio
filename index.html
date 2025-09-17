@@ -26,6 +26,15 @@
 </head>
 
 <body>
+<<<<<<< HEAD
+  <!-- Moving dots background (place first inside <body>) -->
+<canvas id="dotsCanvas" aria-hidden="true"></canvas>
+<div id="content-wrapper"><!-- keep your existing page content inside this wrapper -->
+  <!-- existing header / sections / charts ... -->
+</div>
+
+=======
+>>>>>>> 314714bf7b26658104083996044cc043aa068d0b
 
   <!--
     - #MAIN
@@ -88,7 +97,11 @@
           <div class="contact-info">
               <p class="contact-title">Phone</p>
 
+<<<<<<< HEAD
+              <a href="+918" class="contact-link">+91 </a>
+=======
               <a href="+918688583324" class="contact-link">+91 8688583324</a>
+>>>>>>> 314714bf7b26658104083996044cc043aa068d0b
             </div>
 
           </li>--> 
@@ -698,17 +711,28 @@ functionality.
     <ul class="project-list">
 
       <li class="project-item active" data-filter-item data-category="data analyst">
+<<<<<<< HEAD
+        <a href="Data _analysis/project_1/project_1.html">
+=======
         <a href="#">
+>>>>>>> 314714bf7b26658104083996044cc043aa068d0b
 
           <figure class="project-img">
             <div class="project-item-icon-box">
               <ion-icon name="eye-outline"></ion-icon>
             </div>
 
+<<<<<<< HEAD
+            <img src="thamb/project_1.png" alt="finance" loading="lazy">
+          </figure>
+
+          <h3 class="project-title">Retail Sales Analysis Using Excel And Tableau</h3>
+=======
             <img src="./assets/images/project-1.jpg" alt="finance" loading="lazy">
           </figure>
 
           <h3 class="project-title">comming soon.....</h3>
+>>>>>>> 314714bf7b26658104083996044cc043aa068d0b
 
           <p class="project-category">Data Analyst</p>
 
@@ -790,17 +814,28 @@ functionality.
       </li>
 
       <li class="project-item active" data-filter-item data-category="data analyst">
+<<<<<<< HEAD
+        <a href="Data _analysis/project_2/project_2.html">
+=======
         <a href="#">
+>>>>>>> 314714bf7b26658104083996044cc043aa068d0b
 
           <figure class="project-img">
             <div class="project-item-icon-box">
               <ion-icon name="eye-outline"></ion-icon>
             </div>
 
+<<<<<<< HEAD
+            <img src="thamb/project_2.png" alt="summary" loading="lazy">
+          </figure>
+
+          <h3 class="project-title">Bike Trip Trends Analysis Using Excel And Tableau</h3>
+=======
             <img src="./assets/images/project-7.png" alt="summary" loading="lazy">
           </figure>
 
           <h3 class="project-title">comming soon...</h3>
+>>>>>>> 314714bf7b26658104083996044cc043aa068d0b
 
           <p class="project-category">Data Analyst</p>
 
@@ -861,6 +896,28 @@ functionality.
 
         </a>
       </li>
+<<<<<<< HEAD
+
+       <li class="project-item active" data-filter-item data-category="data analyst">
+        <a href="Data _analysis/project_3/index.html">
+
+          <figure class="project-img">
+            <div class="project-item-icon-box">
+              <ion-icon name="eye-outline"></ion-icon>
+            </div>
+
+            <img src="thamb/project_3.png" alt="summary" loading="lazy">
+          </figure>
+
+          <h3 class="project-title">Movie Ratings Analysis Using SQL And Tableau</h3>
+
+          <p class="project-category">Data Analyst</p>
+
+        </a>
+      </li>
+
+=======
+>>>>>>> 314714bf7b26658104083996044cc043aa068d0b
        <li class="project-item active" data-filter-item data-category="cyber security">
         <a href="pages/webhacking.html">
 
@@ -1157,7 +1214,140 @@ functionality.
   -->
   <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
   <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+<<<<<<< HEAD
+<script>
+(function () {
+  const canvas = document.getElementById('dotsCanvas');
+  const ctx = canvas.getContext('2d', { alpha: true });
 
+  let cw, ch, particles = [], mouse = { x: null, y: null };
+
+  // config: tweak for performance / density
+  const CONFIG = {
+    particleCount: Math.round((window.innerWidth * window.innerHeight) / 70000), // density scale
+    maxRadius: 2.6,
+    minRadius: 0.9,
+    speed: 0.3,
+    linkDistance: 120,
+    linkAlpha: 0.15
+  };
+
+  function resize() {
+    cw = canvas.width = window.innerWidth;
+    ch = canvas.height = window.innerHeight;
+  }
+
+  window.addEventListener('resize', () => {
+    resize();
+    initParticles();
+  });
+
+  // optional: follow mouse lightly
+  window.addEventListener('mousemove', (e) => {
+    mouse.x = e.clientX;
+    mouse.y = e.clientY;
+  });
+  window.addEventListener('mouseout', () => {
+    mouse.x = null;
+    mouse.y = null;
+  });
+
+  function rand(min, max) { return Math.random() * (max - min) + min; }
+
+  function createParticle() {
+    const r = rand(CONFIG.minRadius, CONFIG.maxRadius);
+    return {
+      x: Math.random() * cw,
+      y: Math.random() * ch,
+      vx: rand(-CONFIG.speed, CONFIG.speed),
+      vy: rand(-CONFIG.speed, CONFIG.speed),
+      r: r,
+      alpha: rand(0.4, 0.95)
+    };
+  }
+
+  function initParticles() {
+    particles = [];
+    const count = Math.max(8, CONFIG.particleCount); // minimum particles
+    for (let i = 0; i < count; i++) particles.push(createParticle());
+  }
+
+  function draw() {
+    ctx.clearRect(0, 0, cw, ch);
+
+    // draw links
+    for (let i = 0; i < particles.length; i++) {
+      for (let j = i + 1; j < particles.length; j++) {
+        const p1 = particles[i], p2 = particles[j];
+        const dx = p1.x - p2.x, dy = p1.y - p2.y;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist < CONFIG.linkDistance) {
+          const alpha = (1 - dist / CONFIG.linkDistance) * CONFIG.linkAlpha * p1.alpha * p2.alpha;
+          ctx.beginPath();
+          ctx.strokeStyle = `rgba(244,162,97,${alpha})`; // accent color (change if needed)
+          ctx.lineWidth = 1;
+          ctx.moveTo(p1.x, p1.y);
+          ctx.lineTo(p2.x, p2.y);
+          ctx.stroke();
+        }
+      }
+    }
+
+    // draw particles
+    for (const p of particles) {
+      ctx.beginPath();
+      ctx.fillStyle = `rgba(244,162,97,${p.alpha})`; // dot color
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      ctx.fill();
+    }
+  }
+
+  function update() {
+    for (const p of particles) {
+      // simple movement and boundary bounce
+      p.x += p.vx;
+      p.y += p.vy;
+
+      if (p.x < -10) p.x = cw + 100;
+      if (p.x > cw + 10) p.x = -100;
+      if (p.y < -10) p.y = ch + 100;
+      if (p.y > ch + 10) p.y = -100;
+
+      // slight attraction to mouse for interactivity
+      if (mouse.x !== null && mouse.y !== null) {
+        const dx = (mouse.x - p.x), dy = (mouse.y - p.y);
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist < 120) {
+          p.x -= dx * 0.050; // small repulsion/attraction effect
+          p.y -= dy * 0.002;
+        }
+      }
+    }
+  }
+
+  // animation loop with requestAnimationFrame
+  let rafId;
+  function loop() {
+    update();
+    draw();
+    rafId = requestAnimationFrame(loop);
+  }
+
+  // init
+  resize();
+  initParticles();
+  loop();
+
+  // cleanup if needed (not strictly necessary on single-page)
+  window.addEventListener('visibilitychange', () => {
+    if (document.hidden) cancelAnimationFrame(rafId);
+    else loop();
+  });
+})();
+</script>
+=======
+
+>>>>>>> 314714bf7b26658104083996044cc043aa068d0b
 </body>
 
 </html>
