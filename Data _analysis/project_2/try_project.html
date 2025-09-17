@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Practice: Bike Trip Trends Analysis - Pati Praveen Portfolio</title>
+  <style>
+    :root {
+      --bg: #0f1720;
+      --card: #181a1e;
+      --accent: #f4a261;
+      --muted: #94a3b8;
+      --accent-2: #2a9d8f;
+      --paper: #0f1720;
+      --white: #ffffff;
+    }
+
+    html, body {
+      height: 100%;
+      margin: 0;
+      font-family: Inter, Segoe UI, Roboto, Arial, sans-serif;
+      background: linear-gradient(180deg, #07101a 0%, #0f1720 100%);
+      color: var(--white);
+      font-size: 14px;
+    }
+
+    header {
+      background: linear-gradient(90deg, #081826 0%, #0d1b2a 100%);
+      padding: 1rem;
+      position: sticky;
+      top: 0;
+      z-index: 60;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.45);
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .logo .dot {
+      width: 2.25rem;
+      height: 2.25rem;
+      border-radius: 0.5rem;
+      background: linear-gradient(135deg, var(--accent), #e76f51);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      color: #081826;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: clamp(1rem, 2.5vw, 1.125rem);
+      color: var(--accent);
+    }
+
+    .container {
+      max-width: 100%;
+      margin: 1rem auto;
+      padding: 0 1rem; /* Added padding to container for right and left spacing */
+    }
+
+    .hero {
+      background: linear-gradient(180deg, rgba(244,162,97,0.06), rgba(42,157,143,0.03));
+      border-radius: 0.75rem;
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.625rem;
+    }
+
+    .hero h2 {
+      margin: 0;
+      color: var(--accent);
+      font-size: clamp(1.25rem, 3vw, 1.375rem);
+    }
+
+    .hero p {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1rem;
+      margin-top: 1.125rem;
+      padding: 0 1rem; /* Added padding to grid for right and left spacing */
+    }
+
+    .card {
+      background: var(--card);
+      border-radius: 0.625rem;
+      padding: 1rem;
+      color: var(--white);
+      box-shadow: 0 6px 20px rgba(2,6,23,0.6);
+    }
+
+    .section-title {
+      color: var(--accent);
+      margin: 0 0 0.625rem;
+      font-size: clamp(1rem, 2.5vw, 1.125rem);
+    }
+
+    .sample-table-wrapper {
+      overflow-x: auto;
+      margin: 0 -0.5rem;
+      padding: 0 0.5rem;
+    }
+
+    .sample-table {
+      width: 100%;
+      min-width: 300px;
+      border-collapse: collapse;
+      margin-top: 0.625rem;
+    }
+
+    .sample-table th, .sample-table td {
+      padding: 0.5rem;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      text-align: left;
+      font-size: clamp(0.75rem, 1.8vw, 0.8125rem);
+      white-space: nowrap;
+    }
+
+    .sample-table th {
+      color: var(--accent);
+      background: transparent;
+      font-weight: 700;
+    }
+
+    .btn-row {
+      display: flex;
+      gap: 0.625rem;
+      flex-wrap: wrap;
+      margin-top: 0.75rem;
+      justify-content: center;
+    }
+
+    button {
+      background: var(--accent-2);
+      color: #fff;
+      border: 0;
+      padding: 0.5rem 0.75rem;
+      border-radius: 0.5rem;
+      cursor: pointer;
+      font-weight: 700;
+      font-size: clamp(0.875rem, 2vw, 0.9375rem);
+      transition: transform 0.2s ease;
+    }
+
+    button:hover {
+      transform: translateY(-2px);
+    }
+
+    .small {
+      font-size: clamp(0.75rem, 1.8vw, 0.8125rem);
+      color: var(--muted);
+    }
+
+    .modal-bg {
+      position: fixed;
+      inset: 0;
+      background: rgba(2,6,23,0.7);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 120;
+    }
+
+    .modal {
+      background: #fff;
+      color: #07101a;
+      border-radius: 0.625rem;
+      max-width: 90%;
+      width: 94%;
+      max-height: 80vh;
+      overflow: auto;
+      padding: 1.125rem;
+      box-shadow: 0 20px 60px rgba(2,6,23,0.6);
+      position: relative;
+    }
+
+    .modal h3 {
+      margin: 0 0 0.625rem;
+      color: var(--accent);
+    }
+
+    .modal .line {
+      padding: 0.5rem 0.625rem;
+      border-radius: 0.375rem;
+      margin: 0.375rem 0;
+      background: rgba(2,6,23,0.02);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, "Roboto Mono", monospace;
+      font-size: clamp(0.75rem, 1.8vw, 0.8125rem);
+    }
+
+    .modal .line strong {
+      display: inline-block;
+      width: 100px;
+      color: #0b3b2d;
+    }
+
+    .close {
+      position: absolute;
+      right: 1.125rem;
+      top: 1.125rem;
+      background: #f4a261;
+      color: #fff;
+      border: none;
+      width: 2rem;
+      height: 2rem;
+      border-radius: 50%;
+      font-size: 1.125rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s ease, transform 0.2s ease;
+    }
+
+    .close:hover {
+      background: #e76f51;
+      transform: scale(1.1);
+    }
+
+    .close:focus {
+      outline: 2px solid var(--accent);
+      outline-offset: 2px;
+    }
+
+    .hint {
+      font-size: clamp(0.75rem, 1.8vw, 0.8125rem);
+      color: var(--muted);
+      margin-top: 0.375rem;
+    }
+
+    .important-note {
+      background: linear-gradient(90deg, rgba(244,162,97,0.06), transparent);
+      padding: 0.75rem;
+      border-radius: 0.5rem;
+      border-left: 4px solid var(--accent);
+      color: var(--muted);
+      font-size: clamp(0.75rem, 1.8vw, 0.875rem);
+    }
+
+    @media (max-width: 600px) {
+      html, body { font-size: 12px; }
+      .container { margin: 0.5rem auto; padding: 0 0.25rem; }
+      .hero { padding: 0.75rem; }
+      .card { padding: 0.5rem; }
+      .sample-table-wrapper { padding: 0 0.25rem; }
+      .sample-table { min-width: 250px; }
+    }
+
+    .back-button {
+      position: relative;
+      top: 20px;
+      left: 20px;
+      padding: 10px 20px;
+      background-color: #0d1b2a;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+      transition: background-color 0.3s;
+      z-index: 100;
+    }
+    .back-button:hover {
+      background-color: #f4a261;
+    }
+
+    @media (max-width: 768px) {
+      .back-button {
+        top: 10px;
+        left: 10px;
+        padding: 8px 15px;
+        font-size: 14px;
+      }
+    }
+
+    #dotsCanvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      z-index: 0;
+      display: block;
+    }
+
+    #content-wrapper {
+      position: relative;
+      z-index: 1;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background: rgba(8,12,18,0.35);
+      z-index: 0.5;
+      pointer-events: none;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="dotsCanvas" aria-hidden="true"></canvas>
+  <div id="content-wrapper">
+    <button class="back-button" onclick="history.back()">Back</button>
+    <main class="container">
+      <section class="hero card">
+        <h2>Practice: Bike Trip Trends Analysis (Excel & Tableau)</h2>
+        <p class="small">This beginner-friendly project analyzes 2023 bike trip data from a fictional city bike-sharing service. Follow the data analysis lifecycle: Ask, Process, Analyze, and Visualize. Time: 2-3 hours.</p>
+        <div class="hint">Important: Use free Excel (Microsoft 365 or desktop) and Tableau Public for this project. Download the sample data and follow along.</div>
+      </section>
+
+      <div class="grid" style="margin-top: 1.125rem;">
+        <div class="card full">
+          <div class="important-note">
+            <strong>Important note — quick setup:</strong><br>
+            Copy the sample data table below into an Excel sheet named "BikeTrips.xlsx" or download the CSV. Use Excel for processing and analysis, then export to Tableau Public for visualizations.
+          </div>
+        </div>
+      </div>
+
+      <div id="prepare" class="grid" style="margin-top: 1.125rem;">
+        <div class="card col-12">
+          <h3 class="section-title">Prepare — Sample Data</h3>
+          <p class="small">Copy this table into Excel Sheet1 (A1 start) as "BikeTrips.xlsx" or download the CSV below. Total Cost = (Duration * Cost) / 10.</p>
+          <div class="btn-row">
+            <button onclick="downloadCSV()">Download CSV</button>
+          </div>
+          <div class="sample-table-wrapper">
+            <table class="sample-table">
+              <thead>
+                <tr><th>Date</th><th>Bike Type</th><th>Trip Category</th><th>Duration (min)</th><th>Cost ($)</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>01/04/2023</td><td>Mountain Bike</td><td>Commute</td><td>2</td><td>28</td></tr>
+                <tr><td>01/09/2023</td><td>Electric Bike</td><td>Sport</td><td>5</td><td>26</td></tr>
+                <tr><td>01/12/2023</td><td>Electric Bike</td><td>Casual</td><td>2</td><td>7</td></tr>
+                <tr><td>01/27/2023</td><td>City Bike</td><td>Casual</td><td>2</td><td>16</td></tr>
+                <tr><td>02/06/2023</td><td>Mountain Bike</td><td>Sport</td><td>4</td><td>26</td></tr>
+                <tr><td>02/13/2023</td><td>Road Bike</td><td>Casual</td><td>4</td><td>42</td></tr>
+                <tr><td>02/20/2023</td><td>Road Bike</td><td>Tourist</td><td>2</td><td>6</td></tr>
+                <tr><td>02/24/2023</td><td>Electric Bike</td><td>Tourist</td><td>4</td><td>20</td></tr>
+                <tr><td>03/11/2023</td><td>Road Bike</td><td>Commute</td><td>1</td><td>7</td></tr>
+                <tr><td>03/14/2023</td><td>Mountain Bike</td><td>Sport</td><td>3</td><td>29</td></tr>
+                <tr><td>03/17/2023</td><td>Road Bike</td><td>Casual</td><td>3</td><td>28</td></tr>
+                <tr><td>04/03/2023</td><td>Road Bike</td><td>Tourist</td><td>5</td><td>27</td></tr>
+                <tr><td>04/08/2023</td><td>Road Bike</td><td>Sport</td><td>4</td><td>50</td></tr>
+                <tr><td>04/25/2023</td><td>Electric Bike</td><td>Commute</td><td>1</td><td>34</td></tr>
+                <tr><td>04/28/2023</td><td>City Bike</td><td>Commute</td><td>3</td><td>17</td></tr>
+                <tr><td>05/03/2023</td><td>Mountain Bike</td><td>Sport</td><td>4</td><td>20</td></tr>
+                <tr><td>05/05/2023</td><td>City Bike</td><td>Sport</td><td>3</td><td>20</td></tr>
+                <tr><td>05/07/2023</td><td>City Bike</td><td>Casual</td><td>2</td><td>39</td></tr>
+                <tr><td>05/30/2023</td><td>City Bike</td><td>Sport</td><td>1</td><td>28</td></tr>
+                <tr><td>06/24/2023</td><td>Mountain Bike</td><td>Commute</td><td>2</td><td>5</td></tr>
+                <tr><td>06/24/2023</td><td>Electric Bike</td><td>Tourist</td><td>3</td><td>10</td></tr>
+                <tr><td>07/03/2023</td><td>Road Bike</td><td>Commute</td><td>5</td><td>30</td></tr>
+                <tr><td>07/06/2023</td><td>Mountain Bike</td><td>Commute</td><td>3</td><td>39</td></tr>
+                <tr><td>07/08/2023</td><td>Mountain Bike</td><td>Tourist</td><td>1</td><td>11</td></tr>
+                <tr><td>07/17/2023</td><td>Electric Bike</td><td>Sport</td><td>2</td><td>42</td></tr>
+                <tr><td>07/17/2023</td><td>Mountain Bike</td><td>Tourist</td><td>2</td><td>17</td></tr>
+                <tr><td>07/27/2023</td><td>City Bike</td><td>Commute</td><td>5</td><td>44</td></tr>
+                <tr><td>08/03/2023</td><td>Road Bike</td><td>Tourist</td><td>1</td><td>5</td></tr>
+                <tr><td>08/15/2023</td><td>Road Bike</td><td>Sport</td><td>1</td><td>49</td></tr>
+                <tr><td>08/23/2023</td><td>Electric Bike</td><td>Casual</td><td>1</td><td>38</td></tr>
+                <tr><td>08/24/2023</td><td>Mountain Bike</td><td>Tourist</td><td>4</td><td>10</td></tr>
+                <tr><td>08/28/2023</td><td>City Bike</td><td>Commute</td><td>2</td><td>22</td></tr>
+                <tr><td>08/31/2023</td><td>Electric Bike</td><td>Commute</td><td>5</td><td>10</td></tr>
+                <tr><td>09/05/2023</td><td>Road Bike</td><td>Casual</td><td>3</td><td>23</td></tr>
+                <tr><td>09/18/2023</td><td>City Bike</td><td>Casual</td><td>3</td><td>24</td></tr>
+                <tr><td>09/30/2023</td><td>Electric Bike</td><td>Commute</td><td>3</td><td>28</td></tr>
+                <tr><td>10/04/2023</td><td>Electric Bike</td><td>Casual</td><td>5</td><td>37</td></tr>
+                <tr><td>10/05/2023</td><td>Electric Bike</td><td>Tourist</td><td>2</td><td>25</td></tr>
+                <tr><td>10/08/2023</td><td>Electric Bike</td><td>Tourist</td><td>5</td><td>18</td></tr>
+                <tr><td>10/18/2023</td><td>Road Bike</td><td>Commute</td><td>3</td><td>26</td></tr>
+                <tr><td>10/30/2023</td><td>Road Bike</td><td>Sport</td><td>2</td><td>26</td></tr>
+                <tr><td>11/01/2023</td><td>Mountain Bike</td><td>Casual</td><td>5</td><td>16</td></tr>
+                <tr><td>11/05/2023</td><td>Mountain Bike</td><td>Commute</td><td>2</td><td>13</td></tr>
+                <tr><td>11/10/2023</td><td>City Bike</td><td>Sport</td><td>1</td><td>49</td></tr>
+                <tr><td>11/17/2023</td><td>Road Bike</td><td>Casual</td><td>4</td><td>40</td></tr>
+                <tr><td>11/29/2023</td><td>Road Bike</td><td>Tourist</td><td>4</td><td>26</td></tr>
+                <tr><td>12/02/2023</td><td>City Bike</td><td>Commute</td><td>2</td><td>43</td></tr>
+                <tr><td>12/17/2023</td><td>City Bike</td><td>Casual</td><td>1</td><td>28</td></tr>
+                <tr><td>12/22/2023</td><td>City Bike</td><td>Casual</td><td>2</td><td>22</td></tr>
+                <tr><td>12/30/2023</td><td>Mountain Bike</td><td>Commute</td><td>4</td><td>15</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div id="ask" class="grid" style="margin-top: 1.125rem;">
+        <div class="card full">
+          <h3 class="section-title">Step 1: Ask (Business Understanding)</h3>
+          <p class="small">Define the problem to guide analysis.</p>
+          <ul class="small">
+            <li>What are the total revenue (from costs) and average trip duration?</li>
+            <li>Which bike type (e.g., Electric vs. City) generates more revenue or longer trips?</li>
+            <li>How do trip categories (Casual, Commute, etc.) compare in volume and revenue?</li>
+            <li>Are there seasonal trends (e.g., summer peaks)?</li>
+            <li>What recommendations for optimizing bike fleet or promotions?</li>
+          </ul>
+          <p class="small">Assumptions: No cancellations; focus on 2023; revenue based on cost model. Success Metric: Insights for 10-15% usage increase (e.g., target low-season promotions).</p>
+          <p class="small">Output: Note your questions in Excel/Word.</p>
+          <div class="hint">Time Estimate: 10-15 minutes.</div>
+        </div>
+      </div>
+
+      <div id="process" class="grid" style="margin-top: 1.125rem;">
+        <div class="card full">
+          <h3 class="section-title">Step 2: Process (Data Preparation)</h3>
+          <p class="small">Clean and prepare in Excel.</p>
+          <ol class="small">
+            <li><strong>Import Data:</strong> Paste the table or use the downloaded CSV into Sheet1 (A1:E51). Format: A:A as Date; D:E as Number.</li>
+            <li><strong>Calculate New Columns:</strong>
+              <ul>
+                <li>"Total Cost" (F1): `=D2*E2/10` in F2, drag down.</li>
+                <li>"Month" (G1): `=TEXT(A2,"MMMM")` in G2, drag down.</li>
+              </ul>
+            </li>
+            <li><strong>Clean Data:</strong>
+              <ul>
+                <li>Remove duplicates: Data > Remove Duplicates (A:G).</li>
+                <li>Fix issues: No blanks here; if any, fill with averages (`=AVERAGE(D:D)`).</li>
+                <li>Validate: Durations >0; no negatives.</li>
+              </ul>
+            </li>
+            <li><strong>Save:</strong> As "BikeTrips_Cleaned.xlsx".</li>
+          </ol>
+          <p class="small">Output: Sheet with 50 rows, new columns. Total revenue: ~$300-400 (scaled small for beginners).</p>
+          <div class="hint">Time Estimate: 15-20 minutes.</div>
+        </div>
+      </div>
+
+      <div id="analyze" class="grid" style="margin-top: 1.125rem;">
+        <div class="card full">
+          <h3 class="section-title">Step 3: Analyze (Exploratory Data Analysis)</h3>
+          <p class="small">Compute insights in Excel.</p>
+          <ol class="small">
+            <li><strong>Basic Stats ("Analysis" Sheet):</strong>
+              <ul>
+                <li>Total Revenue: `=SUM('Sheet1'!F:F)`.</li>
+                <li>Avg Duration: `=AVERAGE('Sheet1'!D:D)`.</li>
+                <li>Trips: `=COUNTA('Sheet1'!A2:A51)` → 50.</li>
+              </ul>
+            </li>
+            <li><strong>Bike Type Breakdown (PivotTable):</strong>
+              <ul>
+                <li>Insert > PivotTable > A:G. Rows: Bike Type; Values: Sum Total Cost, Avg Duration.</li>
+                <li>Insights: Electric Bikes may have higher revenue due to longer/costlier trips.</li>
+              </ul>
+            </li>
+            <li><strong>Trip Category Analysis:</strong>
+              <ul>
+                <li>Pivot: Rows: Trip Category; Values: Count of Date (volume), Sum Total Cost.</li>
+                <li>Insights: Commute might dominate volume; Tourist higher cost.</li>
+              </ul>
+            </li>
+            <li><strong>Seasonal Trends:</strong>
+              <ul>
+                <li>Pivot: Rows: Month; Values: Sum Total Cost, Count of Date.</li>
+                <li>Insights: Peaks in summer (Jul-Aug); Dips in winter (Nov-Dec).</li>
+              </ul>
+            </li>
+            <li><strong>Advanced:</strong>
+              <ul>
+                <li>Cost per Minute: New column `=E2/D2`. Pivot by Bike Type → Identify efficient types.</li>
+              </ul>
+            </li>
+          </ol>
+          <p class="small">Insights: Electric bikes drive revenue; Promote in low months for growth.</p>
+          <div class="hint">Time Estimate: 20-30 minutes.</div>
+        </div>
+      </div>
+
+      <div id="visualize" class="grid" style="margin-top: 1.125rem;">
+        <div class="card full">
+          <h3 class="section-title">Step 4: Visualize (Create Dashboards)</h3>
+          <p class="small">Use Tableau for visuals.</p>
+          <ol class="small">
+            <li><strong>Setup:</strong> Connect to "BikeTrips_Cleaned.xlsx" > Sheet1.</li>
+            <li><strong>Build Charts:</strong>
+              <ul>
+                <li>Bar: Revenue by Bike Type: Columns: SUM(Total Cost); Rows: Bike Type. Sort descending.</li>
+                <li>Line: Monthly Trends: Columns: Month (from Date); Rows: SUM(Total Cost). Line type.</li>
+                <li>Bar: Trips by Category: Columns: COUNT(Date); Rows: Trip Category.</li>
+              </ul>
+            </li>
+            <li><strong>Dashboard:</strong>
+              <ul>
+                <li>New Dashboard > Drag charts. Add Filter: Bike Type (global).</li>
+                <li>Text: "Insight: Summer peaks account for 30% of revenue."</li>
+              </ul>
+            </li>
+            <li><strong>Publish:</strong> Save to Tableau Public; share link.</li>
+          </ol>
+          <p class="small">Output: Interactive dashboard for portfolio.</p>
+          <div class="hint">Time Estimate: 20-30 minutes.</div>
+        </div>
+      </div>
+
+      <div id="conclusion" class="grid" style="margin-top: 1.125rem;">
+        <div class="card full">
+          <h3 class="section-title">Final Deliverables & Next Steps</h3>
+          <p class="small">Key Takeaways:</p>
+          <ul class="small">
+            <li>Total revenue: ~$300-400, with Electric Bikes leading.</li>
+            <li>Trends: Peaks in Jul-Aug; dips in Nov-Dec.</li>
+            <li>Commute dominates volume; Tourist trips yield higher costs.</li>
+          </ul>
+          <p class="small">Recommendations: Increase Electric Bike fleet; target low-season promotions for 10-15% usage boost. Extensions: Add real Kaggle data (e.g., from kaggle.com/datasets/gabrielramos87/bike-trips); Forecast with Excel TREND.</p>
+          <div class="hint">Total Project Time: 2-3 hours. Resources: Kaggle tutorials; YouTube: 'Tableau Bike Share Analysis'.</div>
+        </div>
+      </div>
+
+      <div id="contact" class="grid" style="margin-top: 1.125rem; margin-bottom: 2rem;">
+        <div class="card full">
+          <h3 class="section-title">Contact</h3>
+          <p class="small">For the CSV export, full Excel steps, or Tableau tips, contact me!</p>
+          <p class="small">🔗 <a href="https://www.linkedin.com/in/pati-praveen-7951a0312/" target="_blank" style="color: var(--accent);">LinkedIn</a></p>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    (function () {
+      const canvas = document.getElementById('dotsCanvas');
+      const ctx = canvas.getContext('2d', { alpha: true });
+
+      let cw, ch, particles = [], mouse = { x: null, y: null };
+
+      const CONFIG = {
+        particleCount: Math.round((window.innerWidth * window.innerHeight) / 70000),
+        maxRadius: 2.6,
+        minRadius: 0.9,
+        speed: 0.3,
+        linkDistance: 120,
+        linkAlpha: 0.15
+      };
+
+      function resize() {
+        cw = canvas.width = window.innerWidth;
+        ch = canvas.height = window.innerHeight;
+      }
+
+      window.addEventListener('resize', () => {
+        resize();
+        initParticles();
+      });
+
+      window.addEventListener('mousemove', (e) => {
+        mouse.x = e.clientX;
+        mouse.y = e.clientY;
+      });
+      window.addEventListener('mouseout', () => {
+        mouse.x = null;
+        mouse.y = null;
+      });
+
+      function rand(min, max) { return Math.random() * (max - min) + min; }
+
+      function createParticle() {
+        const r = rand(CONFIG.minRadius, CONFIG.maxRadius);
+        return {
+          x: Math.random() * cw,
+          y: Math.random() * ch,
+          vx: rand(-CONFIG.speed, CONFIG.speed),
+          vy: rand(-CONFIG.speed, CONFIG.speed),
+          r: r,
+          alpha: rand(0.4, 0.95)
+        };
+      }
+
+      function initParticles() {
+        particles = [];
+        const count = Math.max(8, CONFIG.particleCount);
+        for (let i = 0; i < count; i++) particles.push(createParticle());
+      }
+
+      function draw() {
+        ctx.clearRect(0, 0, cw, ch);
+
+        for (let i = 0; i < particles.length; i++) {
+          for (let j = i + 1; j < particles.length; j++) {
+            const p1 = particles[i], p2 = particles[j];
+            const dx = p1.x - p2.x, dy = p1.y - p2.y;
+            const dist = Math.sqrt(dx * dx + dy * dy);
+            if (dist < CONFIG.linkDistance) {
+              const alpha = (1 - dist / CONFIG.linkDistance) * CONFIG.linkAlpha * p1.alpha * p2.alpha;
+              ctx.beginPath();
+              ctx.strokeStyle = `rgba(244,162,97,${alpha})`;
+              ctx.lineWidth = 1;
+              ctx.moveTo(p1.x, p1.y);
+              ctx.lineTo(p2.x, p2.y);
+              ctx.stroke();
+            }
+          }
+        }
+
+        for (const p of particles) {
+          ctx.beginPath();
+          ctx.fillStyle = `rgba(244,162,97,${p.alpha})`;
+          ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+          ctx.fill();
+        }
+      }
+
+      function update() {
+        for (const p of particles) {
+          p.x += p.vx;
+          p.y += p.vy;
+
+          if (p.x < -10) p.x = cw + 10;
+          if (p.x > cw + 10) p.x = -10;
+          if (p.y < -10) p.y = ch + 10;
+          if (p.y > ch + 10) p.y = -10;
+
+          if (mouse.x !== null && mouse.y !== null) {
+            const dx = (mouse.x - p.x), dy = (mouse.y - p.y);
+            const dist = Math.sqrt(dx * dx + dy * dy);
+            if (dist < 120) {
+              p.x -= dx * 0.052;
+              p.y -= dy * 0.002;
+            }
+          }
+        }
+      }
+
+      let rafId;
+      function loop() {
+        update();
+        draw();
+        rafId = requestAnimationFrame(loop);
+      }
+
+      resize();
+      initParticles();
+      loop();
+
+      window.addEventListener('visibilitychange', () => {
+        if (document.hidden) cancelAnimationFrame(rafId);
+        else loop();
+      });
+    })();
+
+    function downloadCSV() {
+      const csvContent = [
+        "Date,Bike Type,Trip Category,Duration (min),Cost ($)",
+        "01/04/2023,Mountain Bike,Commute,2,28",
+        "01/09/2023,Electric Bike,Sport,5,26",
+        "01/12/2023,Electric Bike,Casual,2,7",
+        "01/27/2023,City Bike,Casual,2,16",
+        "02/06/2023,Mountain Bike,Sport,4,26",
+        "02/13/2023,Road Bike,Casual,4,42",
+        "02/20/2023,Road Bike,Tourist,2,6",
+        "02/24/2023,Electric Bike,Tourist,4,20",
+        "03/11/2023,Road Bike,Commute,1,7",
+        "03/14/2023,Mountain Bike,Sport,3,29",
+        "03/17/2023,Road Bike,Casual,3,28",
+        "04/03/2023,Road Bike,Tourist,5,27",
+        "04/08/2023,Road Bike,Sport,4,50",
+        "04/25/2023,Electric Bike,Commute,1,34",
+        "04/28/2023,City Bike,Commute,3,17",
+        "05/03/2023,Mountain Bike,Sport,4,20",
+        "05/05/2023,City Bike,Sport,3,20",
+        "05/07/2023,City Bike,Casual,2,39",
+        "05/30/2023,City Bike,Sport,1,28",
+        "06/24/2023,Mountain Bike,Commute,2,5",
+        "06/24/2023,Electric Bike,Tourist,3,10",
+        "07/03/2023,Road Bike,Commute,5,30",
+        "07/06/2023,Mountain Bike,Commute,3,39",
+        "07/08/2023,Mountain Bike,Tourist,1,11",
+        "07/17/2023,Electric Bike,Sport,2,42",
+        "07/17/2023,Mountain Bike,Tourist,2,17",
+        "07/27/2023,City Bike,Commute,5,44",
+        "08/03/2023,Road Bike,Tourist,1,5",
+        "08/15/2023,Road Bike,Sport,1,49",
+        "08/23/2023,Electric Bike,Casual,1,38",
+        "08/24/2023,Mountain Bike,Tourist,4,10",
+        "08/28/2023,City Bike,Commute,2,22",
+        "08/31/2023,Electric Bike,Commute,5,10",
+        "09/05/2023,Road Bike,Casual,3,23",
+        "09/18/2023,City Bike,Casual,3,24",
+        "09/30/2023,Electric Bike,Commute,3,28",
+        "10/04/2023,Electric Bike,Casual,5,37",
+        "10/05/2023,Electric Bike,Tourist,2,25",
+        "10/08/2023,Electric Bike,Tourist,5,18",
+        "10/18/2023,Road Bike,Commute,3,26",
+        "10/30/2023,Road Bike,Sport,2,26",
+        "11/01/2023,Mountain Bike,Casual,5,16",
+        "11/05/2023,Mountain Bike,Commute,2,13",
+        "11/10/2023,City Bike,Sport,1,49",
+        "11/17/2023,Road Bike,Casual,4,40",
+        "11/29/2023,Road Bike,Tourist,4,26",
+        "12/02/2023,City Bike,Commute,2,43",
+        "12/17/2023,City Bike,Casual,1,28",
+        "12/22/2023,City Bike,Casual,2,22",
+        "12/30/2023,Mountain Bike,Commute,4,15"
+      ].join("\n");
+
+      const blob = new Blob([csvContent], { type: 'text/csv' });
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'BikeTrips.csv';
+      a.click();
+      window.URL.revokeObjectURL(url);
+    }
+  </script>
+</body>
+</html>

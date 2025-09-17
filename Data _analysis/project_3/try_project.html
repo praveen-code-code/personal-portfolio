@@ -1,0 +1,1000 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Practice: Movie Ratings Analysis (Try Now)</title>
+  <style>
+    :root {
+      --bg: #0f1720;
+      --card: #181a1e;
+      --accent: #f4a261;
+      --muted: #94a3b8;
+      --accent-2: #2a9d8f;
+      --paper: #0f1720;
+      --white: #ffffff;
+    }
+
+    html, body {
+      height: 100%;
+      margin: 0;
+      font-family: Inter, Segoe UI, Roboto, Arial, sans-serif;
+      background: linear-gradient(180deg, #07101a 0%, #0f1720 100%);
+      color: var(--white);
+      font-size: 16px;
+    }
+
+  
+
+  
+
+  
+   header { background:#0d1b2a; padding:20px; text-align:center; position:relative; }
+    header h1 { margin:0; color:#f4a261; }
+    .back-button {
+      position:absolute; left:20px; top:20px;
+      background:#0d1b2a; color:#fff; padding:10px 20px; border:none; border-radius:5px;
+      font-size:16px; cursor:pointer; font-weight:bold; box-shadow:0 4px 8px rgba(0,0,0,0.3);
+    }
+    .back-button:hover { background:#f4a261; color:#121212; }
+
+    .container {
+      max-width: 1200px;
+      margin: 1.75rem auto;
+      padding: 0 1rem;
+    }
+
+    .hero {
+      background: linear-gradient(180deg, rgba(244,162,97,0.06), rgba(42,157,143,0.03));
+      border-radius: 0.75rem;
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.625rem;
+    }
+
+    .hero h2 {
+      margin: 0;
+      color: var(--accent);
+      font-size: clamp(1.25rem, 3vw, 1.375rem);
+    }
+
+    .hero p {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 1rem;
+      margin-top: 1.125rem;
+    }
+
+    .card {
+      background: var(--card);
+      border-radius: 0.625rem;
+      padding: 1.125rem;
+      color: var(--white);
+      box-shadow: 0 6px 20px rgba(2,6,23,0.6);
+    }
+
+    .col-8 { grid-column: span 8; }
+    .col-4 { grid-column: span 4; }
+    .col-6 { grid-column: span 6; }
+    .full { grid-column: span 12; }
+
+    .section-title {
+      color: var(--accent);
+      margin: 0 0 0.625rem;
+      font-size: clamp(1rem, 2.5vw, 1.125rem);
+    }
+
+    pre.sql {
+      background: #091421;
+      color: #e6eef6;
+      padding: 0.875rem;
+      border-radius: 0.5rem;
+      overflow: auto;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, "Roboto Mono", monospace;
+      font-size: clamp(0.75rem, 1.8vw, 0.8125rem);
+      line-height: 1.45;
+    }
+
+    .btn-row {
+      display: flex;
+      gap: 0.625rem;
+      flex-wrap: wrap;
+      margin-top: 0.75rem;
+    }
+
+    button.explain {
+      background: var(--accent-2);
+      color: #fff;
+      border: 0;
+      padding: 0.5rem 0.75rem;
+      border-radius: 0.5rem;
+      cursor: pointer;
+      font-weight: 700;
+      font-size: clamp(0.875rem, 2vw, 0.9375rem);
+      transition: transform 0.2s ease;
+    }
+
+    button.explain:hover {
+      transform: translateY(-2px);
+    }
+
+    .small {
+      font-size: clamp(0.75rem, 1.8vw, 0.8125rem);
+      color: var(--muted);
+    }
+
+    .sample-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 0.625rem;
+    }
+
+    .sample-table th, .sample-table td {
+      padding: 0.5rem;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      text-align: left;
+      font-size: clamp(0.75rem, 1.8vw, 0.8125rem);
+    }
+
+    .sample-table th {
+      color: var(--accent);
+      background: transparent;
+      font-weight: 700;
+    }
+
+    .modal-bg {
+      position: fixed;
+      inset: 0;
+      background: rgba(2,6,23,0.7);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 120;
+    }
+
+    .modal {
+      background: #fff;
+      color: #07101a;
+      border-radius: 0.625rem;
+      max-width: 820px;
+      width: 94%;
+      max-height: 86vh;
+      overflow: auto;
+      padding: 1.125rem;
+      box-shadow: 0 20px 60px rgba(2,6,23,0.6);
+      position: relative;
+    }
+
+    .modal h3 {
+      margin: 0 0 0.625rem;
+      color: var(--accent);
+    }
+
+    .modal .line {
+      padding: 0.5rem 0.625rem;
+      border-radius: 0.375rem;
+      margin: 0.375rem 0;
+      background: rgba(2,6,23,0.02);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, "Roboto Mono", monospace;
+      font-size: clamp(0.75rem, 1.8vw, 0.8125rem);
+    }
+
+    .modal .line strong {
+      display: inline-block;
+      width: 120px;
+      color: #0b3b2d;
+    }
+
+    .close {
+      position: absolute;
+      right: 1.125rem;
+      top: 1.125rem;
+      background: #f4a261;
+      color: #fff;
+      border: none;
+      width: 2rem;
+      height: 2rem;
+      border-radius: 50%;
+      font-size: 1.125rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s ease, transform 0.2s ease;
+    }
+
+    .close:hover {
+      background: #e76f51;
+      transform: scale(1.1);
+    }
+
+    .close:focus {
+      outline: 2px solid var(--accent);
+      outline-offset: 2px;
+    }
+
+   
+
+   
+    .hint {
+      font-size: clamp(0.75rem, 1.8vw, 0.8125rem);
+      color: var(--muted);
+      margin-top: 0.375rem;
+    }
+
+    .important-note {
+      background: linear-gradient(90deg, rgba(244,162,97,0.06), transparent);
+      padding: 0.75rem;
+      border-radius: 0.5rem;
+      border-left: 4px solid var(--accent);
+      color: var(--muted);
+      font-size: clamp(0.75rem, 1.8vw, 0.875rem);
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 900px) {
+      .col-8, .col-4, .col-6 { grid-column: span 12; }
+    
+      .back-button { margin-left: 0; }
+      .logo { margin-bottom: 0.5rem; }
+    }
+
+    @media (max-width: 600px) {
+      html, body { font-size: 14px; }
+      .container { margin: 1rem auto; padding: 0 0.5rem; }
+      .hero { padding: 1rem; }
+      .card { padding: 0.75rem; }
+      .try-fab { padding: 0.75rem 1rem; right: 0.75rem; bottom: 0.75rem; }
+      .modal { padding: 0.75rem; width: 96%; }
+      .close { width: 1.75rem; height: 1.75rem; font-size: 1rem; }
+    }
+
+
+
+    
+    /* Canvas background full-screen, behind page content */
+#dotsCanvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none; /* allows clicks through canvas */
+  z-index: 0;           /* behind your content */
+  display: block;
+}
+
+/* Ensure your page content sits above the canvas */
+#content-wrapper {
+  position: relative;
+  z-index: 1;
+}
+
+/* Optional subtle overlay so content is legible */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: rgba(8,12,18,0.35); /* tweak for contrast */
+  z-index: 0.5;
+  pointer-events: none;
+}
+
+  </style>
+</head>
+<body>
+    <!-- Moving dots background (place first inside <body>) -->
+<canvas id="dotsCanvas" aria-hidden="true"></canvas>
+<div id="content-wrapper"><!-- keep your existing page content inside this wrapper -->
+  <!-- existing header / sections / charts ... -->
+</div>
+
+
+ <header>
+    <button onclick="history.back()" class="back-button">Back</button>
+  </header>
+  <main class="container">
+    <section class="hero card">
+      <h2>Practice this Movie Ratings & User Behavior Project (MySQL)</h2>
+      <p class="small">This practice page contains the full project: setup SQL, data with deliberate issues, cleaning queries, analysis queries, export steps for Tableau, and interactive "Explain Query" buttons that show line-by-line explanations.</p>
+      <div class="hint">Important: This walkthrough expects MySQL. If you want to run this locally, install MySQL, create a database, then run the SQL blocks below in the order shown.</div>
+    </section>
+
+    <div class="grid" style="margin-top: 1.125rem;">
+      <div class="card full">
+        <div class="important-note">
+          <strong>Important note — quick setup:</strong><br>
+          If you do this on your machine: download & install MySQL → open MySQL Workbench / CLI → run:
+          <code style="display: block; margin-top: 0.375rem; color: #fff;">CREATE DATABASE your_db_name; USE your_db_name; SHOW TABLES;</code>
+          Then run the CREATE TABLE / INSERT queries in the order shown in the Prepare section below.
+        </div>
+      </div>
+    </div>
+
+    <div id="prepare" class="grid" style="margin-top: 1.125rem;">
+      <div class="card col-8">
+        <h3 class="section-title">Prepare — Create Tables & Insert Sample Data</h3>
+        <p class="small">1) Movies table — create and insert 10 movies.</p>
+        <pre class="sql" id="sql-movies">
+CREATE TABLE movies (
+    movie_id INT PRIMARY KEY,
+    title VARCHAR(100),
+    genre VARCHAR(50),
+    release_year INT
+);
+
+INSERT INTO movies (movie_id, title, genre, release_year) VALUES
+(1, 'Inception', 'Sci-Fi', 2010),
+(2, 'Titanic', 'Romance', 1997),
+(3, 'The Dark Knight', 'Action', 2008),
+(4, 'Interstellar', 'Sci-Fi', 2014),
+(5, 'Avengers: Endgame', 'Action', 2019),
+(6, 'Joker', 'Drama', 2019),
+(7, 'The Godfather', 'Crime', 1972),
+(8, 'Frozen', 'Animation', 2013),
+(9, 'Toy Story', 'Animation', 1995),
+(10, 'Avatar', 'Sci-Fi', 2009);
+        </pre>
+        <div class="btn-row">
+          <button class="explain" onclick="openExplain('movies')">Explain Query</button>
+          <span class="hint">Run the whole block in your DB to create the movies table and populate it.</span>
+        </div>
+
+        <hr style="margin: 0.875rem 0; border: none; border-top: 1px solid rgba(255,255,255,0.03);">
+
+        <p class="small">2) Users table — create and insert 10 users.</p>
+        <pre class="sql" id="sql-users">
+CREATE TABLE users (
+    user_id INT PRIMARY KEY,
+    name VARCHAR(50),
+    age INT,
+    country VARCHAR(50)
+);
+
+INSERT INTO users (user_id, name, age, country) VALUES
+(101, 'Alice', 25, 'USA'),
+(102, 'Bob', 30, 'India'),
+(103, 'Charlie', 22, 'UK'),
+(104, 'David', 28, 'Canada'),
+(105, 'Eva', 35, 'Germany'),
+(106, 'Frank', 40, 'USA'),
+(107, 'Grace', 27, 'France'),
+(108, 'Hannah', 31, 'India'),
+(109, 'Ian', 29, 'UK'),
+(110, 'Julia', 26, 'Brazil');
+        </pre>
+        <div class="btn-row">
+          <button class="explain" onclick="openExplain('users')">Explain Query</button>
+          <span class="hint">Run after movies table.</span>
+        </div>
+      </div>
+
+      <div class="card col-4">
+        <h3 class="section-title">Ratings table (sample with issues)</h3>
+        <p class="small">3) Ratings table — includes some deliberate missing/invalid/duplicate rows for cleaning practice.</p>
+        <pre class="sql" id="sql-ratings">
+CREATE TABLE ratings (
+    rating_id INT PRIMARY KEY AUTO_INCREMENT,
+    movie_id INT,
+    user_id INT,
+    rating DECIMAL(2,1),
+    rating_date DATE,
+    FOREIGN KEY (movie_id) REFERENCES movies(movie_id),
+    FOREIGN KEY (user_id) REFERENCES users(user_id)
+);
+
+INSERT INTO ratings (movie_id, user_id, rating, rating_date) VALUES
+(1, 101, 4.5, '2023-01-05'),
+(1, 102, 5.0, '2023-01-10'),
+(2, 103, NULL, '2023-01-12'),
+(3, 104, 4.0, '2023-01-15'),
+(3, 101, 6.0, '2023-01-20'),
+(4, 102, 5.0, '2023-01-22'),
+(5, 105, 4.2, NULL),
+(5, 101, 4.7, '2023-01-28'),
+(6, 106, 0, '2023-02-01'),
+(7, 107, 4.9, '2023-02-05'),
+(8, 108, 3.5, '2023-02-08'),
+(8, 109, 3.7, '2023-02-09'),
+(9, 110, 4.0, '2023-02-11'),
+(9, 110, 4.0, '2023-02-11'),
+(10, 101, NULL, '2023-02-15');
+        </pre>
+        <div class="btn-row">
+          <button class="explain" onclick="openExplain('ratings')">Explain Query</button>
+          <span class="hint">Run after Movies & Users tables exist (FK constraints).</span>
+        </div>
+      </div>
+    </div>
+
+    <div id="cleaning" class="grid" style="margin-top: 1.125rem;">
+      <div class="card full">
+        <h3 class="section-title">Data Cleaning — step-by-step SQL</h3>
+        <p class="small">Use the queries below to detect and fix missing, invalid or duplicate data. Click <strong>Explain Query</strong> under each block to see line-by-line reasoning.</p>
+
+        <h4 style="color: var(--accent); margin-top: 0.75rem;">Step 1 — Find missing values</h4>
+        <pre class="sql" id="sql-find-missing">
+SELECT *
+FROM ratings
+WHERE rating IS NULL OR movie_id IS NULL OR user_id IS NULL OR rating_date IS NULL;
+        </pre>
+        <div class="btn-row">
+          <button class="explain" onclick="openExplain('find_missing')">Explain Query</button>
+        </div>
+
+        <h4 style="color: var(--accent); margin-top: 0.75rem;">Step 1b — Example: fill missing values</h4>
+        <pre class="sql" id="sql-fill-missing">
+UPDATE ratings
+SET rating = 3.5
+WHERE movie_id = 2 AND user_id = 103 AND rating IS NULL;
+
+UPDATE ratings
+SET rating = 4.0
+WHERE movie_id = 10 AND user_id = 101 AND rating IS NULL;
+
+UPDATE ratings
+SET rating_date = CURDATE()
+WHERE movie_id = 5 AND user_id = 105 AND rating_date IS NULL;
+        </pre>
+        <div class="btn-row">
+          <button class="explain" onclick="openExplain('fill_missing')">Explain Query</button>
+        </div>
+
+        <h4 style="color: var(--accent); margin-top: 0.75rem;">Step 2 — Find invalid ratings outside 1–5</h4>
+        <pre class="sql" id="sql-invalid-select">
+SELECT *
+FROM ratings
+WHERE rating < 1 OR rating > 5;
+        </pre>
+        <div class="btn-row">
+          <button class="explain" onclick="openExplain('invalid_select')">Explain Query</button>
+        </div>
+
+        <h4 style="color: var(--accent); margin-top: 0.75rem;">Step 2b — Fix invalid ratings</h4>
+        <pre class="sql" id="sql-invalid-fix">
+UPDATE ratings
+SET rating = 4.7
+WHERE movie_id = 1 AND user_id = 101 AND rating = 6.0;
+
+UPDATE ratings
+SET rating = 4.5
+WHERE movie_id = 6 AND user_id = 106 AND rating = 0;
+        </pre>
+        <div class="btn-row">
+          <button class="explain" onclick="openExplain('invalid_fix')">Explain Query</button>
+        </div>
+
+        <h4 style="color: var(--accent); margin-top: 0.75rem;">Step 3 — Detect duplicates</h4>
+        <pre class="sql" id="sql-dup-detect">
+SELECT movie_id, user_id, rating_date, COUNT(*) AS cnt
+FROM ratings
+GROUP BY movie_id, user_id, rating_date
+HAVING cnt > 1;
+        </pre>
+        <div class="btn-row">
+          <button class="explain" onclick="openExplain('dup_detect')">Explain Query</button>
+        </div>
+
+        <h4 style="color: var(--accent); margin-top: 0.75rem;">Step 3b — Remove duplicates (keep first)</h4>
+        <pre class="sql" id="sql-dup-delete">
+DELETE FROM ratings
+WHERE rating_id IN (
+  SELECT rating_id FROM (
+    SELECT rating_id,
+           ROW_NUMBER() OVER (PARTITION BY movie_id, user_id, rating_date ORDER BY rating_id) AS rn
+    FROM ratings
+  ) t
+  WHERE rn > 1
+);
+        </pre>
+        <div class="btn-row">
+          <button class="explain" onclick="openExplain('dup_delete')">Explain Query</button>
+          <span class="hint">Note: the nested SELECT helps MySQL avoid deleting from the same table used in a subquery.</span>
+        </div>
+
+        <h4 style="color: var(--accent); margin-top: 0.75rem;">Step 4 — Verify data quality</h4>
+        <pre class="sql" id="sql-verify">
+SELECT * FROM ratings WHERE rating IS NULL OR rating_date IS NULL;
+SELECT * FROM ratings WHERE rating < 1 OR rating > 5;
+SELECT movie_id, COUNT(*) AS total_ratings
+FROM ratings
+GROUP BY movie_id;
+        </pre>
+        <div class="btn-row">
+          <button class="explain" onclick="openExplain('verify')">Explain Query</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="analysis" class="grid" style="margin-top: 1.125rem;">
+      <div class="card col-8">
+        <h3 class="section-title">Analysis — Key SQL queries & reasoning</h3>
+        <p class="small">Q1 — Top Movies by Average Rating</p>
+        <pre class="sql" id="sql-q1">
+SELECT m.title, ROUND(AVG(r.rating),2) AS avg_rating, COUNT(r.rating) AS total_ratings
+FROM ratings r
+JOIN movies m ON r.movie_id = m.movie_id
+GROUP BY m.title
+ORDER BY avg_rating DESC, total_ratings DESC;
+        </pre>
+        <div class="btn-row">
+          <button class="explain" onclick="openExplain('q1')">Explain Query</button>
+        </div>
+
+        <hr style="margin: 0.75rem 0; border: none; border-top: 1px solid rgba(255,255,255,0.04);">
+
+        <p class="small">Q2 — Most Active Users</p>
+        <pre class="sql" id="sql-q2">
+SELECT u.name, COUNT(r.rating) AS total_ratings, ROUND(AVG(r.rating),2) AS avg_rating_given
+FROM ratings r
+JOIN users u ON r.user_id = u.user_id
+GROUP BY u.name
+ORDER BY total_ratings DESC;
+        </pre>
+        <div class="btn-row">
+          <button class="explain" onclick="openExplain('q2')">Explain Query</button>
+        </div>
+
+        <hr style="margin: 0.75rem 0; border: none; border-top: 1px solid rgba(255,255,255,0.04);">
+
+        <p class="small">Q3 — Ratings by Genre</p>
+        <pre class="sql" id="sql-q3">
+SELECT m.genre, ROUND(AVG(r.rating),2) AS avg_rating, COUNT(r.rating) AS total_ratings
+FROM ratings r
+JOIN movies m ON r.movie_id = m.movie_id
+GROUP BY m.genre
+ORDER BY avg_rating DESC;
+        </pre>
+        <div class="btn-row">
+          <button class="explain" onclick="openExplain('q3')">Explain Query</button>
+        </div>
+      </div>
+
+      <div class="card col-4">
+        <h3 class="section-title">More analysis</h3>
+        <p class="small">Q4 — Ratings Trend Over Time</p>
+        <pre class="sql" id="sql-q4">
+SELECT DATE(r.rating_date) AS date, ROUND(AVG(r.rating),2) AS avg_rating, COUNT(*) AS total_ratings
+FROM ratings r
+GROUP BY DATE(r.rating_date)
+ORDER BY date;
+        </pre>
+        <div class="btn-row">
+          <button class="explain" onclick="openExplain('q4')">Explain Query</button>
+        </div>
+
+        <hr style="margin: 0.75rem 0; border: none; border-top: 1px solid rgba(255,255,255,0.04);">
+
+        <p class="small">Q5 — Country-wise Behavior</p>
+        <pre class="sql" id="sql-q5">
+SELECT u.country, COUNT(r.rating) AS total_ratings, ROUND(AVG(r.rating),2) AS avg_rating
+FROM ratings r
+JOIN users u ON r.user_id = u.user_id
+GROUP BY u.country
+ORDER BY total_ratings DESC;
+        </pre>
+        <div class="btn-row">
+          <button class="explain" onclick="openExplain('q5')">Explain Query</button>
+        </div>
+
+        <hr style="margin: 0.75rem 0; border: none; border-top: 1px solid rgba(255,255,255,0.04);">
+
+        <p class="small">Q6 — Most Rated Movies (Popularity)</p>
+        <pre class="sql" id="sql-q6">
+SELECT m.title, COUNT(r.rating) AS rating_count
+FROM ratings r
+JOIN movies m ON r.movie_id = m.movie_id
+GROUP BY m.title
+ORDER BY rating_count DESC;
+        </pre>
+        <div class="btn-row">
+          <button class="explain" onclick="openExplain('q6')">Explain Query</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="visualize" class="grid" style="margin-top: 1.125rem;">
+      <div class="card full">
+        <h3 class="section-title">Visualization — export & Tableau steps</h3>
+        <p class="small">Export cleaned dataset for Tableau or Excel:</p>
+        <pre class="sql" id="sql-export">
+SELECT r.rating_id, r.movie_id, m.title, m.genre, m.release_year,
+       r.user_id, u.name AS user_name, u.age, u.country,
+       r.rating, r.rating_date
+FROM ratings r
+JOIN movies m ON r.movie_id = m.movie_id
+JOIN users u ON r.user_id = u.user_id;
+        </pre>
+        <div class="btn-row">
+          <button class="explain" onclick="openExplain('export')">Explain Query</button>
+        </div>
+
+        <h4 style="color: var(--accent); margin-top: 0.75rem;">Tableau import steps (short)</h4>
+        <ol class="small">
+          <li>Run export query and save results as CSV (e.g. <code>ratings_cleaned.csv</code>).</li>
+          <li>Open Tableau → Connect to Data → choose CSV or connect directly to MySQL.</li>
+          <li>Build visualizations: Top Movies (bar), Genre (pie/bars), Rating trend (line), Countries (bar/heatmap).</li>
+          <li>Create a dashboard, add filters (Year, Genre, Country), publish if needed.</li>
+        </ol>
+      </div>
+    </div>
+
+    <div id="results" class="grid" style="margin-top: 1.125rem;">
+      <div class="card col-6">
+        <h3 class="section-title">Sample Output — Top Movies</h3>
+        <table class="sample-table" aria-label="Top movies sample">
+          <thead><tr><th>Title</th><th>Avg Rating</th><th>Total Ratings</th></tr></thead>
+          <tbody>
+            <tr><td>Interstellar</td><td>4.80</td><td>12</td></tr>
+            <tr><td>Inception</td><td>4.70</td><td>11</td></tr>
+            <tr><td>The Dark Knight</td><td>4.60</td><td>10</td></tr>
+            <tr><td>Joker</td><td>4.50</td><td>9</td></tr>
+            <tr><td>Avatar</td><td>4.30</td><td>8</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="card col-6">
+        <h3 class="section-title">Sample Output — Most Active Users</h3>
+        <table class="sample-table" aria-label="Most active users sample">
+          <thead><tr><th>User</th><th>Total Ratings</th><th>Avg Given</th></tr></thead>
+          <tbody>
+            <tr><td>Alice</td><td>12</td><td>4.67</td></tr>
+            <tr><td>Bob</td><td>9</td><td>5.00</td></tr>
+            <tr><td>Charlie</td><td>8</td><td>3.50</td></tr>
+            <tr><td>David</td><td>7</td><td>4.00</td></tr>
+            <tr><td>Eva</td><td>6</td><td>4.20</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="grid" style="margin-top: 1.125rem;">
+      <div class="card full">
+        <h3 class="section-title">What we learned — Insights & Recommendations</h3>
+        <ul class="small">
+          <li><strong>Top-performing genres:</strong> Sci-Fi and Drama—prioritize those in acquisitions and promotions.</li>
+          <li><strong>Power users:</strong> Reward most active users (loyalty badges / discount codes) to retain engagement.</li>
+          <li><strong>Country focus:</strong> USA & India produce most ratings—localize marketing and content for those markets.</li>
+          <li><strong>Data quality:</strong> Enforce rating range and required dates at ingestion to avoid manual cleaning.</li>
+          <li><strong>Product ideas:</strong> Use top-rated lists for personalized recommendations and seasonal campaigns around peak months.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div id="contact" class="grid" style="margin-top: 1.125rem; margin-bottom: 5rem;">
+      <div class="card full">
+        <h3 class="section-title">Contact</h3>
+        <p class="small">If you'd like the CSV export, the full SQL script (ordered for copy/paste), or a zip with this site — tell me which and I can prepare it.</p>
+        <p class="small"> 🔗 <a href="https://www.linkedin.com/in/pati-praveen-7951a0312/" target="_blank" style="color: var(--accent);">LinkedIn</a></p>
+      </div>
+    </div>
+  </main>
+
+ 
+
+  <div id="modalBg" class="modal-bg" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="modal" id="modalContent">
+      <button class="close" onclick="closeModal()" aria-label="Close modal">✕</button>
+      <h3 id="modalTitle">Explain Query</h3>
+      <div id="modalBody" style="margin-top: 0.625rem;"></div>
+    </div>
+  </div>
+<script>
+(function () {
+  const canvas = document.getElementById('dotsCanvas');
+  const ctx = canvas.getContext('2d', { alpha: true });
+
+  let cw, ch, particles = [], mouse = { x: null, y: null };
+
+  // config: tweak for performance / density
+  const CONFIG = {
+    particleCount: Math.round((window.innerWidth * window.innerHeight) / 70000), // density scale
+    maxRadius: 2.6,
+    minRadius: 0.9,
+    speed: 0.3,
+    linkDistance: 120,
+    linkAlpha: 0.15
+  };
+
+  function resize() {
+    cw = canvas.width = window.innerWidth;
+    ch = canvas.height = window.innerHeight;
+  }
+
+  window.addEventListener('resize', () => {
+    resize();
+    initParticles();
+  });
+
+  // optional: follow mouse lightly
+  window.addEventListener('mousemove', (e) => {
+    mouse.x = e.clientX;
+    mouse.y = e.clientY;
+  });
+  window.addEventListener('mouseout', () => {
+    mouse.x = null;
+    mouse.y = null;
+  });
+
+  function rand(min, max) { return Math.random() * (max - min) + min; }
+
+  function createParticle() {
+    const r = rand(CONFIG.minRadius, CONFIG.maxRadius);
+    return {
+      x: Math.random() * cw,
+      y: Math.random() * ch,
+      vx: rand(-CONFIG.speed, CONFIG.speed),
+      vy: rand(-CONFIG.speed, CONFIG.speed),
+      r: r,
+      alpha: rand(0.4, 0.95)
+    };
+  }
+
+  function initParticles() {
+    particles = [];
+    const count = Math.max(8, CONFIG.particleCount); // minimum particles
+    for (let i = 0; i < count; i++) particles.push(createParticle());
+  }
+
+  function draw() {
+    ctx.clearRect(0, 0, cw, ch);
+
+    // draw links
+    for (let i = 0; i < particles.length; i++) {
+      for (let j = i + 1; j < particles.length; j++) {
+        const p1 = particles[i], p2 = particles[j];
+        const dx = p1.x - p2.x, dy = p1.y - p2.y;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist < CONFIG.linkDistance) {
+          const alpha = (1 - dist / CONFIG.linkDistance) * CONFIG.linkAlpha * p1.alpha * p2.alpha;
+          ctx.beginPath();
+          ctx.strokeStyle = `rgba(244,162,97,${alpha})`; // accent color (change if needed)
+          ctx.lineWidth = 1;
+          ctx.moveTo(p1.x, p1.y);
+          ctx.lineTo(p2.x, p2.y);
+          ctx.stroke();
+        }
+      }
+    }
+
+    // draw particles
+    for (const p of particles) {
+      ctx.beginPath();
+      ctx.fillStyle = `rgba(244,162,97,${p.alpha})`; // dot color
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      ctx.fill();
+    }
+  }
+
+  function update() {
+    for (const p of particles) {
+      // simple movement and boundary bounce
+      p.x += p.vx;
+      p.y += p.vy;
+
+      if (p.x < -10) p.x = cw + 10;
+      if (p.x > cw + 10) p.x = -10;
+      if (p.y < -10) p.y = ch + 10;
+      if (p.y > ch + 10) p.y = -10;
+
+      // slight attraction to mouse for interactivity
+      if (mouse.x !== null && mouse.y !== null) {
+        const dx = (mouse.x - p.x), dy = (mouse.y - p.y);
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist < 120) {
+          p.x -= dx * 0.050; // small repulsion/attraction effect
+          p.y -= dy * 0.002;
+        }
+      }
+    }
+  }
+
+  // animation loop with requestAnimationFrame
+  let rafId;
+  function loop() {
+    update();
+    draw();
+    rafId = requestAnimationFrame(loop);
+  }
+
+  // init
+  resize();
+  initParticles();
+  loop();
+
+  // cleanup if needed (not strictly necessary on single-page)
+  window.addEventListener('visibilitychange', () => {
+    if (document.hidden) cancelAnimationFrame(rafId);
+    else loop();
+  });
+})();
+</script>
+
+  <script>
+    const EXPLAINS = {
+      movies: {
+        title: 'Movies table — create & insert',
+        body: [
+          {k: 'CREATE TABLE', t: 'Creates a table named <code>movies</code>.'},
+          {k: 'movie_id INT PRIMARY KEY', t: 'Defines <code>movie_id</code> as integer and primary key — unique identifier for each movie.'},
+          {k: 'title VARCHAR(100)', t: 'Movie title column. VARCHAR(100) stores up to 100 characters.'},
+          {k: 'genre VARCHAR(50)', t: 'Genre column (e.g., Sci-Fi, Drama).'},
+          {k: 'release_year INT', t: 'Release year as integer.'},
+          {k: 'INSERT INTO', t: 'Bulk-inserts the sample movie rows. Run after the table exists.'}
+        ]
+      },
+      users: {
+        title: 'Users table — create & insert',
+        body: [
+          {k: 'CREATE TABLE users', t: 'Creates <code>users</code> storing each user\'s details.'},
+          {k: 'user_id INT PRIMARY KEY', t: 'Unique user identifier used in <code>ratings</code> foreign key.'},
+          {k: 'name, age, country', t: 'Columns to store user name, age and country for segmentation.'},
+          {k: 'INSERT INTO', t: 'Adds 10 sample users used in ratings sample.'}
+        ]
+      },
+      ratings: {
+        title: 'Ratings table — create & sample insert (dirty data intentionally included)',
+        body: [
+          {k: 'CREATE TABLE ratings', t: 'Creates <code>ratings</code> with an AUTO_INCREMENT <code>rating_id</code> primary key.'},
+          {k: 'movie_id, user_id', t: 'Foreign keys referencing <code>movies.movie_id</code> and <code>users.user_id</code> so referential integrity is enforced.'},
+          {k: 'rating DECIMAL(2,1)', t: 'Decimal column allowing values like 4.5 (one decimal).'},
+          {k: 'rating_date DATE', t: 'Date of rating; important for trend analysis.'},
+          {k: 'INSERT rows', t: 'Sample rows include: NULL ratings (missing), invalid ratings (>5 or 0), missing dates, and a duplicate — purposefully to practice cleaning.'}
+        ]
+      },
+      find_missing: {
+        title: 'Find missing values',
+        body: [
+          {k: 'SELECT * FROM ratings', t: 'Retrieves every row so you can inspect them.'},
+          {k: 'WHERE rating IS NULL ...', t: 'Filters rows that have NULL in key fields such as rating or rating_date so they can be fixed.'}
+        ]
+      },
+      fill_missing: {
+        title: 'Fill missing values (example updates)',
+        body: [
+          {k: 'UPDATE ratings SET rating = 3.5 ...', t: 'This is a targeted update: set a sensible default (3.5 here) for a specific row where rating is missing. In real projects prefer computing movie-level average instead of static values.'},
+          {k: 'UPDATE ... SET rating_date = CURDATE()', t: 'Replaces missing date with today\'s date — useful when the date is unknown but you want no NULLs. Prefer to keep original dates if available.'}
+        ]
+      },
+      invalid_select: {
+        title: 'Find invalid ratings',
+        body: [
+          {k: 'SELECT * FROM ratings WHERE rating < 1 OR rating > 5', t: 'Detects ratings outside the valid 1–5 range; these must be corrected or removed.'}
+        ]
+      },
+      invalid_fix: {
+        title: 'Fix invalid ratings (example)',
+        body: [
+          {k: 'UPDATE ratings ... WHERE rating = 6.0', t: 'Replace obviously invalid value (6.0) with the correct/estimated value (e.g., movie average 4.7). Always document why you replace a value.'},
+          {k: 'UPDATE ratings ... WHERE rating = 0', t: 'Replace 0 with a valid score (e.g., 4.5). If 0 means "no rating", handle as NULL instead.'}
+        ]
+      },
+      dup_detect: {
+        title: 'Detect duplicate rows',
+        body: [
+          {k: 'GROUP BY movie_id,user_id,rating_date', t: 'Groups rows by movie, user and date; duplicates show as count > 1.'},
+          {k: 'HAVING cnt > 1', t: 'HAVING filters grouped results — we keep groups that have more than one record to remove them.'}
+        ]
+      },
+      dup_delete: {
+        title: 'Delete duplicates keeping the first',
+        body: [
+          {k: 'ROW_NUMBER() OVER (PARTITION ...)', t: 'Assigns a row number within each group of (movie_id,user_id,rating_date) ordered by rating_id. The first row has rn=1.'},
+          {k: 'WHERE rn > 1', t: 'Selects the duplicates (rows with rn > 1) so they can be deleted.'},
+          {k: 'Nested SELECT', t: 'The inner SELECT is wrapped to avoid MySQL restriction about modifying the same table used in a subquery.'}
+        ]
+      },
+      verify: {
+        title: 'Verify data quality',
+        body: [
+          {k: 'SELECT * FROM ratings WHERE rating IS NULL', t: 'Double-check there are no remaining NULL ratings or dates.'},
+          {k: 'SELECT * FROM ratings WHERE rating < 1 OR rating > 5', t: 'Ensure no ratings are still out-of-range.'},
+          {k: 'SELECT movie_id, COUNT(*) ...', t: 'Confirm you have expected counts per movie — ensures cleaning didn’t accidentally remove many rows.'}
+        ]
+      },
+      q1: {
+        title: 'Q1 — Top Movies by Average Rating',
+        body: [
+          {k: 'SELECT m.title, ROUND(AVG(r.rating),2) AS avg_rating', t: 'Compute average rating per movie; ROUND(…,2) formats to 2 decimals.'},
+          {k: 'COUNT(r.rating) AS total_ratings', t: 'Shows number of ratings per movie — helps judge significance.'},
+          {k: 'JOIN movies m ON r.movie_id = m.movie_id', t: 'Join to get movie title & genre.'},
+          {k: 'GROUP BY m.title', t: 'Group records by movie to aggregate ratings.'},
+          {k: 'ORDER BY avg_rating DESC, total_ratings DESC', t: 'Sorts by best-rated movies, breaking ties by number of ratings.'}
+        ]
+      },
+      q2: {
+        title: 'Q2 — Most Active Users',
+        body: [
+          {k: 'SELECT u.name, COUNT(r.rating) AS total_ratings', t: 'Counts how many ratings each user submitted — identifies power users.'},
+          {k: 'ROUND(AVG(r.rating),2) AS avg_rating_given', t: 'Shows each user\'s average given rating, useful to find harsh or lenient raters.'},
+          {k: 'GROUP BY u.name ORDER BY total_ratings DESC', t: 'Group by user and sort by most active.'}
+        ]
+      },
+      q3: {
+        title: 'Q3 — Ratings by Genre',
+        body: [
+          {k: 'SELECT m.genre, ROUND(AVG(r.rating),2) AS avg_rating', t: 'Average rating per genre so you know which categories perform best.'},
+          {k: 'COUNT(r.rating) AS total_ratings', t: 'Counts how many ratings a genre received (popularity).' },
+          {k: 'GROUP BY m.genre ORDER BY avg_rating DESC', t: 'Sorts by the highest-rated genres.'}
+        ]
+      },
+      q4: {
+        title: 'Q4 — Ratings Trend Over Time',
+        body: [
+          {k: 'SELECT DATE(r.rating_date) AS date', t: 'Converts date/time to date (if needed) to group daily.'},
+          {k: 'ROUND(AVG(r.rating),2) AS avg_rating', t: 'Daily average rating.'},
+          {k: 'COUNT(*) AS total_ratings', t: 'Daily rating volume — combine with avg to understand significance.'},
+          {k: 'GROUP BY DATE(r.rating_date) ORDER BY date', t: 'Groups by date and orders for time series.'}
+        ]
+      },
+      q5: {
+        title: 'Q5 — Country-wise User Behavior',
+        body: [
+          {k: 'SELECT u.country, COUNT(r.rating) AS total_ratings', t: 'Counts ratings by country to find where most engagement comes from.'},
+          {k: 'ROUND(AVG(r.rating),2) AS avg_rating', t: 'Average rating per country to see regional sentiment.'},
+          {k: 'GROUP BY u.country ORDER BY total_ratings DESC', t: 'Sorts countries by activity.'}
+        ]
+      },
+      q6: {
+        title: 'Q6 — Most Rated Movies (Popularity)',
+        body: [
+          {k: 'SELECT m.title, COUNT(r.rating) AS rating_count', t: 'Counts total ratings per movie — shows popularity (not necessarily quality).'},
+          {k: 'GROUP BY m.title ORDER BY rating_count DESC', t: 'Sorts the most rated movies first.'}
+        ]
+      },
+      export: {
+        title: 'Export cleaned data for Tableau / Excel',
+        body: [
+          {k: 'SELECT r.rating_id, r.movie_id, m.title, m.genre, ...', t: 'Selects a rich flattened dataset (ratings + movie + user info) that can be exported to CSV and loaded into Tableau or Excel.'},
+          {k: 'JOIN movies / users', t: 'Joins provide readable fields (title, name, country) rather than only IDs.'}
+        ]
+      }
+    };
+
+    function openExplain(key) {
+      const modalBg = document.getElementById('modalBg');
+      const modalTitle = document.getElementById('modalTitle');
+      const modalBody = document.getElementById('modalBody');
+      const data = EXPLAINS[key];
+      if (!data) return;
+      modalTitle.innerHTML = data.title;
+      modalBody.innerHTML = '';
+      data.body.forEach(item => {
+        const div = document.createElement('div');
+        div.className = 'line';
+        div.innerHTML = `<strong style="color: #0b3b2d;">${escapeHtml(item.k)}</strong> - <span style="color: #07221a;">${item.t}</span>`;
+        modalBody.appendChild(div);
+      });
+      modalBg.style.display = 'flex';
+      modalBg.setAttribute('aria-hidden', 'false');
+      document.getElementById('modalContent').scrollTop = 0;
+    }
+
+    function closeModal() {
+      document.getElementById('modalBg').style.display = 'none';
+      document.getElementById('modalBg').setAttribute('aria-hidden', 'true');
+    }
+
+    function escapeHtml(string) {
+      return String(string)
+        .replace(/&/g, '&amp;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;');
+    }
+
+    window.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
+    document.getElementById('modalBg').addEventListener('click', (e) => {
+      if (e.target === document.getElementById('modalBg')) closeModal();
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pati Praveen - Movie Ratings Analysis Portfolio</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body { background:#121212; color:#fff; font-family:Arial, sans-serif; margin:0; }
+    header { background:#0d1b2a; padding:20px; text-align:center; position:relative; }
+    header h1 { margin:0; color:#f4a261; }
+    nav a { margin:0 15px; text-decoration:none; color:#fff; font-weight:bold; }
+    nav a:hover { color:#f4a261; }
+    .back-button {
+      position:absolute; left:20px; top:20px;
+      background:#0d1b2a; color:#fff; padding:10px 20px; border:none; border-radius:5px;
+      font-size:16px; cursor:pointer; font-weight:bold; box-shadow:0 4px 8px rgba(0,0,0,0.3);
+    }
+    .back-button:hover { background:#f4a261; color:#121212; }
+    .hero { background:#1b263b; height:300px; display:flex; justify-content:center; align-items:center; }
+    .hero h2 { font-size:2.5em; color:#f4a261; text-align:center; }
+    .content { max-width:1200px; margin:auto; padding:20px; }
+    .project-section { background:#181414; margin:20px 0; padding:30px; border-radius:10px; }
+    .project-title { text-align:center; color:#f4a261; font-size:2em; margin-bottom:20px; }
+    .dashboard { display:grid; grid-template-columns:repeat(auto-fit,minmax(400px,1fr)); gap:20px; }
+    .chart-container { background:#1b263b; padding:20px; border-radius:10px; }
+    footer { background:#0d1b2a; padding:20px; text-align:center; margin-top:40px; }
+    .try-button {
+      position:fixed; right:20px; bottom:20px;
+      background:#2a9d8f; color:#fff; padding:15px 25px; border-radius:50px;
+      text-decoration:none; font-weight:bold; box-shadow:0 4px 12px rgba(0,0,0,0.4);
+      animation:pulse 2s infinite;
+    }
+    .try-button:hover { background:#21867a; }
+    @keyframes pulse {
+      0% { transform:scale(1); }
+      50% { transform:scale(1.1); }
+      100% { transform:scale(1); }
+    }
+    @media(max-width:768px){
+      .hero{height:200px;} .hero h2{font-size:2em;} .dashboard{grid-template-columns:1fr;}
+    }
+      .try-fab {
+  position: fixed;
+  right: 1.125rem;
+  bottom: 1.125rem;
+  background: linear-gradient(135deg, var(--accent-2), #21867a);
+  color: #fff;
+  padding: 0.875rem 1.125rem;
+  border-radius: 999px;
+  box-shadow: 0 12px 36px rgba(33,134,122,0.18);
+  font-weight: 700;
+  cursor: pointer;
+  z-index: 80;
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+  font-size: clamp(0.875rem, 2vw, 0.9375rem);
+}
+
+.try-fab .dot {
+  width: 0.625rem;
+  height: 0.625rem;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.9);
+  animation: ping 1.6s infinite;
+}
+
+@keyframes ping {
+  0% { transform: scale(1); opacity: 1 }
+  50% { transform: scale(1.35); opacity: 0.6 }
+  100% { transform: scale(1); opacity: 1 }
+}
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
+  .try-fab { padding: 0.75rem 1rem; right: 0.75rem; bottom: 0.75rem; }
+}
+
+
+
+
+    /* Canvas background full-screen, behind page content */
+#dotsCanvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none; /* allows clicks through canvas */
+  z-index: 0;           /* behind your content */
+  display: block;
+}
+
+/* Ensure your page content sits above the canvas */
+#content-wrapper {
+  position: relative;
+  z-index: 1;
+}
+
+/* Optional subtle overlay so content is legible */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: rgba(8,12,18,0.35); /* tweak for contrast */
+  z-index: 0.5;
+  pointer-events: none;
+}
+
+  </style>
+</head>
+<body>
+
+
+
+    <!-- Moving dots background (place first inside <body>) -->
+<canvas id="dotsCanvas" aria-hidden="true"></canvas>
+<div id="content-wrapper"><!-- keep your existing page content inside this wrapper -->
+  <!-- existing header / sections / charts ... -->
+</div>
+
+  <header>
+    <button onclick="history.back()" class="back-button">Back</button>
+  </header>
+
+
+
+  <div class="content">
+    <section id="movie-project" class="project-section">
+      <h2 class="project-title">Movie Ratings Analysis: 2023 Dataset</h2>
+
+      <p><b>Project Overview:</b><br>
+      This project analyzes user ratings for 10 movies from 15 users. We explored patterns in preferences, activity levels, genre popularity, time trends, and country-specific behavior to uncover actionable insights.</p>
+
+      <h3>Detailed Insights</h3>
+      <ul>
+        <li><b>Top Movies:</b> Interstellar (4.8), Inception (4.7), and The Dark Knight (4.6) consistently ranked highest, showing strong audience preference for Sci-Fi and action-driven narratives.</li>
+        <li><b>Most Active Users:</b> Alice (12 ratings), Bob (9), and Charlie (8) contributed most ratings, highlighting core engaged users who drive the platform's activity.</li>
+        <li><b>Genre Trends:</b> Sci-Fi led with an average rating of 4.6, followed by Drama (4.4). Animation and Comedy trailed behind, suggesting opportunities to improve those genres' appeal.</li>
+        <li><b>Time Trends:</b> Average ratings rose steadily from January (4.2) to April (4.6), showing that newer releases gained stronger positive reception over time.</li>
+        <li><b>Country Patterns:</b> USA and India were the most active regions, accounting for more than 60% of ratings, making them priority markets for growth strategies.</li>
+      </ul>
+
+      <h3>Questions Answered</h3>
+      <ul>
+        <li>⭐ Which movies are rated highest and attract the most viewers?</li>
+        <li>👥 Who are the most active users driving engagement?</li>
+        <li>🎬 Which genres perform best across the dataset?</li>
+        <li>📅 How do ratings change over time?</li>
+        <li>🌍 Which countries contribute the most to ratings activity?</li>
+      </ul>
+
+      <div class="dashboard">
+        <div class="chart-container">
+          <h3>Top Movies (Avg Rating)</h3>
+          <canvas id="moviesChart"></canvas>
+        </div>
+        <div class="chart-container">
+          <h3>Most Active Users</h3>
+          <canvas id="usersChart"></canvas>
+        </div>
+        <div class="chart-container">
+          <h3>Ratings by Genre</h3>
+          <canvas id="genreChart"></canvas>
+        </div>
+        <div class="chart-container">
+          <h3>Ratings Over Time</h3>
+          <canvas id="timeChart"></canvas>
+        </div>
+        <div class="chart-container">
+          <h3>Country-wise Ratings</h3>
+          <canvas id="countryChart"></canvas>
+        </div>
+      </div>
+    </section>
+
+    <section id="recommendations" class="project-section">
+      <h2 class="project-title">Recommendations</h2>
+      <ul>
+        <li>🎯 <b>Promote Sci-Fi & Drama</b>: These genres consistently score highest and attract engaged viewers.</li>
+        <li>👥 <b>Reward Active Users</b>: Create loyalty programs for Alice, Bob, and Charlie to encourage continued engagement.</li>
+        <li>🌍 <b>Expand to Emerging Markets</b>: India shows high engagement → localize marketing campaigns and add regional content.</li>
+        <li>📅 <b>Leverage Seasonal Trends</b>: Since ratings activity grows in February, plan movie launches and promotions around that period.</li>
+        <li>⭐ <b>Enhance Data Quality</b>: Maintain strict validation of ratings to ensure accurate analysis and better recommendations.</li>
+      </ul>
+    </section>
+
+ 
+  </div>
+
+ <a href="try_project.html"><button class="try-fab" onclick="document.getElementById('prepare').scrollIntoView({behavior: 'smooth'})">
+      <span class="dot" aria-hidden="true"></span> Try Project
+    </button></a>
+
+  <script>
+    // Top Movies
+    new Chart(document.getElementById('moviesChart'), {
+      type: 'bar',
+      data: {
+        labels: ['Interstellar','Inception','The Dark Knight','Joker','Avatar'],
+        datasets: [{ label:'Avg Rating', data:[4.8,4.7,4.6,4.5,4.3], backgroundColor:'#f4a261' }]
+      }
+    });
+
+    // Most Active Users
+    new Chart(document.getElementById('usersChart'), {
+      type: 'bar',
+      data: {
+        labels: ['Alice','Bob','Charlie','David','Eve'],
+        datasets: [{ label:'Ratings Count', data:[12,9,8,7,6], backgroundColor:'#2a9d8f' }]
+      }
+    });
+
+    // Genre Ratings
+    new Chart(document.getElementById('genreChart'), {
+      type: 'pie',
+      data: {
+        labels: ['Sci-Fi','Drama','Crime','Animation','Comedy'],
+        datasets: [{ data:[4.6,4.4,4.3,4.2,4.0], backgroundColor:['#f4a261','#e76f51','#2a9d8f','#264653','#9a6fb0'] }]
+      }
+    });
+
+    // Ratings Over Time
+    new Chart(document.getElementById('timeChart'), {
+      type: 'line',
+      data: {
+        labels: ['Jan','Feb','Mar','Apr'],
+        datasets: [{ label:'Avg Rating', data:[4.2,4.4,4.5,4.6], borderColor:'#f4a261', fill:false }]
+      }
+    });
+
+    // Country-wise Ratings
+    new Chart(document.getElementById('countryChart'), {
+      type: 'bar',
+      data: {
+        labels: ['USA','India','UK','Canada','Australia'],
+        datasets: [{ label:'Ratings Count', data:[20,18,12,8,7], backgroundColor:'#e76f51' }]
+      }
+    });
+  </script>
+
+
+
+<script>
+(function () {
+  const canvas = document.getElementById('dotsCanvas');
+  const ctx = canvas.getContext('2d', { alpha: true });
+
+  let cw, ch, particles = [], mouse = { x: null, y: null };
+
+  // config: tweak for performance / density
+  const CONFIG = {
+    particleCount: Math.round((window.innerWidth * window.innerHeight) / 70000), // density scale
+    maxRadius: 2.6,
+    minRadius: 0.9,
+    speed: 0.3,
+    linkDistance: 120,
+    linkAlpha: 0.15
+  };
+
+  function resize() {
+    cw = canvas.width = window.innerWidth;
+    ch = canvas.height = window.innerHeight;
+  }
+
+  window.addEventListener('resize', () => {
+    resize();
+    initParticles();
+  });
+
+  // optional: follow mouse lightly
+  window.addEventListener('mousemove', (e) => {
+    mouse.x = e.clientX;
+    mouse.y = e.clientY;
+  });
+  window.addEventListener('mouseout', () => {
+    mouse.x = null;
+    mouse.y = null;
+  });
+
+  function rand(min, max) { return Math.random() * (max - min) + min; }
+
+  function createParticle() {
+    const r = rand(CONFIG.minRadius, CONFIG.maxRadius);
+    return {
+      x: Math.random() * cw,
+      y: Math.random() * ch,
+      vx: rand(-CONFIG.speed, CONFIG.speed),
+      vy: rand(-CONFIG.speed, CONFIG.speed),
+      r: r,
+      alpha: rand(0.4, 0.95)
+    };
+  }
+
+  function initParticles() {
+    particles = [];
+    const count = Math.max(8, CONFIG.particleCount); // minimum particles
+    for (let i = 0; i < count; i++) particles.push(createParticle());
+  }
+
+  function draw() {
+    ctx.clearRect(0, 0, cw, ch);
+
+    // draw links
+    for (let i = 0; i < particles.length; i++) {
+      for (let j = i + 1; j < particles.length; j++) {
+        const p1 = particles[i], p2 = particles[j];
+        const dx = p1.x - p2.x, dy = p1.y - p2.y;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist < CONFIG.linkDistance) {
+          const alpha = (1 - dist / CONFIG.linkDistance) * CONFIG.linkAlpha * p1.alpha * p2.alpha;
+          ctx.beginPath();
+          ctx.strokeStyle = `rgba(244,162,97,${alpha})`; // accent color (change if needed)
+          ctx.lineWidth = 1;
+          ctx.moveTo(p1.x, p1.y);
+          ctx.lineTo(p2.x, p2.y);
+          ctx.stroke();
+        }
+      }
+    }
+
+    // draw particles
+    for (const p of particles) {
+      ctx.beginPath();
+      ctx.fillStyle = `rgba(244,162,97,${p.alpha})`; // dot color
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      ctx.fill();
+    }
+  }
+
+  function update() {
+    for (const p of particles) {
+      // simple movement and boundary bounce
+      p.x += p.vx;
+      p.y += p.vy;
+
+      if (p.x < -10) p.x = cw + 10;
+      if (p.x > cw + 10) p.x = -10;
+      if (p.y < -10) p.y = ch + 10;
+      if (p.y > ch + 10) p.y = -10;
+
+      // slight attraction to mouse for interactivity
+      if (mouse.x !== null && mouse.y !== null) {
+        const dx = (mouse.x - p.x), dy = (mouse.y - p.y);
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist < 120) {
+          p.x -= dx * 0.050; // small repulsion/attraction effect
+          p.y -= dy * 0.002;
+        }
+      }
+    }
+  }
+
+  // animation loop with requestAnimationFrame
+  let rafId;
+  function loop() {
+    update();
+    draw();
+    rafId = requestAnimationFrame(loop);
+  }
+
+  // init
+  resize();
+  initParticles();
+  loop();
+
+  // cleanup if needed (not strictly necessary on single-page)
+  window.addEventListener('visibilitychange', () => {
+    if (document.hidden) cancelAnimationFrame(rafId);
+    else loop();
+  });
+})();
+</script>
+
+</body>
+</html>

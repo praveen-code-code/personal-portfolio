@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data analysis project</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #121212;
+            color: #fff;
+            line-height: 1.6;
+        }
+        header {
+            background-color: #0d1b2a;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+        header h1 {
+            margin: 0;
+            color: #f4a261;
+        }
+        .back-button {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            padding: 10px 20px;
+            background-color: #0d1b2a;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            transition: background-color 0.3s;
+        }
+        .back-button:hover {
+            background-color: #f4a261;
+        }
+        .hero {
+            width: 100%;
+            height: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            background-color: #1b263b;
+        }
+        .hero h2 {
+            font-size: 3em;
+            color: #f4a261;
+        }
+        .content {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .project-section {
+            background-color: #181414;
+            padding: 50px;
+            margin: 20px 10%;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+        .project-title {
+            text-align: center;
+            color: #f4a261;
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
+        .project-hero {
+            width: 100%;
+            height: 300px;
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 400"><rect fill="%231b263b" width="800" height="400"/><text x="400" y="200" font-size="30" fill="%23f4a261" text-anchor="middle">Project Visual</text></svg>');
+            border-radius: 10px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .p {
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 10px;
+            text-align: center;
+            background-color: #1b263b;
+        }
+        .image-section {
+            width: 100%;
+            max-width: 600px;
+            margin: 20px auto;
+            text-align: center;
+        }
+        .image-section img {
+            width: 100%;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+        /* Updated table styles for responsiveness */
+        .table-container {
+            width: 100%;
+            overflow-x: auto;
+            margin: 20px 0;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: #1b263b;
+            min-width: 300px; /* Ensure table doesn't shrink too much */
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #333;
+            font-size: 14px;
+            white-space: nowrap; /* Prevent text from wrapping unnecessarily */
+        }
+        th {
+            background-color: #0d1b2a;
+            color: #f4a261;
+        }
+        /* Allow wrapping for long content on small screens */
+        @media (max-width: 600px) {
+            th, td {
+                white-space: normal;
+                word-wrap: break-word;
+                font-size: 12px;
+                padding: 8px;
+            }
+        }
+        .technologies {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        .tech-card {
+            background-color: #1b263b;
+            padding: 10px 20px;
+            border-radius: 5px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            font-size: 16px;
+        }
+        b {
+            color: #f4a261;
+        }
+        @media (max-width: 768px) {
+            .hero { height: 200px; }
+            .hero h2 { font-size: 2em; }
+            .project-section, .project-hero { padding: 20px; margin: 10px 5%; }
+            .project-title { font-size: 2em; }
+            .image-section img { max-width: 100%; }
+            .back-button {
+                top: 10px;
+                left: 10px;
+                padding: 8px 15px;
+                font-size: 14px;
+            }
+        }
+        .try-fab {
+            position: fixed;
+            right: 1.125rem;
+            bottom: 1.125rem;
+            background: linear-gradient(135deg, var(--accent-2), #21867a);
+            color: #fff;
+            padding: 0.875rem 1.125rem;
+            border-radius: 999px;
+            box-shadow: 0 12px 36px rgba(33,134,122,0.18);
+            font-weight: 700;
+            cursor: pointer;
+            z-index: 80;
+            display: flex;
+            align-items: center;
+            gap: 0.625rem;
+            font-size: clamp(0.875rem, 2vw, 0.9375rem);
+        }
+        .try-fab .dot {
+            width: 0.625rem;
+            height: 0.625rem;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.9);
+            animation: ping 1.6s infinite;
+        }
+        @keyframes ping {
+            0% { transform: scale(1); opacity: 1 }
+            50% { transform: scale(1.35); opacity: 0.6 }
+            100% { transform: scale(1); opacity: 1 }
+        }
+        @media (max-width: 600px) {
+            .try-fab { padding: 0.75rem 1rem; right: 0.75rem; bottom: 0.75rem; }
+        }
+        #dotsCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 0;
+            display: block;
+        }
+        #content-wrapper {
+            position: relative;
+            z-index: 1;
+        }
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            background: rgba(8,12,18,0.35);
+            z-index: 0.5;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="dotsCanvas" aria-hidden="true"></canvas>
+    <div id="content-wrapper">
+        <button class="back-button" onclick="history.back()">Back</button>
+        <section class="hero">
+            <h2>Data-Driven Insights for Business Growth</h2>
+        </section>
+        <div class="content">
+            <section id="data-project" class="project-section">
+                <h2 class="project-title">Retail Sales Analysis: Unveiling 2023 Trends</h2>
+                <div class="p"><b>Overview</b><br>Presented on September 13, 2025. Analyzed transactions from a fictional retail store using Excel and Tableau. Uncovered key trends in Electronics and Clothing categories, total sales $13,895.</div>
+                <div class="p"><b>Key Metrics</b></div>
+                <div class="table-container">
+                    <table>
+                        <tr><th>Metric</th><th>Value</th></tr>
+                        <tr><td>Total Sales</td><td>$13,895</td></tr>
+                        <tr><td>Average per Transaction</td><td>$695</td></tr>
+                        <tr><td>Electronics Revenue</td><td>$10,450 (55 units)</td></tr>
+                        <tr><td>Clothing Revenue</td><td>$3,445 (120 units)</td></tr>
+                    </table>
+                </div>
+                <div class="image-section">
+                    <img src="Category_sales.png" alt="Sales by Category Chart">
+                    <p><b>Figure 1:</b> Bar chart showing Electronics ($10,450) vs. Clothing ($3,445) revenue.</p>
+                </div>
+                <div class="p"><b>Sample Data</b></div>
+                <div class="table-container">
+                    <table>
+                        <tr><th>Date</th><th>Product</th><th>Category</th><th>Quantity</th><th>Unit Price</th><th>Total Sales</th></tr>
+                        <tr><td>01/05/2023</td><td>Laptop</td><td>Electronics</td><td>2</td><td>800</td><td>1,600</td></tr>
+                        <tr><td>01/15/2023</td><td>T-Shirt</td><td>Clothing</td><td>10</td><td>20</td><td>200</td></tr>
+                        <tr><td>02/10/2023</td><td>Smartphone</td><td>Electronics</td><td>5</td><td>500</td><td>2,500</td></tr>
+                        <tr><td>...</td><td>...</td><td>...</td><td>...</td><td>...</td><td>...</td></tr>
+                        <tr><td>11/15/2023</td><td>Backpack</td><td>Clothing</td><td>5</td><td>40</td><td>200</td></tr>
+                    </table>
+                </div>
+                <div class="image-section">
+                    <img src="monthly_sales.png" alt="Monthly Sales Trends">
+                    <p><b>Figure 2:</b> Line chart showing sales peaks in February ($2,900) and March ($2,220), dip in November ($200).</p>
+                </div>
+                <div class="p"><b>Top Products</b></div>
+                <div class="table-container">
+                    <table>
+                        <tr><th>Product</th><th>Total Sales</th></tr>
+                        <tr><td>Smartphone</td><td>$2,500</td></tr>
+                        <tr><td>Laptop</td><td>$1,600</td></tr>
+                        <tr><td>Headphones</td><td>$1,500</td></tr>
+                        <tr><td>Speaker</td><td>$900</td></tr>
+                        <tr><td>Smartwatch</td><td>$800</td></tr>
+                    </table>
+                </div>
+                <div class="image-section">
+                    <img src="top_products.png" alt="Top Products Chart">
+                    <p><b>Figure 3:</b> Bar chart highlighting top products, led by Smartphone ($2,500).</p>
+                </div>
+                <div class="p"><b>Action Plan</b><br>Prioritize Electronics for high-margin sales, bundle Clothing to boost volume, target February/March promotions, address November dip with marketing. Estimated growth potential: 15-20%.</div>
+                <div class="technologies">
+                    <div class="tech-card">Excel</div>
+                    <div class="tech-card">Tableau</div>
+                    <div class="tech-card">PivotTables</div>
+                    <div class="tech-card">Data Visualization</div>
+                </div>
+            </section>
+        </div>
+        <a href="try_project.html"><button class="try-fab" onclick="document.getElementById('prepare').scrollIntoView({behavior: 'smooth'})">
+            <span class="dot" aria-hidden="true"></span> Try Project
+        </button></a>
+    </div>
+    <script>
+        (function () {
+            const canvas = document.getElementById('dotsCanvas');
+            const ctx = canvas.getContext('2d', { alpha: true });
+            let cw, ch, particles = [], mouse = { x: null, y: null };
+            const CONFIG = {
+                particleCount: Math.round((window.innerWidth * window.innerHeight) / 70000),
+                maxRadius: 2.6,
+                minRadius: 0.9,
+                speed: 0.3,
+                linkDistance: 120,
+                linkAlpha: 0.15
+            };
+            function resize() {
+                cw = canvas.width = window.innerWidth;
+                ch = canvas.height = window.innerHeight;
+            }
+            window.addEventListener('resize', () => {
+                resize();
+                initParticles();
+            });
+            window.addEventListener('mousemove', (e) => {
+                mouse.x = e.clientX;
+                mouse.y = e.clientY;
+            });
+            window.addEventListener('mouseout', () => {
+                mouse.x = null;
+                mouse.y = null;
+            });
+            function rand(min, max) { return Math.random() * (max - min) + min; }
+            function createParticle() {
+                const r = rand(CONFIG.minRadius, CONFIG.maxRadius);
+                return {
+                    x: Math.random() * cw,
+                    y: Math.random() * ch,
+                    vx: rand(-CONFIG.speed, CONFIG.speed),
+                    vy: rand(-CONFIG.speed, CONFIG.speed),
+                    r: r,
+                    alpha: rand(0.4, 0.95)
+                };
+            }
+            function initParticles() {
+                particles = [];
+                const count = Math.max(8, CONFIG.particleCount);
+                for (let i = 0; i < count; i++) particles.push(createParticle());
+            }
+            function draw() {
+                ctx.clearRect(0, 0, cw, ch);
+                for (let i = 0; i < particles.length; i++) {
+                    for (let j = i + 1; j < particles.length; j++) {
+                        const p1 = particles[i], p2 = particles[j];
+                        const dx = p1.x - p2.x, dy = p1.y - p2.y;
+                        const dist = Math.sqrt(dx * dx + dy * dy);
+                        if (dist < CONFIG.linkDistance) {
+                            const alpha = (1 - dist / CONFIG.linkDistance) * CONFIG.linkAlpha * p1.alpha * p2.alpha;
+                            ctx.beginPath();
+                            ctx.strokeStyle = `rgba(244,162,97,${alpha})`;
+                            ctx.lineWidth = 1;
+                            ctx.moveTo(p1.x, p1.y);
+                            ctx.lineTo(p2.x, p2.y);
+                            ctx.stroke();
+                        }
+                    }
+                }
+                for (const p of particles) {
+                    ctx.beginPath();
+                    ctx.fillStyle = `rgba(244,162,97,${p.alpha})`;
+                    ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+                    ctx.fill();
+                }
+            }
+            function update() {
+                for (const p of particles) {
+                    p.x += p.vx;
+                    p.y += p.vy;
+                    if (p.x < -10) p.x = cw + 10;
+                    if (p.x > cw + 10) p.x = -10;
+                    if (p.y < -10) p.y = ch + 10;
+                    if (p.y > ch + 10) p.y = -10;
+                    if (mouse.x !== null && mouse.y !== null) {
+                        const dx = (mouse.x - p.x), dy = (mouse.y - p.y);
+                        const dist = Math.sqrt(dx * dx + dy * dy);
+                        if (dist < 120) {
+                            p.x -= dx * 0.052;
+                            p.y -= dy * 0.002;
+                        }
+                    }
+                }
+            }
+            let rafId;
+            function loop() {
+                update();
+                draw();
+                rafId = requestAnimationFrame(loop);
+            }
+            resize();
+            initParticles();
+            loop();
+            window.addEventListener('visibilitychange', () => {
+                if (document.hidden) cancelAnimationFrame(rafId);
+                else loop();
+            });
+        })();
+        window.addEventListener('resize', () => {
+            const hero = document.querySelector('.hero');
+            if (window.innerWidth <= 768) {
+                hero.style.height = '200px';
+            } else {
+                hero.style.height = '400px';
+            }
+        });
+        window.dispatchEvent(new Event('resize'));
+    </script>
+</body>
+</html>
